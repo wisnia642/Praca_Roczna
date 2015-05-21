@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.example.michal.siema.Lista">
+    <item
+        android:id="@+id/item1"
+        android:orderInCategory="1"
+        android:title="Dodaj przepis">
+    </item>
+    <item
+        android:id="@+id/item2"
+        android:orderInCategory="2"
+        android:title="Usuń przepis">
+    </item>
+    <item
+        android:id="@+id/item3"
+        android:orderInCategory="3"
+        android:title="Poprawka">
+    </item>
+</menu>

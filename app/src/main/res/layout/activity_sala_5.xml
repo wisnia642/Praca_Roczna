@@ -1,0 +1,198 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.michal.siema.Sala_1"
+    android:background="@drawable/images1">
+
+    <AbsoluteLayout
+        android:id="@+id/absLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 1"
+            android:id="@+id/textView1"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 2"
+            android:id="@+id/textView2"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 3"
+            android:id="@+id/textView3"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 4"
+            android:id="@+id/textView4"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 5"
+            android:id="@+id/textView5"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 6"
+            android:id="@+id/textView6"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 7"
+            android:id="@+id/textView7"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 8"
+            android:id="@+id/textView8"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 9"
+            android:id="@+id/textView9"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="10"
+            android:id="@+id/textView10"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="11"
+            android:id="@+id/textView11"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="12"
+            android:id="@+id/textView12"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="13"
+            android:id="@+id/textView13"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="14"
+            android:id="@+id/textView14"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="15"
+            android:id="@+id/textView15"
+            android:layout_x="26dp"
+            android:layout_y="29dp"
+            android:background="@drawable/stolik"
+            android:textSize="80dp"
+
+            />
+
+    </AbsoluteLayout>
+</RelativeLayout>

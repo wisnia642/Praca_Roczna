@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/customImage"
+        android:layout_width="130dp"
+        android:layout_height="120dp"
+        android:padding="5dp" />
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/customText"
+            android:layout_width="809dp"
+            android:layout_height="55dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:textColor="#33CC33"
+            android:textSize="40dp" />
+
+        <TextView
+            android:id="@+id/customText1"
+            android:layout_width="791dp"
+            android:layout_height="55dp"
+            android:text="TextView"
+            android:layout_marginLeft="10dp"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/customText2"
+        android:textSize="75dp"
+        android:text="1"
+        android:layout_marginTop="15dp" />
+
+</LinearLayout>

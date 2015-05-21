@@ -1,0 +1,49 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.example.michal.siema.Sala_1">
+    <item
+        android:id="@+id/item1"
+        android:orderInCategory="1"
+        android:title="Zrób zdjęcie">
+    </item>
+    <item
+        android:id="@+id/item2"
+        android:orderInCategory="2"
+        android:title="Dodaj zdjęcie">
+    </item>
+    <item
+        android:id="@+id/item3"
+        android:orderInCategory="3"
+        android:title="Zblokuj stoliki">
+    </item>
+    <item
+        android:id="@+id/item4"
+        android:orderInCategory="3"
+        android:title="Odblokuj stoliki">
+    </item>
+    <item
+        android:id="@+id/item5"
+        android:orderInCategory="3"
+        android:title="Usuń stolik">
+    </item>
+    <item
+        android:id="@+id/item6"
+        android:orderInCategory="3"
+        android:title="Dodaj stolik">
+    </item>/>
+    <item
+        android:id="@+id/item7"
+        android:orderInCategory="3"
+        android:title="Zapis">
+    </item>/>
+    <item
+        android:id="@+id/item8"
+        android:orderInCategory="3"
+        android:title="export">
+    </item>/>
+    <item
+        android:id="@+id/item9"
+        android:orderInCategory="3"
+        android:title="import">
+    </item>/>
+</menu>

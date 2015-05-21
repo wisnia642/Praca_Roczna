@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Siema</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sala_1">Sala_1</string>
+    <string name="title_activity_karta">Karta</string>
+    <string name="title_activity_sala_2">Sala_2</string>
+    <string name="title_activity_sala_3">Sala_3</string>
+    <string name="title_activity_sala_4">Sala_4</string>
+    <string name="title_activity_sala_5">Sala_5</string>
+    <string name="title_activity_lista">Lista</string>
+    <string name="title_activity_zamowienie">Zamowienie</string>
+    <string name="title_activity_dodawanie">Dodawanie</string>
+    <string name="title_activity_usuwanie">Usuwanie</string>
+
+</resources>
