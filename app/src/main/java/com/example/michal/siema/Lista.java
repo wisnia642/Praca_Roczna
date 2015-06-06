@@ -1,20 +1,24 @@
 package com.example.michal.siema;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,7 +37,6 @@ public class Lista extends ActionBarActivity {
     public static final int DRUGI_ELEMENT = 2;
     public static final int TRZECI_ELEMENT = 3;
 
-    static ResultSet rs;
     static Statement st;
     Connection connection = null;
     String posilek;
@@ -44,6 +47,9 @@ public class Lista extends ActionBarActivity {
     final String[] zm1 = new String[50];
     final String[] zm2 = new String[50];
     final String[] zm3 = new String[50];
+
+    ResultSet resultSet;
+    FileOutputStream fos;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -86,38 +92,56 @@ public class Lista extends ActionBarActivity {
             }
              String sql = "SELECT Nazwa,Skladniki,Cena,Zdjecie FROM " + posilek + " ";
 
-
-                try {
-                    rs=st.executeQuery(sql);
-                } catch (SQLException e1) {
-                    //  e1.printStackTrace();
-                }
-                try{int i=0;
-                    while (rs.next())
-                    {
-
-                        zm[i] = rs.getString("Nazwa");
-                        zm1[i] = rs.getString("Skladniki");
-                        zm2[i] = rs.getString("Cena");
-                        zm3[i] = rs.getString("Zdjecie");
-                        i++;
-
-
+            try {
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                resultSet = stmt.executeQuery();
+                int i =0;
+                while (resultSet.next()){
+                    zm[i] = resultSet.getString(1);
+                    zm1[i] = resultSet.getString(2);
+                    zm2[i] = resultSet.getString(3);
+                    File image = new File("/mnt/sdcard/"+zm[i]+".jpg");
+                    zm3[i] = "/mnt/sdcard/"+zm[i]+".jpg";
+                    try {
+                        fos = new FileOutputStream(image);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
                     }
-                } catch (SQLException e1)
-                {
-                    e1.printStackTrace();
+                    byte[] buffer = new byte[1];
+                    InputStream is = resultSet.getBinaryStream(4);
+                    try {
+                        while (is.read(buffer) > 0)
+                        {
+                            try {
+                                fos.write(buffer);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        try {
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    i++;
                 }
 
-            try{
-                if(connection!=null)
-                    connection.close();
-            }catch(SQLException se){
-                showToast("brak polaczenia z internetem");}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }}
 
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
         }
 
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
