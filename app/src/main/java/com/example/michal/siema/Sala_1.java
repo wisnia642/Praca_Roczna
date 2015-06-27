@@ -1,40 +1,30 @@
 package com.example.michal.siema;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsoluteLayout;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -53,7 +43,10 @@ public class Sala_1 extends ActionBarActivity {
     int[] licz = new int[31];
     int zm;
     int zm1=15;
-  //  String stolik[] = {"img1","img2","img3","img4","img5","img6","img7","img8","img9","img10","img11","img12","img13","img14","img15"};
+    int x=0;
+
+    private static final String SAMPLE_DB_NAME = "Restalracja";
+    private static final String SAMPLE_TABLE_NAME = "Stol";
 
     static ResultSet rs;
     static Statement st;
@@ -82,6 +75,36 @@ public class Sala_1 extends ActionBarActivity {
                 Toast.LENGTH_LONG).show();
     }
 
+    private void ToDataBase()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
+                    SAMPLE_TABLE_NAME +
+                    " (Id INT ,Sala1 DOUBLE, Sala2 DOUBLE,Sala3 DOUBLE,Sala4 DOUBLE,Sala5 DOUBLE);");
+
+        }
+        catch (Exception e){}
+
+    }
+
+    private void writeToDataBase()
+    {
+        ToDataBase();
+
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            for (int i = 0; i <= 29; i = i + 0) {
+                sampleDB.execSQL("UPDATE Stol SET Sala1=('" + tab[i] + "') WHERE Id=('" + i + "') ");
+               //sampleDB.execSQL("INSERT INTO Stol ('Id') VALUES ('"+i+"')");
+
+                i++;
+            }
+            sampleDB.close();
+        }catch (Exception e){showToast("Blad w update");}
+    }
+/*
     private void writeToFile() {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("config.txt", Context.MODE_PRIVATE));
@@ -127,8 +150,8 @@ public class Sala_1 extends ActionBarActivity {
 
         return ret;
     }
-    //zapis danych do bazy danych
 
+*/   //zapis danych do bazy danych
     public void connectToDataBase() {
 
         connect();
@@ -141,7 +164,7 @@ public class Sala_1 extends ActionBarActivity {
         }
 
         for (int i = 0; i <= 29; i = i + 0) {
-            String sql = "UPDATE TabelaN SET Sala1=(" + tab[i] + ") WHERE ID=(" + i + ")";
+            String sql = "UPDATE Stoliki SET Sala1=(" + tab[i] + ") WHERE ID=(" + i + ")";
             i++;
 
             try {
@@ -174,7 +197,7 @@ public class Sala_1 extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://54.215.148.52/sql374428", "sql374428", "mJ2*rN6%");
+            connection = DriverManager.getConnection("jdbc:mysql://54.217.215.74/sql481900", "sql481900", "qF9!gX2*");
             showToast("open");
         } catch (SQLException e) {
             showToast("" + e);
@@ -195,7 +218,7 @@ public class Sala_1 extends ActionBarActivity {
             }
 
             for(int i =0; i<=29;i=i+0) {
-                String sql = "SELECT * FROM TabelaN WHERE ID=("+i+")";
+                String sql = "SELECT * FROM Stoliki WHERE ID=("+i+")";
 
 
                 try {
@@ -251,34 +274,34 @@ public class Sala_1 extends ActionBarActivity {
          img15 = (TextView) findViewById(R.id.textView15);
 
 
-       //odczyt z bazy danych i z pliku
 
-            readFromFile();
-            for(int i=0;i<=29;i=i+0)
-            {
-                tab[i]= Double.valueOf(tablica[i]);
+        //odczyt z bazy danych i z pliku
+        try {
+           // ToDataBase();
+            for (int i = 0; i <= 29; i = i + 0) {
+                tab[i] = Double.valueOf(tablica[i]);
                 i++;
             }
-        try {
-            Bitmap thumbnail = (BitmapFactory.decodeFile(tablica[30]));
-            // Log.w("path of image from gallery......******************.........", picturePath+"");
-            img1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-            img15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-        }catch(Exception e){}
-
+            try {
+                Bitmap thumbnail = (BitmapFactory.decodeFile(tablica[30]));
+                // Log.w("path of image from gallery......******************.........", picturePath+"");
+                img1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                img15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+            } catch (Exception e) {
+            }
         stan=true;
 
         if (tab[0] != 0 || tab[1] != 0) {
@@ -365,6 +388,7 @@ public class Sala_1 extends ActionBarActivity {
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[28], (int) tab[29]);
             img15.setLayoutParams(lp);
         }
+        }catch (Exception e){}
 
 
 
@@ -1107,7 +1131,7 @@ public class Sala_1 extends ActionBarActivity {
                     break;
                 case SIUDMY_ELEMENT:
 
-                        writeToFile();
+                       writeToDataBase();
 
                     break;
                 case OSMY_ELEMENT:
@@ -1117,7 +1141,7 @@ public class Sala_1 extends ActionBarActivity {
                     break;
                 case DZIEWIATY_ELEMENT:
                           wczytywanie();
-                          writeToFile();
+                          //writeToFile();
                     Intent i = new Intent(Sala_1.this,MainActivity.class);
                     startActivity(i);
 
