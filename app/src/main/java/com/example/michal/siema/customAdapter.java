@@ -1,10 +1,8 @@
 package com.example.michal.siema;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +39,15 @@ public class customAdapter extends ArrayAdapter<String> {
         txtTitle1.setText(pi2[position]);
         txtTitle2.setText(pi3[position]);
         String zdjencie = (pi4[position]);
-        Bitmap bmImg = BitmapFactory.decodeFile(zdjencie);
-        imageView.setImageBitmap(bmImg);
+
+        //dodawanie obrazu jesli go nie ma
+           Bitmap bmImg = BitmapFactory.decodeFile(zdjencie);
+            imageView.setImageBitmap(bmImg);
+          if(bmImg==null&pi[position]!=null)
+        {
+            imageView.setImageDrawable(imageView.getResources().getDrawable(R.drawable.brak));
+
+        }
 
         return rowView;
 

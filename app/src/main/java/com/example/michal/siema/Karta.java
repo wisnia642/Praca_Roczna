@@ -1,25 +1,13 @@
 package com.example.michal.siema;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 
 public class Karta extends ActionBarActivity {
@@ -27,10 +15,8 @@ public class Karta extends ActionBarActivity {
     Button buton1,buton2,buton3,buton4,buton5,buton6,buton7,buton8,buton9,buton10,buton11,buton12,
             buton13,buton14,buton15,buton16;
 
-
-    String zdjecie = null;
-    String message3;
-    Intent intent;
+    Bundle applesData;
+    String posilek;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -42,6 +28,9 @@ public class Karta extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_karta);
+
+        applesData = getIntent().getExtras();
+        posilek = applesData.getString("Sala");
 
         buton1=(Button) findViewById(R.id.makarony);
         buton2=(Button) findViewById(R.id.przystawki);
@@ -66,6 +55,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Makarony";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -75,6 +65,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Przystawki";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -84,6 +75,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Ryba";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -93,6 +85,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Salatki";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -102,6 +95,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Fast_Food";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -111,6 +105,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Pizza";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -120,6 +115,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Zupy";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -129,6 +125,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Suszi";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -138,6 +135,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Wina";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -147,6 +145,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Piwo";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         }); buton11.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +154,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Desery";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -164,6 +164,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Dodatki";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -173,6 +174,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Napoje_Gazowane";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -182,6 +184,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Napoje_Zimne";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -191,6 +194,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Napoje_Gorace";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });
@@ -200,6 +204,7 @@ public class Karta extends ActionBarActivity {
                 Intent i = new Intent(Karta.this,Lista.class);
                 String userMassage = "Soki";
                 i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
                 startActivity(i);
             }
         });

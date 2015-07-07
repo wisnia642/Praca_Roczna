@@ -1,6 +1,8 @@
 package com.example.michal.siema;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -36,7 +38,11 @@ public class Lista extends ActionBarActivity {
     public static final int PIERWSZY_ELEMENT = 1;
     public static final int DRUGI_ELEMENT = 2;
     public static final int TRZECI_ELEMENT = 3;
+    public static final int CZWARTY_ELEMENT = 4;
+    public static final int PIATY_ELEMENT = 5;
 
+    private static final String SAMPLE_DB_NAME = "Restalracja";
+    int i =0;
     static Statement st;
     Connection connection = null;
     String posilek;
@@ -73,14 +79,15 @@ public class Lista extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://54.215.148.52/sql374428", "sql374428", "mJ2*rN6%");
+            connection = DriverManager.getConnection("jdbc:mysql://54.217.215.74/sql481900", "sql481900", "qF9!gX2*");
         } catch (SQLException e) {
             showToast("" + e);
             return;
         }
 
     }
-    public void wczytywanie1() {
+    //dane z serwera
+    public void wczytywanie() {
 
         connect();
         if (connection != null) {
@@ -95,7 +102,7 @@ public class Lista extends ActionBarActivity {
             try {
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 resultSet = stmt.executeQuery();
-                int i =0;
+
                 while (resultSet.next()){
                     zm[i] = resultSet.getString(1);
                     zm1[i] = resultSet.getString(2);
@@ -142,6 +149,64 @@ public class Lista extends ActionBarActivity {
             }
         }
 
+    public void readFromSqlLight()
+    {
+        try{
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
+                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Zdjecie VARCHAR,Cena DOUBLE);");
+
+            Cursor c=sampleDB.rawQuery("SELECT * FROM '"+posilek+"'",null);
+                int j=0;
+                while (c.moveToNext())
+                {
+                    zm[j]=  c.getString(0);
+                    zm1[j]= c.getString(1);
+                    zm3[j]= c.getString(2);
+                    zm2[j]= c.getString(3);
+                    j++;
+                }
+            showToast(zm3[1]);
+            sampleDB.close();
+        }catch (Exception a){}
+    }
+
+    public void saveDataSqlLight()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
+                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Zdjecie VARCHAR ,Cena DOUBLE);");
+
+            sampleDB.execSQL("DELETE FROM "+posilek+"");
+
+            i=i-1;
+            for (int w = 0; w <= i; w = w + 0) {
+                sampleDB.execSQL("INSERT INTO "+posilek+" ('Nazwa','Skladniki','Zdjecie','Cena') VALUES ('"+zm[w]+"','"+zm1[w]+"','"+zm3[w]+"','"+zm2[w]+"')");
+                w++;
+            }
+            sampleDB.close();
+        }catch (Exception e){}
+    }
+
+    public void saveDataSqlLigtUpdate()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
+                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Zdjecie VARCHAR ,Cena DOUBLE);");
+            i=i-1;
+            for (int w = 0; w <= i; w = w + 0) {
+                sampleDB.execSQL("INSERT INTO "+posilek+" ('Nazwa','Skladniki','Zdjecie','Cena') VALUES ('"+zm[w]+"','"+zm1[w]+"','"+zm3[w]+"','"+zm2[w]+"')");
+                w++;
+            }
+            sampleDB.close();
+        }catch (Exception e){}
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +220,9 @@ public class Lista extends ActionBarActivity {
             return;
         }
          posilek = applesData.getString("applesMessage");
+        final String Sala = applesData.getString("Sala");
 
-            wczytywanie1();
+        readFromSqlLight();
 
             pi=zm;
             pi2=zm1;
@@ -173,15 +239,13 @@ public class Lista extends ActionBarActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             //przejscie do zamowienia
                             Intent i = new Intent(Lista.this, Zamowienie.class);
-                            String Message1 = String.valueOf(zm[userSelectedIndex]);
-                            i.putExtra("nazwa", Message1);
-                            String Massage2 = zm1[userSelectedIndex];
-                            i.putExtra("skladniki", Massage2);
+                            String Message1 = zm[userSelectedIndex];
+                            i.putExtra("nazwa",Message1);
                             String Massage3 = zm2[userSelectedIndex];
                             i.putExtra("cena", Massage3);
                             String Message4 = String.valueOf(zm3[userSelectedIndex]);
                             i.putExtra("zdjecie", Message4);
-                            i.putExtra("kategoria", posilek);
+                            i.putExtra("Sala", Sala);
                             startActivity(i);
                         }
 
@@ -191,25 +255,8 @@ public class Lista extends ActionBarActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //usuwanie z menu
-                if(message13.equals("true")){
-                    userSelectedIndex=position;
-                Intent i = new Intent(Lista.this, Dodawanie.class);
-                String Message1 = String.valueOf(zm[userSelectedIndex]);
-                i.putExtra("nazwa", Message1);
-                String Massage2 = zm1[userSelectedIndex];
-                i.putExtra("skladniki", Massage2);
-                String Massage3 = zm2[userSelectedIndex];
-                i.putExtra("cena", Massage3);
-                String Message4 = String.valueOf(zm3[userSelectedIndex]);
-                i.putExtra("zdjecie", Message4);
-                i.putExtra("warunek", message13);
-                i.putExtra("kategoria", posilek);
-                startActivity(i);}
-
-                //poprawianie blendow
-                if(message13.equals("ttrue"))
-                {
-                    userSelectedIndex=position;
+                if (message13.equals("true")) {
+                    userSelectedIndex = position;
                     Intent i = new Intent(Lista.this, Dodawanie.class);
                     String Message1 = String.valueOf(zm[userSelectedIndex]);
                     i.putExtra("nazwa", Message1);
@@ -221,8 +268,25 @@ public class Lista extends ActionBarActivity {
                     i.putExtra("zdjecie", Message4);
                     i.putExtra("warunek", message13);
                     i.putExtra("kategoria", posilek);
-                    pozycja=String.valueOf(userSelectedIndex+1);
-                    i.putExtra("pozycja",pozycja);
+                    startActivity(i);
+                }
+
+                //poprawianie blendow
+                if (message13.equals("ttrue")) {
+                    userSelectedIndex = position;
+                    Intent i = new Intent(Lista.this, Dodawanie.class);
+                    String Message1 = String.valueOf(zm[userSelectedIndex]);
+                    i.putExtra("nazwa", Message1);
+                    String Massage2 = zm1[userSelectedIndex];
+                    i.putExtra("skladniki", Massage2);
+                    String Massage3 = zm2[userSelectedIndex];
+                    i.putExtra("cena", Massage3);
+                    String Message4 = String.valueOf(zm3[userSelectedIndex]);
+                    i.putExtra("zdjecie", Message4);
+                    i.putExtra("warunek", message13);
+                    i.putExtra("kategoria", posilek);
+                    pozycja = String.valueOf(userSelectedIndex + 1);
+                    i.putExtra("pozycja", pozycja);
                     startActivity(i);
                 }
                 return true;
@@ -236,7 +300,8 @@ public class Lista extends ActionBarActivity {
         menu.add(0, PIERWSZY_ELEMENT, 0, "Dodaj Przepis");
         menu.add(1, DRUGI_ELEMENT, 0, "Usun Przepis");
         menu.add(2, TRZECI_ELEMENT, 0, "Poprawianie Przepisu");
-
+        menu.add(3, CZWARTY_ELEMENT, 0, "Update Data");
+        menu.add(4, PIATY_ELEMENT, 0, "Import Data");
 
         return true;
 
@@ -266,6 +331,15 @@ public class Lista extends ActionBarActivity {
                 c.putExtra("kategoria", posilek);
                 showToast(" przytrzymaj pozycje aby ja poprawic");
 
+                break;
+            case CZWARTY_ELEMENT:
+                wczytywanie();
+                saveDataSqlLight();
+
+                break;
+            case PIATY_ELEMENT:
+                wczytywanie();
+                saveDataSqlLigtUpdate();
                 break;
 
             default:

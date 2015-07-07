@@ -46,4 +46,9 @@
         android:orderInCategory="3"
         android:title="import">
     </item>/>
+    <item
+        android:id="@+id/item10"
+        android:orderInCategory="3"
+        android:title="Reset stolikow">
+    </item>/>
 </menu>

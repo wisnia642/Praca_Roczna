@@ -1,40 +1,30 @@
 package com.example.michal.siema;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsoluteLayout;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -53,7 +43,9 @@ public class Sala_4 extends ActionBarActivity {
     int[] licz = new int[31];
     int zm;
     int zm1=15;
-    //  String stolik[] = {"img1","img2","img3","img4","img5","img6","img7","img8","img9","img10","img11","img12","img13","img14","img15"};
+
+    private static final String SAMPLE_DB_NAME = "Restalracja";
+    private static final String SAMPLE_TABLE_NAME = "Sala4";
 
     static ResultSet rs;
     static Statement st;
@@ -75,6 +67,7 @@ public class Sala_4 extends ActionBarActivity {
     public static final int SIUDMY_ELEMENT = 7;
     public static final int OSMY_ELEMENT = 8;
     public static final int DZIEWIATY_ELEMENT = 9;
+    public static final int DZIESIATY_ELEMENT = 10;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -82,50 +75,108 @@ public class Sala_4 extends ActionBarActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-    private void writeToFile() {
+    private void ToDataBase()
+    {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("config3.txt", Context.MODE_PRIVATE));
-            for(int i=0;i<=29;i=i+0) {
-                outputStreamWriter.write(String.valueOf(tab[i]) + "\n");
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
+                    SAMPLE_TABLE_NAME +
+                    " (Id INT ,Sala4 DOUBLE);");
+
+        }
+        catch (Exception e){}
+
+    }
+
+    private void ResetSqlLigt()
+    {
+        ToDataBase();
+
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            sampleDB.execSQL("DELETE FROM Sala4");
+
+            for (int i = 0; i <= 29; i = i + 0) {
+                sampleDB.execSQL("INSERT INTO Sala4 ('Id') VALUES ('"+i+"')");
                 i++;
             }
-            outputStreamWriter.write(tablica[30]+ "\n");
-            outputStreamWriter.close();
+            sampleDB.close();
+        }catch (Exception e){showToast("Blad w update");}
+    }
+
+    private void ResetMySql()
+    {
+        connect();
+
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+            String sql = "DELETE FROM Sala4";
+
+
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
+            }
         }
-        catch (IOException e) {
-            showToast("Exception" + e);
+
+        for (int i = 0; i <= 29; i = i + 0) {
+            String sql = "INSERT INTO Sala4 " + "VALUES ('"+i+"',0)";
+            i++;
+
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
+            }
+        }
+        try {
+            if (connection != null)
+                connection.close();
+        } catch (SQLException se) {
+            showToast("brak połączenia z internetem");
         }
     }
 
-
-    private String readFromFile() {
-
-        String ret = "";
+    private void writeToDataBase()
+    {
+        ToDataBase();
 
         try {
-            InputStream inputStream = openFileInput("config3.txt");
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-                int i=0;
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    tablica[i]=receiveString;
-                    i++;
-                }
+            for (int i = 0; i <= 29; i = i + 0) {
+                sampleDB.execSQL("UPDATE Stol SET Sala4=('" + tab[i] + "') WHERE Id=('" + i + "') ");
+                //sampleDB.execSQL("INSERT INTO Stol ('Id') VALUES ('"+i+"')");
 
-                inputStream.close();
+                i++;
             }
-        }
-        catch (FileNotFoundException e) {
-         //   showToast( "File not found: " + e);
-        } catch (IOException e) {
-          //  showToast("Can not read file: " + e);
-        }
+            sampleDB.close();
+        }catch (Exception e){showToast("Blad w update");}
+    }
 
-        return ret;
+    private void readFromDataBase()
+    {
+        try{
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            for (int i = 0; i <= 29; i = i + 0) {
+                Cursor c=sampleDB.rawQuery("SELECT * FROM Sala4 WHERE Id='"+i+"'",null);
+                if(c.moveToFirst())
+                {
+                    tab[i]= Double.parseDouble(c.getString(1));
+
+                }
+                i++;
+            }
+            sampleDB.close();
+            stan = true;
+        }catch (Exception a){}
     }
     //zapis danych do bazy danych
 
@@ -141,7 +192,7 @@ public class Sala_4 extends ActionBarActivity {
             }
 
             for (int i = 0; i <= 29; i = i + 0) {
-                String sql = "UPDATE TabelaN SET Sala4=(" + tab[i] + ") WHERE ID=(" + i + ")";
+                String sql = "UPDATE Sala4 SET Sala4=(" + tab[i] + ") WHERE ID=(" + i + ")";
                 i++;
 
                 try {
@@ -168,16 +219,14 @@ public class Sala_4 extends ActionBarActivity {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            showToast("" + e);
             return;
         }
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://54.215.148.52/sql374428", "sql374428", "mJ2*rN6%");
-            showToast("open");
+            connection = DriverManager.getConnection("jdbc:mysql://54.217.215.74/sql481900", "sql481900", "qF9!gX2*");
         } catch (SQLException e) {
-            showToast("" + e);
+            showToast("brak połączenia z internetem");
             return;
         }
 
@@ -195,7 +244,7 @@ public class Sala_4 extends ActionBarActivity {
             }
 
             for(int i =0; i<=29;i=i+0) {
-                String sql = "SELECT * FROM TabelaN WHERE ID=("+i+")";
+                String sql = "SELECT * FROM Sala4 WHERE ID=("+i+")";
 
 
                 try {
@@ -253,11 +302,7 @@ public class Sala_4 extends ActionBarActivity {
 
         //odczyt z bazy danych i z pliku
         try {
-            readFromFile();
-            for (int i = 0; i <= 29; i = i + 0) {
-                tab[i] = Double.valueOf(tablica[i]);
-                i++;
-            }
+            readFromDataBase();
             try {
                 Bitmap thumbnail = (BitmapFactory.decodeFile(tablica[30]));
                 // Log.w("path of image from gallery......******************.........", picturePath+"");
@@ -279,7 +324,6 @@ public class Sala_4 extends ActionBarActivity {
             } catch (Exception e) {
             }
 
-            stan = true;
 
             if (tab[0] != 0 || tab[1] != 0) {
 
@@ -378,6 +422,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_1";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[0] = 0;
                             return false;
@@ -403,6 +449,8 @@ public class Sala_4 extends ActionBarActivity {
                     case MotionEvent.ACTION_DOWN: {
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_2";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[1] = 0;
                             return false;
@@ -429,6 +477,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_3";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[2] = 0;
                             return false;
@@ -455,6 +505,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_4";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[3] = 0;
                             return false;
@@ -481,6 +533,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_5";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[4] = 0;
                             return false;
@@ -508,6 +562,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_6";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[5] = 0;
                             return false;
@@ -534,6 +590,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_7";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[6] = 0;
                             return false;
@@ -560,6 +618,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_8";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[7] = 0;
                             return false;
@@ -587,6 +647,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_9";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[8] = 0;
                             return false;
@@ -614,6 +676,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_10";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[9] = 0;
                             return false;
@@ -640,6 +704,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_11";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[10] = 0;
                             return false;
@@ -667,6 +733,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_12";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[11] = 0;
                             return false;
@@ -693,6 +761,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_13";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[12] = 0;
                             return false;
@@ -719,6 +789,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_14";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[13] = 0;
                             return false;
@@ -746,6 +818,8 @@ public class Sala_4 extends ActionBarActivity {
 
                         if (stan==true) {
                             Intent i = new Intent(Sala_4.this, Karta.class);
+                            String userMassage = "Sala_4 / Stolik_15";
+                            i.putExtra("Sala", userMassage);
                             startActivity(i);
                             licz[14] = 0;
                             return false;
@@ -1029,6 +1103,7 @@ public class Sala_4 extends ActionBarActivity {
         menu.add(6, SIUDMY_ELEMENT, 0, "Zapis");
         menu.add(7, OSMY_ELEMENT, 0, "export");
         menu.add(8, DZIEWIATY_ELEMENT, 0, "import");
+        menu.add(9, DZIESIATY_ELEMENT, 0, "Reset stolikow");
 
         return true;
     }
@@ -1108,7 +1183,7 @@ public class Sala_4 extends ActionBarActivity {
                 break;
             case SIUDMY_ELEMENT:
 
-                writeToFile();
+                writeToDataBase();
 
                 break;
             case OSMY_ELEMENT:
@@ -1117,13 +1192,14 @@ public class Sala_4 extends ActionBarActivity {
 
                 break;
             case DZIEWIATY_ELEMENT:
-
-
                 wczytywanie();
-                writeToFile();
+                writeToDataBase();
                 Intent i = new Intent(Sala_4.this,MainActivity.class);
                 startActivity(i);
-
+                break;
+            case DZIESIATY_ELEMENT:
+                ResetMySql();
+                ResetSqlLigt();
                 break;
             default:
 
