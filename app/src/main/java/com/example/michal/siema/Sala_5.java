@@ -81,7 +81,7 @@ public class Sala_5 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
                     SAMPLE_TABLE_NAME +
-                    " (Id INT ,Sala5 DOUBLE);");
+                    " (Id INT ,Sala5 DOUBLE,Zdjecie VARCHAR);");
 
         }
         catch (Exception e){}
@@ -151,7 +151,7 @@ public class Sala_5 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             for (int i = 0; i <= 29; i = i + 0) {
-                sampleDB.execSQL("UPDATE Sala5 SET Sala5=('" + tab[i] + "') WHERE Id=('" + i + "') ");
+                sampleDB.execSQL("UPDATE Sala5 SET Sala5=('" + tab[i] + "'),Zdjecie=('" + tablica[30] + "') WHERE Id=('" + i + "') ");
                 //sampleDB.execSQL("INSERT INTO Stol ('Id') VALUES ('"+i+"')");
 
                 i++;
@@ -170,6 +170,7 @@ public class Sala_5 extends ActionBarActivity {
                 if(c.moveToFirst())
                 {
                     tab[i]= Double.parseDouble(c.getString(1));
+                    tablica[30] = String.valueOf(c.getString(2));
 
                 }
                 i++;
@@ -1148,7 +1149,7 @@ public class Sala_5 extends ActionBarActivity {
                         default:{}
                     }
                     zm1=zm1+1;
-                    showToast(String.valueOf(zm1));
+
                 }
                 break;
             case SZUSTY_ELEMENT:
@@ -1173,7 +1174,7 @@ public class Sala_5 extends ActionBarActivity {
                         default:{}
                     }
                     zm1=zm1-1;
-                    showToast(String.valueOf(zm1));
+
                 }
 
 
@@ -1181,7 +1182,7 @@ public class Sala_5 extends ActionBarActivity {
             case SIUDMY_ELEMENT:
 
                 writeToDataBase();
-
+                stan=true;
                 break;
             case OSMY_ELEMENT:
 

@@ -82,7 +82,7 @@ public class Sala_2 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
                     SAMPLE_TABLE_NAME +
-                    " (Id INT ,Sala2 DOUBLE);");
+                    " (Id INT ,Sala2 DOUBLE,Zdjecie VARCHAR);");
 
         }
         catch (Exception e){}
@@ -152,7 +152,7 @@ public class Sala_2 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             for (int i = 0; i <= 29; i = i + 0) {
-                sampleDB.execSQL("UPDATE Sala2 SET Sala2=('" + tab[i] + "') WHERE Id=('" + i + "') ");
+                sampleDB.execSQL("UPDATE Sala2 SET Sala2=('" + tab[i] + "'),Zdjecie=('" + tablica[30] + "') WHERE Id=('" + i + "') ");
                 //sampleDB.execSQL("INSERT INTO Stol ('Id') VALUES ('"+i+"')");
 
                 i++;
@@ -171,6 +171,7 @@ public class Sala_2 extends ActionBarActivity {
                 if(c.moveToFirst())
                 {
                     tab[i]= Double.parseDouble(c.getString(1));
+                    tablica[30] = String.valueOf(c.getString(2));
 
                 }
                 i++;
@@ -1153,13 +1154,39 @@ public class Sala_2 extends ActionBarActivity {
                         default:{}
                     }
                     zm1=zm1+1;
-                    showToast(String.valueOf(zm1));
                 }
+                break;
+            case SZUSTY_ELEMENT:
+                if(zm1>2||zm1<15)
+                {
+                    switch (zm1)
+                    {
+                        case 2:img2.setVisibility(View.INVISIBLE);break;
+                        case 3:img3.setVisibility(View.INVISIBLE);break;
+                        case 4:img4.setVisibility(View.INVISIBLE);break;
+                        case 5:img5.setVisibility(View.INVISIBLE);break;
+                        case 6:img6.setVisibility(View.INVISIBLE);break;
+                        case 7:img7.setVisibility(View.INVISIBLE);break;
+                        case 8:img8.setVisibility(View.INVISIBLE);break;
+                        case 9:img9.setVisibility(View.INVISIBLE);break;
+                        case 10:img10.setVisibility(View.INVISIBLE);break;
+                        case 11:img11.setVisibility(View.INVISIBLE);break;
+                        case 12:img12.setVisibility(View.INVISIBLE);break;
+                        case 13:img13.setVisibility(View.INVISIBLE);break;
+                        case 14:img14.setVisibility(View.INVISIBLE);break;
+                        case 15:img15.setVisibility(View.INVISIBLE);break;
+                        default:{}
+                    }
+                    zm1=zm1-1;
+
+                }
+
+
                 break;
             case SIUDMY_ELEMENT:
 
                 writeToDataBase();
-
+                stan=true;
                 break;
             case OSMY_ELEMENT:
 

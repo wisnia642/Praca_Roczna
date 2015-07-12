@@ -149,6 +149,8 @@ public class Lista extends ActionBarActivity {
             }
         }
 
+
+
     public void readFromSqlLight()
     {
         try{

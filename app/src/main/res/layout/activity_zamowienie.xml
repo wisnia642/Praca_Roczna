@@ -29,7 +29,8 @@
         android:layout_marginLeft="106dp"
         android:layout_marginStart="106dp"
         android:layout_marginTop="57dp"
-        android:text="Klient" />
+        android:text="Klient"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,9 +48,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Dodatki"
         android:id="@+id/textView25"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/textView24"
-        android:layout_alignStart="@+id/textView24" />
+        android:layout_below="@+id/imageView3"
+        android:layout_toRightOf="@+id/textView24"
+        android:layout_toEndOf="@+id/textView24"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,18 +59,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Dodatkowe Życzenia"
         android:id="@+id/textView26"
-        android:layout_marginTop="147dp"
+        android:layout_marginTop="66dp"
         android:layout_below="@+id/textView25"
         android:layout_alignLeft="@+id/textView25"
-        android:layout_alignStart="@+id/textView25" />
-
-    <EditText
-        android:layout_width="400dp"
-        android:layout_height="100dp"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/textView24"
-        android:layout_alignLeft="@+id/textView22"
-        android:layout_alignStart="@+id/textView22" />
+        android:layout_alignStart="@+id/textView25"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,15 +73,17 @@
         android:id="@+id/textView27"
         android:layout_alignBottom="@+id/textView23"
         android:layout_alignLeft="@+id/textView22"
-        android:layout_alignStart="@+id/textView22" />
+        android:layout_alignStart="@+id/textView22"
+        android:textSize="25dp" />
 
     <EditText
         android:layout_width="400dp"
         android:layout_height="100dp"
         android:id="@+id/editText"
         android:layout_alignTop="@+id/textView26"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2" />
+        android:layout_alignLeft="@+id/textView22"
+        android:layout_alignStart="@+id/textView22"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,7 +93,8 @@
         android:text="Ilość"
         android:layout_alignLeft="@+id/textView24"
         android:layout_alignStart="@+id/textView24"
-        android:layout_alignBottom="@+id/textView24" />
+        android:layout_alignBottom="@+id/textView24"
+        android:textSize="25dp" />
 
     <ImageView
         android:layout_width="250dp"
@@ -108,13 +106,15 @@
 
     <EditText
         android:layout_width="400dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/editText3"
         android:layout_alignBottom="@+id/textView28"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2" />
+        android:layout_alignLeft="@+id/textView22"
+        android:layout_alignStart="@+id/textView22"
+        android:text="0"
+        android:textSize="25dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -144,9 +144,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Suma:"
         android:id="@+id/textView29"
-        android:layout_below="@+id/editText2"
         android:layout_alignLeft="@+id/imageView3"
-        android:layout_alignStart="@+id/imageView3" />
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_below="@+id/imageView3"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -156,6 +157,37 @@
         android:id="@+id/textView30"
         android:layout_alignTop="@+id/textView29"
         android:layout_toRightOf="@+id/button17"
-        android:layout_toEndOf="@+id/button17" />
+        android:layout_toEndOf="@+id/button17"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nazwa"
+        android:id="@+id/textView31"
+        android:layout_alignBottom="@+id/editText4"
+        android:layout_alignLeft="@+id/textView23"
+        android:layout_alignStart="@+id/textView23"
+        android:textSize="25dp" />
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:id="@+id/editText4"
+        android:layout_above="@+id/editText3"
+        android:layout_alignLeft="@+id/editText3"
+        android:layout_alignStart="@+id/editText3"
+        android:layout_marginBottom="50dp"
+        android:textSize="25dp" />
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:id="@+id/editText2"
+        android:layout_above="@+id/textView26"
+        android:layout_alignLeft="@+id/editText3"
+        android:layout_alignStart="@+id/editText3"
+        android:textSize="25dp" />
 
 </RelativeLayout>

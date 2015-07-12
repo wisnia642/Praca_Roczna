@@ -30,8 +30,9 @@ import java.sql.Statement;
 public class Zamowienie extends ActionBarActivity {
 
     Bundle applesData;
-    String sala,cena,zdjecie,ilosc,dodatki,dodatkowe_zyczenia,sql,nazwa;
-    Double wartosc,suma;
+    String sala,cena,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc;
+    Double wartosc=0.0;
+    Double suma=0.0;
 
     Connection connection = null;
     int baza=0;
@@ -79,6 +80,7 @@ public class Zamowienie extends ActionBarActivity {
             }
                 sql = "INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma) VALUES (?,?,?,?,?,?,?) ";
 
+
                 try {
                     connection.setAutoCommit(false);
                     File file =new File(zdjecie);
@@ -120,23 +122,35 @@ public class Zamowienie extends ActionBarActivity {
                 if (connection != null)
                     connection.close();
             } catch (SQLException se) {
-                showToast("brak po³¹czenia z internetem");
+                showToast("brak po³aczenia z internetem");
             }
+    }
+
+    private void ToDataBase()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+           sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc VARCHAR,Dodatki VARCHAR," +
+                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma INT);");
+
+        }
+        catch (Exception e){}
+
     }
 
     public void ZapisSqlLight()
     {
+             ToDataBase();
+
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc INT,Dodatki VARCHAR," +
-                    "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE);");
-
-            sampleDB.execSQL("INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia," +
-                    "Zdjecie,Suma) VALUES ('"+sala+"','"+nazwa+"','"+ilosc+"','"+dodatki+"','"+dodatkowe_zyczenia+"','"+zdjecie+"',"+suma+"') ");
+            suma=0.0;
+            sampleDB.execSQL("INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma) VALUES ('"+sala+"','"+nazwa+"','"+ilosc+"','"+dodatki+"','"+dodatkowe_zyczenia+"','"+zdjecie+"','"+suma+"') ");
 
             sampleDB.close();
-        }catch (Exception e){showToast("Blad w sqlLight");}
+
+        }catch (Exception e)
+        {showToast(e+"");}
     }
 
     @Override
@@ -145,13 +159,15 @@ public class Zamowienie extends ActionBarActivity {
         setContentView(R.layout.activity_zamowienie);
 
         TextView Klient =(TextView) findViewById(R.id.textView27);
-        EditText Ilosc =(EditText) findViewById(R.id.editText3);
-        EditText Dodatki =(EditText) findViewById(R.id.editText2);
-        EditText Dodatkowe_Zyczenia = (EditText) findViewById(R.id.editText);
-        TextView Suma = (TextView) findViewById(R.id.textView30);
+        final EditText Ilosc =(EditText) findViewById(R.id.editText3);
+        final EditText Dodatki =(EditText) findViewById(R.id.editText2);
+        final EditText Dodatkowe_Zyczenia = (EditText) findViewById(R.id.editText);
+        final TextView Suma = (TextView) findViewById(R.id.textView30);
         ImageView Zdjecie = (ImageView) findViewById(R.id.imageView3);
         Button dodawanie = (Button) findViewById(R.id.button17);
         Button anulacja = (Button) findViewById(R.id.button);
+        EditText Nazwa = (EditText) findViewById(R.id.editText4);
+        TextView Kasa = (TextView) findViewById(R.id.textView29);
 
         applesData = getIntent().getExtras();
         sala = applesData.getString("Sala");
@@ -165,33 +181,51 @@ public class Zamowienie extends ActionBarActivity {
         Zdjecie.setImageBitmap(bmImg);
         if(bmImg==null&zdjecie!=null)
         {
-            Zdjecie.setImageDrawable(Zdjecie.getResources().getDrawable(R.drawable.brak));
+           Zdjecie.setImageDrawable(Zdjecie.getResources().getDrawable(R.drawable.brak));
 
         }
-        ilosc = Ilosc.getText().toString();
-        if(ilosc!=null)
-        {
-            suma = Double.parseDouble(ilosc);
-            wartosc = Double.parseDouble(cena);
-            suma=suma*wartosc;
-        }
-        Suma.setText(String.valueOf(suma));
-        dodatki = Dodatki.getText().toString();
-        dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
+        Nazwa.setText(nazwa);
+        Suma.setText(cena);
 
-        //dodanie zamowienia do stolika
-        dodawanie.setOnClickListener(new View.OnClickListener() {
+
+        Kasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Zamowienie.this,MainActivity.class);
-                startActivity(i);
+                try {
+                    ilosc = Ilosc.getText().toString();
+
+                    if(ilosc!="0")
+
+                        suma = Double.parseDouble(ilosc);
+                    wartosc = Double.parseDouble(cena);
+                    suma = suma * wartosc;
+                    cena = String.valueOf(suma);
+                    Suma.setText(String.valueOf(cena));
+                }
+                catch(Exception e)
+                {}
             }
         });
+
+
+
+                //dodanie zamowienia do stolika
+                dodawanie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dodatki = Dodatki.getText().toString();
+                        dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
+                        ZapisSqlLight();
+                        ZapisMySql();
+                        Intent i = new Intent(Zamowienie.this, MainActivity.class);
+                        startActivity(i);
+                    }
+                });
 
         anulacja.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Zamowienie.this,MainActivity.class);
+                Intent i = new Intent(Zamowienie.this, MainActivity.class);
                 startActivity(i);
             }
         });
