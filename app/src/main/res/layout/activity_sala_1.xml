@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -23,7 +23,9 @@
             android:layout_y="29dp"
             android:background="@drawable/stolik"
             android:textSize="80dp"
-/>
+            android:maxLines="1"
+            android:elegantTextHeight="false"
+            android:editable="false" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,6 +37,7 @@
             android:layout_y="29dp"
             android:background="@drawable/stolik"
             android:textSize="80dp"
+            android:maxLines="1"
 />
 
         <TextView
@@ -47,6 +50,7 @@
             android:layout_y="29dp"
             android:background="@drawable/stolik"
             android:textSize="80dp"
+            android:maxLines="1"
 />
 
         <TextView
@@ -179,6 +183,7 @@
             android:layout_y="29dp"
             android:background="@drawable/stolik"
             android:textSize="80dp"
+
 />
 
         <TextView
@@ -192,7 +197,9 @@
             android:background="@drawable/stolik"
             android:textSize="80dp"
 
+
 />
 
+
     </AbsoluteLayout>
-</RelativeLayout>
+</FrameLayout>

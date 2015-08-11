@@ -29,10 +29,6 @@ import java.sql.Statement;
 public class Lista extends ActionBarActivity {
 
     ListView list;
-    String[] pi=null;
-    String[] pi2 =null;
-    String[] pi3 =null;
-    String[] pi4=null;
     int userSelectedIndex;
 
     public static final int PIERWSZY_ELEMENT = 1;
@@ -226,12 +222,7 @@ public class Lista extends ActionBarActivity {
 
         readFromSqlLight();
 
-            pi=zm;
-            pi2=zm1;
-            pi3=zm2;
-            pi4=zm3;
-
-            customAdapter adapter=new customAdapter(this, pi,pi2,pi3,pi4);
+            customAdapter adapter=new customAdapter(this, zm,zm1,zm2,zm3);
             list=(ListView)findViewById(R.id.listView3);
             list.setAdapter(adapter);
 
@@ -240,15 +231,21 @@ public class Lista extends ActionBarActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             //przejscie do zamowienia
-                            Intent i = new Intent(Lista.this, Zamowienie.class);
-                            String Message1 = zm[userSelectedIndex];
-                            i.putExtra("nazwa",Message1);
-                            String Massage3 = zm2[userSelectedIndex];
-                            i.putExtra("cena", Massage3);
-                            String Message4 = String.valueOf(zm3[userSelectedIndex]);
-                            i.putExtra("zdjecie", Message4);
-                            i.putExtra("Sala", Sala);
-                            startActivity(i);
+                            //jeżeli nazwa jest pusta to nie wyswietlaj pozycji
+                                userSelectedIndex = position;
+                            if (zm[userSelectedIndex] != null) {
+                                Intent i = new Intent(Lista.this, Zamowienie.class);
+                                String Message1 = zm[userSelectedIndex];
+                                i.putExtra("nazwa", Message1);
+                                String Massage3 = zm2[userSelectedIndex];
+                                i.putExtra("cena", Massage3);
+                                String Message4 = String.valueOf(zm3[userSelectedIndex]);
+                                i.putExtra("zdjecie", Message4);
+                                i.putExtra("Sala", Sala);
+
+
+                                startActivity(i);
+                            }
                         }
 
                     });
@@ -256,6 +253,7 @@ public class Lista extends ActionBarActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                showToast(zm[userSelectedIndex]);
                 //usuwanie z menu
                 if (message13.equals("true")) {
                     userSelectedIndex = position;

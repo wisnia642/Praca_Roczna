@@ -78,12 +78,12 @@
 
     <EditText
         android:layout_width="400dp"
-        android:layout_height="100dp"
+        android:layout_height="55dp"
         android:id="@+id/editText"
-        android:layout_alignTop="@+id/textView26"
-        android:layout_alignLeft="@+id/textView22"
-        android:layout_alignStart="@+id/textView22"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:layout_alignBottom="@+id/textView26"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignStart="@+id/editText2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -113,7 +113,6 @@
         android:layout_alignBottom="@+id/textView28"
         android:layout_alignLeft="@+id/textView22"
         android:layout_alignStart="@+id/textView22"
-        android:text="0"
         android:textSize="25dp" />
 
     <Button
@@ -179,7 +178,10 @@
         android:layout_alignLeft="@+id/editText3"
         android:layout_alignStart="@+id/editText3"
         android:layout_marginBottom="50dp"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:layout_toLeftOf="@+id/textView27"
+        android:layout_toStartOf="@+id/textView27"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="400dp"
@@ -189,5 +191,16 @@
         android:layout_alignLeft="@+id/editText3"
         android:layout_alignStart="@+id/editText3"
         android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView32"
+        android:textSize="25dp"
+        android:layout_alignTop="@+id/textView31"
+        android:layout_toRightOf="@+id/editText4"
+        android:layout_toEndOf="@+id/editText4" />
 
 </RelativeLayout>

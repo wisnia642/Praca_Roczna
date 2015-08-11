@@ -68,6 +68,7 @@ public class Sala_1 extends ActionBarActivity {
     public static final int OSMY_ELEMENT = 8;
     public static final int DZIEWIATY_ELEMENT = 9;
     public static final int DZIESIATY_ELEMENT = 10;
+    public static final int JEDYNASTY_ELEMENT = 11;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -81,7 +82,7 @@ public class Sala_1 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
                     SAMPLE_TABLE_NAME +
-                    " (Id INT ,Sala1 DOUBLE,Zdjecie VARCHAR);");
+                    " (Id INT ,Sala1 DOUBLE,Zdjecie VARCHAR,Stan INT);");
 
         }
         catch (Exception e){}
@@ -150,7 +151,7 @@ public class Sala_1 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             for (int i = 0; i <= 29; i = i + 0) {
-                sampleDB.execSQL("UPDATE Sala1 SET Sala1=('" + tab[i] + "'),Zdjecie=('" + tablica[30] + "') WHERE Id=('" + i + "') ");
+                sampleDB.execSQL("UPDATE Sala1 SET Sala1=('" + tab[i] + "'),Zdjecie=('" + tablica[30] + "'),Stan=('" + zm1 + "') WHERE Id=('" + i + "') ");
                //sampleDB.execSQL("INSERT INTO Stol ('Id') VALUES ('"+i+"')");
 
                 i++;
@@ -170,6 +171,7 @@ public class Sala_1 extends ActionBarActivity {
             {
                 tab[i]= Double.parseDouble(c.getString(1));
                 tablica[30] = String.valueOf(c.getString(2));
+                zm1 = Integer.parseInt(c.getString(3));
 
             }
             i++;
@@ -345,7 +347,6 @@ public class Sala_1 extends ActionBarActivity {
          img14 = (TextView) findViewById(R.id.textView14);
          img15 = (TextView) findViewById(R.id.textView15);
 
-
         //odczyt z bazy danych i z pliku
         try {
            readFromDataBase();
@@ -381,80 +382,81 @@ public class Sala_1 extends ActionBarActivity {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[2], (int) tab[3]);
             img2.setLayoutParams(lp);
-        }
+
+         if(zm1<2){img2.setVisibility(View.INVISIBLE);}}
 
         if (tab[4] != 0 & tab[5] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[4], (int) tab[5]);
             img3.setLayoutParams(lp);
-        }
+         if(zm1<3){img3.setVisibility(View.INVISIBLE);}}
 
         if (tab[6] != 0 & tab[7] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[6], (int) tab[7]);
             img4.setLayoutParams(lp);
-        }
+         if(zm1<4){img4.setVisibility(View.INVISIBLE);}}
         if (tab[8] != 0 || tab[9] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[8], (int) tab[9]);
             img5.setLayoutParams(lp);
-        }
+         if(zm1<5){img5.setVisibility(View.INVISIBLE);}}
 
         if (tab[10] != 0 & tab[11] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[10], (int) tab[11]);
             img6.setLayoutParams(lp);
-        }
+         if(zm1<6) {img6.setVisibility(View.INVISIBLE);}}
 
         if (tab[12] != 0 & tab[13] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[12], (int) tab[13]);
             img7.setLayoutParams(lp);
-        }
+         if(zm1<7) {img7.setVisibility(View.INVISIBLE);}}
 
         if (tab[14] != 0 & tab[15] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[14], (int) tab[15]);
             img8.setLayoutParams(lp);
-        }
+         if(zm1<8) {img8.setVisibility(View.INVISIBLE);}}
         if (tab[16] != 0 || tab[17] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[16], (int) tab[17]);
             img9.setLayoutParams(lp);
-        }
+         if(zm1<9) {img9.setVisibility(View.INVISIBLE);}}
 
         if (tab[18] != 0 & tab[19] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[18], (int) tab[19]);
             img10.setLayoutParams(lp);
-        }
+         if(zm1<10) {img10.setVisibility(View.INVISIBLE);}}
 
         if (tab[20] != 0 & tab[21] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[20], (int) tab[21]);
             img11.setLayoutParams(lp);
-        }
+        if(zm1<11) {img11.setVisibility(View.INVISIBLE);}}
 
         if (tab[22] != 0 & tab[23] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[22], (int) tab[23]);
             img12.setLayoutParams(lp);
-        }
+        if(zm1<12) {img12.setVisibility(View.INVISIBLE);}}
         if (tab[24] != 0 & tab[25] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[24], (int) tab[25]);
             img13.setLayoutParams(lp);
-        }
+         if(zm1<13) {img13.setVisibility(View.INVISIBLE);}}
         if (tab[26] != 0 & tab[27] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[26], (int) tab[27]);
             img14.setLayoutParams(lp);
-        }
+         if(zm1<14){img14.setVisibility(View.INVISIBLE);}}
         if (tab[28] != 0 & tab[29] != 0) {
 
             AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[28], (int) tab[29]);
             img15.setLayoutParams(lp);
-        }
+         if(zm1<15){img15.setVisibility(View.INVISIBLE);}}
         }catch (Exception e){}
 
 
@@ -916,6 +918,7 @@ public class Sala_1 extends ActionBarActivity {
                             tab[2] = (double) (event.getX() - img2.getWidth() / 2);
                             tab[3] = (double) (event.getY() - img2.getHeight() / 2);
 
+
                         }
                         break;
                         case 3: {
@@ -942,7 +945,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[8] = (double) (event.getX() - img5.getWidth() / 2);
                             tab[9] = (double) (event.getY() - img5.getHeight() / 2);
-
                         }
                         break;
                         case 6: {
@@ -960,7 +962,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[12] = (double) (event.getX() - img7.getWidth() / 2);
                             tab[13] = (double) (event.getY() - img7.getHeight() / 2);
-
                         }
                         break;
                         case 8: {
@@ -969,7 +970,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[14] = (double) (event.getX() - img8.getWidth() / 2);
                             tab[15] = (double) (event.getY() - img8.getHeight() / 2);
-
                         }
                         break;
                         case 9: {
@@ -978,7 +978,7 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[16] = (double) (event.getX() - img9.getWidth() / 2);
                             tab[17] = (double) (event.getY() - img9.getHeight() / 2);
-
+                            img10.setVisibility(View.VISIBLE);
                         }
                         break;
                         case 10: {
@@ -987,7 +987,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[18] = (double) (event.getX() - img10.getWidth() / 2);
                             tab[19] = (double) (event.getY() - img10.getHeight() / 2);
-
                         }
                         break;
                         case 11: {
@@ -997,7 +996,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[20] = (double) (event.getX() - img11.getWidth() / 2);
                             tab[21] = (double) (event.getY() - img11.getHeight() / 2);
-
                         }
                         break;
                         case 12: {
@@ -1007,8 +1005,6 @@ public class Sala_1 extends ActionBarActivity {
                             tab[22] = (double) (event.getX() - img12.getWidth() / 2);
                             tab[23] = (double) (event.getY() - img12.getHeight() / 2);
 
-
-
                         }
                         break;
                         case 13: {
@@ -1017,7 +1013,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[24] = (double) (event.getX() - img13.getWidth() / 2);
                             tab[25] = (double) (event.getY() - img13.getHeight() / 2);
-
                         }
                         break;
                         case 14: {
@@ -1026,7 +1021,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[26] = (double) (event.getX() - img14.getWidth() / 2);
                             tab[27] = (double) (event.getY() - img14.getHeight() / 2);
-
                         }
                         break;
                         case 15: {
@@ -1132,6 +1126,7 @@ public class Sala_1 extends ActionBarActivity {
             menu.add(7, OSMY_ELEMENT, 0, "export");
             menu.add(8, DZIEWIATY_ELEMENT, 0, "import");
             menu.add(9, DZIESIATY_ELEMENT, 0, "Reset stolikow");
+            menu.add(10, JEDYNASTY_ELEMENT, 0, "Powrót");
 
             return true;
         }
@@ -1229,6 +1224,9 @@ public class Sala_1 extends ActionBarActivity {
                         ResetSqlLigt();
                         stan=false;
                     break;
+                case JEDYNASTY_ELEMENT:
+                    Intent w= new Intent(Sala_1.this,MainActivity.class);
+                    startActivity(w);
                 default:
 
 

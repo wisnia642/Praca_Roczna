@@ -33,6 +33,7 @@ public class Karta extends ActionBarActivity {
     String[] zdjecie = new String[17];
     int wiadomosc = 0;
     int stan = 0;
+
     private static final int CAMERA_PIC_REQUEST = 1111;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
@@ -81,6 +82,7 @@ public class Karta extends ActionBarActivity {
 
 
     private void readsqlLight() {
+        ToDataBase();
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
@@ -97,26 +99,132 @@ public class Karta extends ActionBarActivity {
         }
     }
 
-    public void menu()
-    {
-        switch (wiadomosc){
-            case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+    private void zdjecie1() {
+        //wyswietlanie zdjec na poczatku programu
 
-            case 2:
-                intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 2);break;
-
-            case 3:
-                buton1.setBackgroundResource(R.drawable.brak);
-                zdjecie[stan]= "brak";
-                savesqlLight(); break;
-
-            case 4:
-                zdjecie[stan]="";
-                savesqlLight(); break;
-            default:
+        if (zdjecie[0].equals("brak")) {
+            buton1.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[0]));
+            buton1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
         }
+    }
+    private void zdjecie2() {
+        if (zdjecie[1].equals("brak")) {
+            buton2.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[1]));
+            buton2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private void zdjecie3() {
+        if (zdjecie[2].equals("brak")) {
+            buton3.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[2]));
+            buton3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private void zdjecie4() {
+        if (zdjecie[3].equals("brak")) {
+            buton4.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[3]));
+            buton4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private void zdjecie5() {
+        if (zdjecie[4].equals("brak")) {
+            buton5.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[4]));
+            buton5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private void zdjecie6() {
+            if(zdjecie[5].equals("brak")){
+                buton6.setBackgroundResource(R.drawable.brak);
+            } else{
+                thumbnail = (BitmapFactory.decodeFile(zdjecie[5]));
+                buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
+
+    }
+    private  void zdjecie7()
+    {
+        if(zdjecie[6].equals("brak")){buton7.setBackgroundResource(R.drawable.brak);}
+        else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[6]));
+            buton7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie8() {
+        if (zdjecie[7].equals("brak")) {
+            buton8.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[7]));
+            buton8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie9() {
+        if (zdjecie[8].equals("brak")) {
+            buton9.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[8]));
+            buton9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie10() {
+        if (zdjecie[9].equals("brak")) {
+            buton10.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[9]));
+            buton10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie11(){
+        if(zdjecie[10].equals("brak")) {buton11.setBackgroundResource(R.drawable.brak);}
+        else {
+        thumbnail = (BitmapFactory.decodeFile(zdjecie[10]));
+            buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
+    }
+    private  void zdjecie12() {
+        if (zdjecie[11].equals("brak")) {
+            buton12.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[11]));
+            buton12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie13() {
+        if (zdjecie[12].equals("brak")) {
+            buton13.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[12]));
+            buton13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie14() {
+        if (zdjecie[13].equals("brak")) {
+            buton14.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[13]));
+            buton14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie15() {
+        if (zdjecie[14].equals("brak")) {
+            buton15.setBackgroundResource(R.drawable.brak);
+        } else {
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[14]));
+            buton15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+        }
+    }
+    private  void zdjecie16(){
+        if(zdjecie[15].equals("brak")) {buton16.setBackgroundResource(R.drawable.brak);}
+        else {
+        thumbnail = (BitmapFactory.decodeFile(zdjecie[15]));
+            buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
+
     }
 
 
@@ -146,92 +254,25 @@ public class Karta extends ActionBarActivity {
         buton16 = (Button) findViewById(R.id.soki);
 
         //odczyt z bazy danych i z pliku
-            readsqlLight();
-            try {
-                if(zdjecie[0].equals("brak")) {buton1.setBackgroundResource(R.drawable.brak);}
-                else {
-                     thumbnail = (BitmapFactory.decodeFile(zdjecie[0]));
-                    buton1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                }
-
-                if(zdjecie[1].equals("brak")){buton2.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[1]));
-                buton2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[2].equals("brak")){buton3.setBackgroundResource(R.drawable.brak);}
-                else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[2]));
-                buton3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[3].equals("brak")){buton4.setBackgroundResource(R.drawable.brak);}
-                else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[3]));
-                buton4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[4].equals("brak")){buton5.setBackgroundResource(R.drawable.brak);}
-                else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[4]));
-                buton5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[5].equals("brak")){buton6.setBackgroundResource(R.drawable.brak);}
-                else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[5]));
-                buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[6].equals("brak")){buton7.setBackgroundResource(R.drawable.brak);}
-                else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[6]));
-                buton7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[7]=="brak"){buton8.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[7]));
-                buton8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[8]=="brak"){buton9.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[8]));
-                buton9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[9]=="brak"){buton10.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[9]));
-                buton10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[10]=="brak"){buton11.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[10]));
-                buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[11]=="brak"){buton12.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[11]));
-                buton12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[12]=="brak"){buton13.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[12]));
-                buton13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[13]=="brak"){buton14.setBackgroundResource(R.drawable.brak);}
-                else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[13]));
-                buton14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[14]=="brak"){buton15.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[14]));
-                buton15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
-
-                if(zdjecie[15]=="brak"){buton16.setBackgroundResource(R.drawable.brak);}
-                else {
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[15]));
-                buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
+        try{readsqlLight();}catch (Exception e){}
+        try{zdjecie1();}catch (Exception e){}
+        try{zdjecie2();}catch (Exception e){}
+        try{zdjecie3();}catch (Exception e){}
+        try{zdjecie4();}catch (Exception e){}
+        try{zdjecie5();}catch (Exception e){}
+        try{zdjecie6();}catch (Exception e){}
+        try{zdjecie7();}catch (Exception e){}
+        try{zdjecie8();}catch (Exception e){}
+        try{zdjecie9();}catch (Exception e){}
+        try{zdjecie10();}catch (Exception e){}
+        try{zdjecie11();}catch (Exception e){}
+        try{zdjecie12();}catch (Exception e){}
+        try{zdjecie13();}catch (Exception e){}
+        try{zdjecie14();}catch (Exception e){}
+        try{zdjecie15();}catch (Exception e){}
+        try{zdjecie16();}catch (Exception e){}
 
 
-            } catch (Exception e) {
-            }
 
             buton1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -415,7 +456,25 @@ public class Karta extends ActionBarActivity {
                 public boolean onLongClick(View v) {
                     userMassage = "Makarony";
                     stan = 0;
-                    menu();
+                    switch (wiadomosc){
+                        case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                        case 2:
+                            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, 2);break;
+
+                        case 3:
+                            buton1.setBackgroundResource(R.drawable.brak);
+                            zdjecie[stan]= "brak";
+                            savesqlLight(); break;
+
+                        case 4:
+                            buton1.setBackgroundResource(R.drawable.makarony);
+                            zdjecie[stan]="";
+                            savesqlLight(); break;
+                        default:
+                    }
                     return true;
                 }
             });
@@ -424,7 +483,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                     userMassage = "Przystawki";
                     stan = 1;
-                   menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton2.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton2.setBackgroundResource(R.drawable.salatki);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -434,7 +511,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                     userMassage = "Ryba";
                     stan = 2;
-               menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton3.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton3.setBackgroundResource(R.drawable.ryba);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -444,7 +539,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Salatki";
                 stan=3;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton4.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton4.setBackgroundResource(R.drawable.sal);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -454,7 +567,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Fast_Food";
                 stan=4;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton5.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton5.setBackgroundResource(R.drawable.fast);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -464,7 +595,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Pizza";
                 stan=5;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton6.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton6.setBackgroundResource(R.drawable.pizza);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -474,7 +623,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Zupy";
                 stan=6;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton7.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton7.setBackgroundResource(R.drawable.zupy);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -484,7 +651,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Suszi";
                 stan=7;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton8.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton8.setBackgroundResource(R.drawable.suszi);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -494,7 +679,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Wina";
                 stan=8;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton9.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton9.setBackgroundResource(R.drawable.wina);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -504,7 +707,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Piwo";
                 stan=9;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton10.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton10.setBackgroundResource(R.drawable.piwo);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -514,7 +735,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Desery";
                 stan=10;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton11.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton11.setBackgroundResource(R.drawable.desery);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -524,7 +763,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Dodatki";
                 stan=11;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton12.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton12.setBackgroundResource(R.drawable.dodatki);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -534,7 +791,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Napoje_Gazowane";
                 stan=12;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton13.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton13.setBackgroundResource(R.drawable.gazowane);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -544,7 +819,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Napoje_Zimne";
                 stan=13;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton14.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton14.setBackgroundResource(R.drawable.zimne);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -553,7 +846,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Napoje_Gorace";
                 stan=14;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton15.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton15.setBackgroundResource(R.drawable.kawa);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -562,7 +873,25 @@ public class Karta extends ActionBarActivity {
             public boolean onLongClick(View v) {
                 userMassage = "Soki";
                 stan=15;
-                menu();
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
+
+                    case 3:
+                        buton16.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
+
+                    case 4:
+                        buton16.setBackgroundResource(R.drawable.soki);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
+                }
                 return true;
             }
         });
@@ -718,7 +1047,7 @@ public class Karta extends ActionBarActivity {
             @Override
             public boolean onCreateOptionsMenu (Menu menu){
                 menu.add(0, PIERWSZY_ELEMENT, 0, "Zrob Zdjecie");
-                menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjêcie");
+                menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjecie");
                 menu.add(2, TRZECI_ELEMENT, 0, "Brak Zdjecia");
                 menu.add(3, CZWARTY_ELEMENT, 0, "Reset Zdjecia");
                 return true;
