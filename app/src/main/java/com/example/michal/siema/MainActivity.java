@@ -40,9 +40,10 @@ public class MainActivity extends ActionBarActivity {
     String[] Zdjecie = new String[20];
     Double[] Suma = new Double[20];
     String zm=null;
-    Double zm1 =null;
+    Double zm1,zm2;
     int Numer;
-    int x,w,c;
+    int x,w,c,a,q;
+
 
     customAdapter1 adapter1;
 
@@ -110,8 +111,8 @@ public class MainActivity extends ActionBarActivity {
         customAdapter2 adapter2=new customAdapter2(this, klient);
         lista1.setAdapter(adapter2);
     }
-    //TODO MAmy tutaj problem ziom :) - ju¿ nie !!!
-    //anulacja ca³ego zamówienia
+    //TODO MAmy tutaj problem ziom :) - juz nie !!!
+    //anulacja calego zamowienia
     public void anulacja_sqlLight_SQL()
     {
         try{
@@ -143,21 +144,31 @@ public class MainActivity extends ActionBarActivity {
             if (connection != null)
                 connection.close();
         } catch (SQLException se) {
-            showToast("brak po³¹czenia z internetem");
+            showToast("brak poÅ‚Ä…czenia z internetem");
         }
         showToast(Klient[Numer]);
     }
     //odczyt zamowienia
     public void SqlLight()
     {
-
-        int q=0; zm1=null;
+        for(int i=0;i<q;i=i+0)
+        {
+            danie[i]=null;
+            ilosc[i]=null;
+            zdj[i]=null;
+            i++;
+        }
+       // a=q;
+        q=0;
+        zm1=0.0;
+        zm2=0.0;
         for(int i = 0; i < x; i=i+0){
             if(klient[Numer].equals(Klient[i])){
                 danie[q]=Danie[i];
                 ilosc[q]=Ilosc[i];
                 zdj[q]=Zdjecie[i];
-              //  zm1=zm1+Suma[i]; //Suma ma byæ double i tyle :) Dobranoc
+                zm2=zm1;
+                zm1=zm2+Suma[i]; //Suma ma byÄ‡ double i tyle :) Dobranoc
                 q=q+1;
             }
             i++;
@@ -167,6 +178,8 @@ public class MainActivity extends ActionBarActivity {
         lista.setAdapter(adapter1);
         Txt.setText("Nazwa: "+ Klient[Numer]);
         Txt1.setText("Suma: " + String.valueOf(zm1));
+
+
 
     }
 
@@ -459,8 +472,8 @@ public class MainActivity extends ActionBarActivity {
         rabat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                zm1 = (zm1 * 20) / 100;
-                Txt1.setText("Suma: " + String.valueOf(zm1));
+                zm2 = zm1-((zm1 * 20) / 100);
+                Txt1.setText("Suma + rabat: " + String.valueOf(zm2));
             }
         });
 
@@ -484,9 +497,11 @@ public class MainActivity extends ActionBarActivity {
         lista1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Numer=position;
-               // lista.setAdapter(null);
-                SqlLight();
+                try {
+                    Numer = position;
+                    // lista.setAdapter(null);
+                    SqlLight();
+                }catch (Exception e){}
 
             }
 

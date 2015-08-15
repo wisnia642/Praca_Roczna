@@ -165,7 +165,6 @@ public class Lista extends ActionBarActivity {
                     zm2[j]= c.getString(3);
                     j++;
                 }
-            showToast(zm3[1]);
             sampleDB.close();
         }catch (Exception a){}
     }
@@ -253,7 +252,6 @@ public class Lista extends ActionBarActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                showToast(zm[userSelectedIndex]);
                 //usuwanie z menu
                 if (message13.equals("true")) {
                     userSelectedIndex = position;

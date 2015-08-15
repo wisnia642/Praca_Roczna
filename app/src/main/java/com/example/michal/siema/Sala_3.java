@@ -175,9 +175,12 @@ public class Sala_3 extends ActionBarActivity {
                 }
                 i++;
             }
+
             sampleDB.close();
             stan = true;
         }catch (Exception a){}
+
+
     }
     //zapis danych do bazy danych
 
