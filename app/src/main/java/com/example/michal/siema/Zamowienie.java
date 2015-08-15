@@ -1,18 +1,25 @@
 package com.example.michal.siema;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,18 +34,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class Zamowienie extends ActionBarActivity {
+public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
     Bundle applesData;
-    String sala,cena,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc;
+    String sala,cena,cena1,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc;
     Double wartosc=0.0;
     Double suma=0.0;
 
+    String tab[] = new String[20];
     Connection connection = null;
-    int baza=0;
+    int i =0;
     Statement st;
     PreparedStatement ps;
     FileInputStream fis = null;
+
+    Spinner spinnerOsversions;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
 
@@ -96,7 +106,7 @@ public class Zamowienie extends ActionBarActivity {
                     ps.setString(4,dodatki);
                     ps.setString(5,dodatkowe_zyczenia);
                     ps.setBinaryStream(6, fis, (int) file.length());
-                    ps.setString(7, String.valueOf(suma));
+                    ps.setString(7, cena1);
                     ps.executeUpdate();
                     connection.commit();
 
@@ -122,7 +132,7 @@ public class Zamowienie extends ActionBarActivity {
                 if (connection != null)
                     connection.close();
             } catch (SQLException se) {
-                showToast("brak po³aczenia z internetem");
+                showToast("brak polaczenia z internetem");
             }
     }
 
@@ -131,11 +141,32 @@ public class Zamowienie extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc VARCHAR,Dodatki VARCHAR," +
-                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma INT);");
+                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE);");
 
         }
         catch (Exception e){}
 
+    }
+
+    private void readFromDataBase()
+    {
+        try{
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+
+                Cursor c=sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
+                  while (c.moveToNext())
+                {
+                    if(tab[i]!="") {
+                        tab[i] = String.valueOf(c.getString(0));
+
+                    }
+                    i++;
+
+                }
+            sampleDB.close();
+
+        }catch (Exception a){}
     }
 
     public void ZapisSqlLight()
@@ -145,7 +176,7 @@ public class Zamowienie extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             suma=0.0;
-            sampleDB.execSQL("INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma) VALUES ('"+sala+"','"+nazwa+"','"+ilosc+"','"+dodatki+"','"+dodatkowe_zyczenia+"','"+zdjecie+"','"+suma+"') ");
+            sampleDB.execSQL("INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma) VALUES ('"+sala+"','"+nazwa+"','"+ilosc+"','"+dodatki+"','"+dodatkowe_zyczenia+"','"+zdjecie+"','"+cena1+"') ");
 
             sampleDB.close();
 
@@ -166,7 +197,7 @@ public class Zamowienie extends ActionBarActivity {
         ImageView Zdjecie = (ImageView) findViewById(R.id.imageView3);
         Button dodawanie = (Button) findViewById(R.id.button17);
         Button anulacja = (Button) findViewById(R.id.button);
-        EditText Nazwa = (EditText) findViewById(R.id.editText4);
+        TextView Nazwa = (TextView) findViewById(R.id.textView32);
         TextView Kasa = (TextView) findViewById(R.id.textView29);
 
         applesData = getIntent().getExtras();
@@ -174,6 +205,13 @@ public class Zamowienie extends ActionBarActivity {
         cena = applesData.getString("cena");
         zdjecie = applesData.getString("zdjecie");
         nazwa = applesData.getString("nazwa");
+
+        try{readFromDataBase();}catch (Exception e){showToast("b³¹d :(");}
+
+        spinnerOsversions = (Spinner) findViewById(R.id.spinner);
+        spinnerOsversions.setAdapter(new MyAdapter(this, R.layout.custom_spiner, tab));
+
+
 
         //wyswietlanie danych
         Klient.setText(sala);
@@ -194,16 +232,17 @@ public class Zamowienie extends ActionBarActivity {
                 try {
                     ilosc = Ilosc.getText().toString();
 
-                    if(ilosc!="0")
+                    if (ilosc != null)
 
                         suma = Double.parseDouble(ilosc);
                     wartosc = Double.parseDouble(cena);
                     suma = suma * wartosc;
-                    cena = String.valueOf(suma);
-                    Suma.setText(String.valueOf(cena));
+                    cena1 = String.valueOf(suma);
+                    Suma.setText(String.valueOf(cena1));
+
+
+                } catch (Exception e) {
                 }
-                catch(Exception e)
-                {}
             }
         });
 
@@ -215,6 +254,29 @@ public class Zamowienie extends ActionBarActivity {
                     public void onClick(View v) {
                         dodatki = Dodatki.getText().toString();
                         dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
+                        try {
+                            ilosc = Ilosc.getText().toString();
+
+                            if(ilosc!=null)
+
+                                suma = Double.parseDouble(ilosc);
+                            wartosc = Double.parseDouble(cena);
+                            suma = suma * wartosc;
+                            cena1 = String.valueOf(suma);
+                            Suma.setText(String.valueOf(cena1));
+
+
+                        }
+                        catch(Exception e)
+                        {}
+                        try{
+                            if(sala==null)
+                            {
+                                sala=String.valueOf(i);
+                            }
+                        }
+                        catch(Exception e)
+                        {}
                         ZapisSqlLight();
                         ZapisMySql();
                         Intent i = new Intent(Zamowienie.this, MainActivity.class);
@@ -253,4 +315,40 @@ public class Zamowienie extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+      //  sala=tab[position];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    public class MyAdapter extends ArrayAdapter<String>
+    {
+        public MyAdapter(Context ctx, int txtViewResourceId, String[] objects)
+        {
+            super(ctx, txtViewResourceId, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent)
+        {
+            LayoutInflater inflater = getLayoutInflater();
+            View mySpinner = inflater.inflate(R.layout.custom_spiner, parent, false);
+            TextView main_text = (TextView) mySpinner .findViewById(R.id.text1);
+            main_text.setText(tab[position]);
+            return mySpinner;
+        }}
 }

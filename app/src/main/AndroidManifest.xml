@@ -56,6 +56,10 @@
             android:name=".Dodawanie"
             android:label="@string/title_activity_dodawanie" >
         </activity>
+        <activity
+            android:name=".customAdapter1"
+            android:label="@string/title_activity_custom_adapter1" >
+        </activity>
     </application>
 
 </manifest>
