@@ -32,6 +32,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
@@ -41,9 +43,13 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
     Double wartosc=0.0;
     Double suma=0.0;
 
+    int x,w,c;
     String tab[] = new String[20];
     Connection connection = null;
     int i =0;
+
+    List<String> listaStringow = new ArrayList<String>();
+
     Statement st;
     PreparedStatement ps;
     FileInputStream fis = null;
@@ -71,7 +77,7 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://54.217.215.74/sql481900", "sql481900", "qF9!gX2*");
+            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
         } catch (SQLException e) {
             showToast("Brak polaczenia z internetem");
             return;
@@ -153,15 +159,15 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
         try{
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-
+                x=0;
                 Cursor c=sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
                   while (c.moveToNext())
                 {
-                    if(tab[i]!="") {
-                        tab[i] = String.valueOf(c.getString(0));
+                    if(tab[x]!="") {
+                        tab[x] = String.valueOf(c.getString(0));
 
                     }
-                    i++;
+                    x++;
 
                 }
             sampleDB.close();
@@ -206,10 +212,34 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
         zdjecie = applesData.getString("zdjecie");
         nazwa = applesData.getString("nazwa");
 
-        try{readFromDataBase();}catch (Exception e){showToast("b³¹d :(");}
+        try{readFromDataBase();}catch (Exception e){showToast("blad :(");}
+
+
+        for (int i=0; i < x; i = i+ 0) {
+            for (int j = 0; j < x; j = j+ 0) {
+                if(j==0)
+                {
+                    j=j+i;
+                }
+
+                if (tab[j].equals(tab[i])) {
+                    w = w + 1;
+                }
+                j = j + 1;
+            }
+            if (w == 1) {
+                listaStringow.add(tab[i]);
+                showToast(tab[i]);
+                c=c+1;
+
+            }
+            w = 0;
+            i=i+1;
+        }
+        c=0;
 
         spinnerOsversions = (Spinner) findViewById(R.id.spinner);
-        spinnerOsversions.setAdapter(new MyAdapter(this, R.layout.custom_spiner, tab));
+        spinnerOsversions.setAdapter(new MyAdapter(this, R.layout.custom_spiner, listaStringow));
 
 
 
@@ -327,7 +357,7 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
     }
     public class MyAdapter extends ArrayAdapter<String>
     {
-        public MyAdapter(Context ctx, int txtViewResourceId, String[] objects)
+        public MyAdapter(Context ctx, int txtViewResourceId, List<String> objects)
         {
             super(ctx, txtViewResourceId, objects);
         }

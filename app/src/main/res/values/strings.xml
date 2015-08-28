@@ -14,5 +14,6 @@
     <string name="title_activity_dodawanie">Dodawanie</string>
     <string name="title_activity_usuwanie">Usuwanie</string>
     <string name="title_activity_custom_adapter1">customAdapter1</string>
+    <string name="kwota_do_zaplaty">Large Text</string>
 
 </resources>
