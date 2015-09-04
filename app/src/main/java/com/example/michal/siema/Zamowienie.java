@@ -36,12 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+public class Zamowienie extends ActionBarActivity  {
 
     Bundle applesData;
-    String sala,cena,cena1,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc;
+    String cena,cena1,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc;
+    String sala=null;
     Double wartosc=0.0;
     Double suma=0.0;
+    boolean klikniete = false;
 
     int x,w,c;
     String tab[] = new String[20];
@@ -207,13 +209,12 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
         TextView Kasa = (TextView) findViewById(R.id.textView29);
 
         applesData = getIntent().getExtras();
-        sala = applesData.getString("Sala");
+      //  sala = applesData.getString("Sala");
         cena = applesData.getString("cena");
         zdjecie = applesData.getString("zdjecie");
         nazwa = applesData.getString("nazwa");
 
         try{readFromDataBase();}catch (Exception e){showToast("blad :(");}
-
 
         for (int i=0; i < x; i = i+ 0) {
             for (int j = 0; j < x; j = j+ 0) {
@@ -228,23 +229,35 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
                 j = j + 1;
             }
             if (w == 1) {
+                tab[c]=tab[i];
                 listaStringow.add(tab[i]);
-                showToast(tab[i]);
+                //showToast(String.valueOf(tab[i]));
                 c=c+1;
 
             }
             w = 0;
             i=i+1;
         }
+        i=c;
         c=0;
 
         spinnerOsversions = (Spinner) findViewById(R.id.spinner);
         spinnerOsversions.setAdapter(new MyAdapter(this, R.layout.custom_spiner, listaStringow));
 
+        spinnerOsversions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                klikniete=true;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                klikniete=false;
+            }
+        });
 
         //wyswietlanie danych
-        Klient.setText(sala);
         Bitmap bmImg = BitmapFactory.decodeFile(zdjecie);
         Zdjecie.setImageBitmap(bmImg);
         if(bmImg==null&zdjecie!=null)
@@ -276,18 +289,19 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
             }
         });
 
-
-
                 //dodanie zamowienia do stolika
                 dodawanie.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ilosc = Ilosc.getText().toString();
+                        if(ilosc==null){
+                            showToast("UZUPELNIJ ILOSC");
+                        }
+                        else
+                        {
                         dodatki = Dodatki.getText().toString();
                         dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
                         try {
-                            ilosc = Ilosc.getText().toString();
-
-                            if(ilosc!=null)
 
                                 suma = Double.parseDouble(ilosc);
                             wartosc = Double.parseDouble(cena);
@@ -299,19 +313,23 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
                         }
                         catch(Exception e)
                         {}
-                        try{
-                            if(sala==null)
+
+                            if(klikniete=false)
                             {
                                 sala=String.valueOf(i);
+
+
                             }
-                        }
-                        catch(Exception e)
-                        {}
+                            if (klikniete=true)
+                            {
+                                sala=tab[w];
+                            }
+
                         ZapisSqlLight();
                         ZapisMySql();
                         Intent i = new Intent(Zamowienie.this, MainActivity.class);
                         startActivity(i);
-                    }
+                    }}
                 });
 
         anulacja.setOnClickListener(new View.OnClickListener() {
@@ -346,15 +364,6 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-      //  sala=tab[position];
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
     public class MyAdapter extends ArrayAdapter<String>
     {
         public MyAdapter(Context ctx, int txtViewResourceId, List<String> objects)
@@ -375,6 +384,8 @@ public class Zamowienie extends ActionBarActivity implements AdapterView.OnItemS
 
         public View getCustomView(int position, View convertView, ViewGroup parent)
         {
+            klikniete=false;
+            w=position;
             LayoutInflater inflater = getLayoutInflater();
             View mySpinner = inflater.inflate(R.layout.custom_spiner, parent, false);
             TextView main_text = (TextView) mySpinner .findViewById(R.id.text1);

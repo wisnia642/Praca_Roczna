@@ -309,38 +309,26 @@
         <Button
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/button1"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="75dp"
-            android:layout_weight="0.15"
-            android:background="@drawable/dodaj" />
-
-        <Button
-            android:layout_width="60dp"
-            android:layout_height="60dp"
             android:id="@+id/button2"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/plus" />
+            android:background="@drawable/plus"
+            android:layout_marginTop="150dp" />
 
         <Button
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/button3"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/usun" />
+            android:background="@drawable/usun"
+            android:layout_marginTop="20dp" />
 
         <Button
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/button4"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/minus" />
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/minus"
+            android:layout_marginTop="0dp" />
 
-        <Button
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/button5"
-            android:background="@drawable/zapis" />
     </LinearLayout>
 
     <LinearLayout

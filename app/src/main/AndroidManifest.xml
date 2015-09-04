@@ -60,6 +60,14 @@
             android:name=".customAdapter1"
             android:label="@string/title_activity_custom_adapter1" >
         </activity>
+        <activity
+            android:name=".Gotowka1"
+            android:label="@string/title_activity_gotowka1" >
+        </activity>
+        <activity
+            android:name=".Faktura"
+            android:label="@string/title_activity_faktura" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,26 +1,20 @@
 package com.example.michal.siema;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -29,30 +23,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    String posilek, userMassage,popupTxt;
+    String posilek, userMassage;
     int stan = 0;
     String[] zdjecie = new String[17];
     String[] Klient = new String[20];
@@ -71,12 +55,10 @@ public class MainActivity extends ActionBarActivity {
     int x,w,c,a,q,z;
 
     List<String> listaStringow = new ArrayList<String>();
+    Spinner Stolik;
 
-    private PopupWindow mpopup,got;
+    private PopupWindow mpopup;
     customAdapter1 adapter1;
-
-    Date date;
-    DateFormat dateFormat;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -84,6 +66,8 @@ public class MainActivity extends ActionBarActivity {
     Bitmap thumbnail;
     static ResultSet rs;
     static Statement st;
+    PreparedStatement ps;
+    FileInputStream fis = null;
     Connection connection = null;
 
     ListView lista,lista1;
@@ -91,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
 
     Button menu1,menu2,menu3,menu4,menu5,menu6,menu7,menu8,menu9,menu10,menu11,menu12,menu13,menu14,menu15,menu16;
     Button rabat,napiwek,anulacja,odswierz,przerwa,wyjdz,karta,gotowka,faktura;
-    Button stolikplus,stolikminus,dodaj,odejmnij,usun;
+    Button dodaj,odejmnij,usun;
 
 
     private void showToast(String message) {
@@ -112,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private void funkcjonalności()
+    private void funkcjonalnosci()
     {
             try {
                 SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
@@ -121,6 +105,10 @@ public class MainActivity extends ActionBarActivity {
                 }
                 if(wartosc==2) {
                     sampleDB.execSQL("DELETE FROM Zamowienie WHERE Danie=('" + danie[Numer1] + "') AND Klient=('" + klient[Numer] + "')");
+                }
+                if(wartosc==3)
+                {
+                    sampleDB.execSQL("INSERT INTO Zamowienie (Suma) VALUES ('"+zm2+"') WHERE Klient= ('"+klient[w]+"')" );
                 }
                 sampleDB.close();
 
@@ -151,6 +139,19 @@ public class MainActivity extends ActionBarActivity {
             } catch (SQLException e1) {
                 // e1.printStackTrace();
             }}
+        if(wartosc==3)
+        {
+            String sql = "INSERT INTO Zamowienie (Suma) VALUES (?) WHERE Klient= ('"+klient[w]+"')";
+            try{
+                ps = connection.prepareStatement(sql);
+                ps.setString(7, String.valueOf(zm2));
+                ps.executeUpdate();
+                connection.commit();
+
+            } catch (SQLException e) {
+
+            }
+        }
         try {
             if (connection != null)
                 connection.close();
@@ -247,8 +248,8 @@ public class MainActivity extends ActionBarActivity {
                 danie[q]=Danie[i];
                 ilosc[q]=Ilosc[i];
                 zdj[q]=Zdjecie[i];
-                zm2=zm1;
                 zm1=zm2+Suma[i];
+                zm2=zm1;
                 q=q+1;
             }
             i++;
@@ -256,10 +257,8 @@ public class MainActivity extends ActionBarActivity {
 
         adapter1=new customAdapter1(this, danie,ilosc,zdj,q);
         lista.setAdapter(adapter1);
-        Txt.setText("Nazwa: " + Klient[Numer]);
+        Txt.setText("Nazwa: " + klient[Numer]);
         Txt1.setText("Suma: " + String.valueOf(zm1));
-
-
 
     }
 
@@ -326,231 +325,6 @@ public class MainActivity extends ActionBarActivity {
             }catch(SQLException se){
                 showToast("brak polaczenia z internetem");}
 
-        }
-
-    }
-    //Faktura
-    public void createPDF()
-    {
-        Document doc = new Document();
-
-
-        try {
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/droidText";
-
-            File dir = new File(path);
-            if(!dir.exists())
-                dir.mkdirs();
-
-            Log.d("PDFCreator", "PDF Path: " + path);
-
-
-            File file = new File(dir, "sample.pdf");
-            FileOutputStream fOut = new FileOutputStream(file);
-
-            PdfWriter.getInstance(doc, fOut);
-
-            //open the document
-            doc.open();
-
-            //NR.faktury
-            Paragraph p7 = new Paragraph("Faktura Nr:");
-            Font paraFont7= new Font(Font.COURIER,15.1f, Color.GREEN);
-            p7.setAlignment(Paragraph.ALIGN_LEFT);
-            p7.setFont(paraFont7);
-
-            doc.add(p7);
-
-            //Miejscowo\ść i data
-            Paragraph p8 = new Paragraph("Miejscowość i data:");
-            Font paraFont8= new Font(Font.COURIER,00.1f, Color.GREEN);
-            p8.setAlignment(Paragraph.ALIGN_RIGHT);
-            p8.setFont(paraFont8);
-
-            doc.add(p8);
-
-            //NR.faktury?
-            Paragraph p24 = new Paragraph("Faktura Nr:");
-            Font paraFont24= new Font(Font.COURIER,10.1f, Color.GREEN);
-            p24.setAlignment(Paragraph.ALIGN_LEFT);
-            p24.setFont(paraFont24);
-
-            doc.add(p24);
-
-            //Miejscowo\ść i data?
-            Paragraph p25 = new Paragraph("Miejscowość i data:");
-            Font paraFont25= new Font(Font.COURIER,00.1f, Color.GREEN);
-            p25.setAlignment(Paragraph.ALIGN_RIGHT);
-            p25.setFont(paraFont25);
-
-            doc.add(p8);
-
-            //Nazwa
-            Paragraph p29 = new Paragraph("FAKTURA VAT");
-            Font paraFont29= new Font(Font.SYMBOL,50.7f, Color.GREEN);
-            p29.setAlignment(Paragraph.ALIGN_CENTER);
-            p29.setFont(paraFont29);
-
-            doc.add(p29);
-
-            //Termin Płatności
-            Paragraph p9 = new Paragraph("Termin Płatności:");
-            Font paraFont9= new Font(Font.COURIER,35.1f, Color.GREEN);
-            p9.setAlignment(Paragraph.ALIGN_LEFT);
-            p9.setFont(paraFont9);
-
-            doc.add(p9);
-
-            //Data zakończenia wystawiania usługi
-            Paragraph p11 = new Paragraph("Data zakończenia wystawiania usługi:");
-            Font paraFont11= new Font(Font.COURIER,1.1f, Color.GREEN);
-            p11.setAlignment(Paragraph.ALIGN_CENTER);
-            p11.setFont(paraFont11);
-
-            doc.add(p11);
-
-            //Forma płatności
-            Paragraph p10 = new Paragraph("Forma Płatności:");
-            Font paraFont10= new Font(Font.COURIER,1.1f, Color.GREEN);
-            p10.setAlignment(Paragraph.ALIGN_RIGHT);
-            p10.setFont(paraFont10);
-
-            doc.add(p10);
-
-            //Termin Płatności?
-            Paragraph p17 = new Paragraph("Termin Płatności:");
-            Font paraFont17= new Font(Font.COURIER,10.1f, Color.GREEN);
-            p17.setAlignment(Paragraph.ALIGN_LEFT);
-            p17.setFont(paraFont17);
-
-            doc.add(p17);
-
-            //Data zakończenia wystawiania usługi?
-            Paragraph p18 = new Paragraph("Data zakończenia wystawiania usługi:");
-            Font paraFont18= new Font(Font.COURIER,1.1f, Color.GREEN);
-            p18.setAlignment(Paragraph.ALIGN_CENTER);
-            p18.setFont(paraFont18);
-
-            doc.add(p18);
-
-            //Forma płatności?
-            Paragraph p19 = new Paragraph("Forma Płatności:");
-            Font paraFont19= new Font(Font.COURIER,1.1f, Color.GREEN);
-            p19.setAlignment(Paragraph.ALIGN_RIGHT);
-            p19.setFont(paraFont19);
-
-            doc.add(p19);
-
-            //Dane Firmy
-            Paragraph p1 = new Paragraph("Nazwa Firmy:");
-            Font paraFont= new Font(Font.COURIER,40.1f, Color.GREEN);
-            p1.setAlignment(Paragraph.ALIGN_LEFT);
-            p1.setFont(paraFont);
-
-            doc.add(p1);
-
-            Paragraph p2 = new Paragraph("Dane Firmy:");
-            Font paraFont2= new Font(Font.COURIER);
-            p2.setAlignment(Paragraph.ALIGN_LEFT);
-            p2.setFont(paraFont2);
-
-            doc.add(p2);
-            Paragraph p3 = new Paragraph("Telefon Kontaktowy:");
-            Font paraFont3= new Font(Font.COURIER);
-            p2.setAlignment(Paragraph.ALIGN_LEFT);
-            p2.setFont(paraFont3);
-
-            doc.add(p3);
-
-            //Dane klienta
-            Paragraph p4 = new Paragraph("Nazwa Firmy:");
-            Font paraFont4= new Font(Font.COURIER,-23.1f, Color.GREEN);
-            p4.setAlignment(Paragraph.ALIGN_RIGHT);
-            p4.setFont(paraFont4);
-
-
-            doc.add(p4);
-
-            Paragraph p5 = new Paragraph("Dane Firmy:");
-            Font paraFont5= new Font(Font.COURIER);
-            p5.setAlignment(Paragraph.ALIGN_RIGHT);
-            p5.setFont(paraFont5);
-
-            doc.add(p5);
-
-            Paragraph p6 = new Paragraph("Telefon Kontaktowy:");
-            Font paraFont6= new Font(Font.COURIER);
-            p6.setAlignment(Paragraph.ALIGN_RIGHT);
-            p6.setFont(paraFont6);
-
-            doc.add(p6);
-
-
-            //Nazwa towaru
-            Paragraph p12 = new Paragraph("Lp.| Nazwa towaru | J.M | Ilość | Cena Netto | Stawka Vat | Kwota Vat | Wartość z Vat ");
-            Font paraFont12= new Font(Font.COURIER,40.1f, Color.GREEN);
-            p12.setAlignment(Paragraph.ALIGN_CENTER);
-            p12.setFont(paraFont12);
-
-            doc.add(p12);
-
-            //Towar
-            Paragraph p13 = new Paragraph("1. | Zupa Pomidorowa | Szt. |  1  |   12.00   |     23%    |   2.13   |      12.00      ");
-            Font paraFont13 = new Font(Font.COURIER,20.1f, Color.GREEN);
-            p13.setAlignment(Paragraph.ALIGN_CENTER);
-            p13.setFont(paraFont13);
-
-            doc.add(p13);
-
-            //Uwagi
-            Paragraph p14 = new Paragraph("Uwagi: ");
-            Font paraFont14 = new Font(Font.COURIER,60.1f, Color.GREEN);
-            p14.setAlignment(Paragraph.ALIGN_LEFT);
-            p14.setFont(paraFont14);
-
-            doc.add(p14);
-
-            //Stawka
-            Paragraph p15 = new Paragraph("Stawka | Wartość Netto | Kwota Vat | Wartość z podatkiem Vat ");
-            Font paraFont15 = new Font(Font.COURIER,-3.1f, Color.GREEN);
-            p15.setAlignment(Paragraph.ALIGN_RIGHT);
-            p15.setFont(paraFont15);
-
-            doc.add(p15);
-
-            //Stawka1
-            Paragraph p16 = new Paragraph("23%   |    123.00    |    12.21    |    145.21 ");
-            Font paraFont16 = new Font(Font.COURIER,15.1f, Color.GREEN);
-            p16.setAlignment(Paragraph.ALIGN_RIGHT);
-            p16.setFont(paraFont16);
-
-            doc.add(p16);
-
-            //Fakturę wystawił
-            Paragraph p27 = new Paragraph("Fakturę wystawił:");
-            Font paraFont27 = new Font(Font.COURIER,41.1f, Color.GREEN);
-            p27.setAlignment(Paragraph.ALIGN_LEFT);
-            p27.setFont(paraFont27);
-
-            doc.add(p27);
-
-            //Fakturę wystawił kto?
-            Paragraph p28 = new Paragraph("     XYZ      ");
-            Font paraFont28 = new Font(Font.COURIER);
-            p28.setAlignment(Paragraph.ALIGN_LEFT);
-            p28.setFont(paraFont28);
-
-            doc.add(p28);
-
-
-        } catch (DocumentException de) {
-            Log.e("PDFCreator", "DocumentException:" + de);
-        } catch (IOException e) {
-            Log.e("PDFCreator", "ioException:" + e);
-        }
-        finally
-        {
-            doc.close();
         }
 
     }
@@ -685,7 +459,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -730,18 +503,13 @@ public class MainActivity extends ActionBarActivity {
         gotowka = (Button) findViewById(R.id.button36);
         faktura = (Button) findViewById(R.id.button37);
 
-        stolikplus = (Button) findViewById(R.id.button1);
         dodaj = (Button) findViewById(R.id.button2);
         usun = (Button) findViewById(R.id.button3);
         odejmnij = (Button) findViewById(R.id.button4);
-        stolikminus = (Button) findViewById(R.id.button5);
-
-        //pobieranie daty do faktury
-         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-         date = new Date();
 
         //odczyt z bazy danych i z pliku
         try{readsqlLight();}catch (Exception e){}
+        try{wczytywanie();} catch (Exception e){}
         try{zdjecie1();}catch (Exception e){}
         try{zdjecie2();}catch (Exception e){}
         try{zdjecie3();}catch (Exception e){}
@@ -799,7 +567,7 @@ public class MainActivity extends ActionBarActivity {
                 final TextView textV = (TextView) popUpView.findViewById(R.id.textView33);
                 textV.setText("Rabat w %");
 
-                Button btnOk = (Button) popUpView.findViewById(R.id.button50);
+                Button btnOk = (Button) popUpView.findViewById(R.id.button60);
                 final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -817,13 +585,16 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
-                Button btnCancel = (Button) popUpView.findViewById(R.id.button51);
+                Button btnCancel = (Button) popUpView.findViewById(R.id.button61);
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mpopup.dismiss();
                     }
                 });
+
+                wartosc = 3;
+                funkcjonalnosci();
 
             }
         });
@@ -857,53 +628,46 @@ public class MainActivity extends ActionBarActivity {
         gotowka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View popUpView1 = getLayoutInflater().inflate(R.layout.gotowka, null);
-                // inflating popup layout
-                got = new PopupWindow(popUpView1, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                //Creation of popup
-                got.setAnimationStyle(android.R.style.Animation_Dialog);
-                got.showAtLocation(popUpView1, Gravity.CENTER, 0, 0);
+                Intent i = new Intent(MainActivity.this, Gotowka1.class);
+                i.putExtra("applesMessage", zm2);
+                startActivity(i);
 
-                final TextView kwota_do_zaplaty = (TextView) popUpView1.findViewById(R.id.textView36);
-                final TextView reszta = (TextView) popUpView1.findViewById(R.id.textView38);
-                Spinner Klient = (Spinner) popUpView1.findViewById(R.id.spinner2);
-              //  Klient.setAdapter(new MyAdapter(this, R.layout.custom_spiner, listaStringow));
-                //Button btnOk = (Button)popUpView1.findViewById(R.id.button50);
-                final EditText kwota_otzrymana= (EditText) popUpView1.findViewById(R.id.editText6);
-                Button btnCancel = (Button)popUpView1.findViewById(R.id.button51);
-
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        got.dismiss();
-                    }
-                });
             }
 
         });
 
-
+        faktura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Faktura.class);
+                startActivity(i);
+            }
+        });
 
 
         dodaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                z = Integer.parseInt(ilosc[Numer1]);
-                z++;
-                ilosc[Numer1] = String.valueOf(z);
-                wartosc = 1;
-                showToast("wybież danie do zwiększenia ilości");
+                try {
+                    z = Integer.parseInt(ilosc[Numer1]);
+                    z++;
+                    ilosc[Numer1] = String.valueOf(z);
+                    wartosc = 1;
+                    showToast("wybież danie do zwiększenia ilości");
+                }catch (Exception e){}
             }
         });
 
         odejmnij.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                z=Integer.parseInt(ilosc[Numer1]);
-                z--;
-                ilosc[Numer1]=String.valueOf(z);
-                wartosc=1;
-                showToast("wybież danie do zmniejszenia ilości");
+                try {
+                    z = Integer.parseInt(ilosc[Numer1]);
+                    z--;
+                    ilosc[Numer1] = String.valueOf(z);
+                    wartosc = 1;
+                    showToast("wybież danie do zmniejszenia ilości");
+                }catch (Exception e) {}
             }
         });
 
@@ -936,7 +700,7 @@ public class MainActivity extends ActionBarActivity {
                    Numer1=position;
 
                 if(wartosc==1||wartosc==2) {
-                    funkcjonalności();
+                    funkcjonalnosci();
                 }
             }
 
@@ -955,7 +719,7 @@ public class MainActivity extends ActionBarActivity {
                 final TextView textV = (TextView) popUpView.findViewById(R.id.textView33);
                 textV.setText("Napiwek w zł");
 
-                Button btnOk = (Button)popUpView.findViewById(R.id.button50);
+                Button btnOk = (Button)popUpView.findViewById(R.id.button60);
                 final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -969,7 +733,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
-                Button btnCancel = (Button)popUpView.findViewById(R.id.button51);
+                Button btnCancel = (Button)popUpView.findViewById(R.id.button61);
 
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -977,6 +741,9 @@ public class MainActivity extends ActionBarActivity {
                         mpopup.dismiss();
                     }
                 });
+
+                wartosc=3;
+                funkcjonalnosci();
             }
         });
 
@@ -1232,30 +999,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class MyAdapter extends ArrayAdapter<String>
-    {
-        public MyAdapter(View.OnClickListener ctx, int txtViewResourceId, List<String> objects)
-        {
-            super((Context) ctx, txtViewResourceId, objects);
-        }
 
-        @Override
-        public View getDropDownView(int position, View cnvtView, ViewGroup prnt)
-        {
-            return getCustomView(position, cnvtView, prnt);
-        }
-        @Override
-        public View getView(int pos, View cnvtView, ViewGroup prnt)
-        {
-            return getCustomView(pos, cnvtView, prnt);
-        }
 
-        public View getCustomView(int position, View convertView, ViewGroup parent)
-        {
-            LayoutInflater inflater = getLayoutInflater();
-            View mySpinner = inflater.inflate(R.layout.custom_spiner, parent, false);
-            TextView main_text = (TextView) mySpinner .findViewById(R.id.text1);
-            main_text.setText(klient[position]);
-            return mySpinner;
-        }}
 }

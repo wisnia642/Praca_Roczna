@@ -15,5 +15,8 @@
     <string name="title_activity_usuwanie">Usuwanie</string>
     <string name="title_activity_custom_adapter1">customAdapter1</string>
     <string name="kwota_do_zaplaty">Large Text</string>
+    <string name="kwota_otrzymana">Kwota otrzymana</string>
+    <string name="title_activity_gotowka1">Gotowka1</string>
+    <string name="title_activity_faktura">Faktura</string>
 
 </resources>

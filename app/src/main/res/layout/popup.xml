@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ok"
-            android:id="@+id/button50"
-            android:layout_alignBottom="@+id/button51"
+            android:id="@+id/button60"
+            android:layout_alignBottom="@+id/button61"
             android:layout_alignLeft="@+id/editText5"
             android:layout_alignStart="@+id/editText5" />
 
@@ -44,10 +44,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:id="@+id/button51"
+            android:id="@+id/button61"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/textView33"
-            android:layout_alignStart="@+id/textView33" />
+            android:layout_alignRight="@+id/editText5"
+            android:layout_alignEnd="@+id/editText5" />
     </RelativeLayout>
 
 </RelativeLayout>
