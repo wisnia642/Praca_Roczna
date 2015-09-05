@@ -68,6 +68,10 @@
             android:name=".Faktura"
             android:label="@string/title_activity_faktura" >
         </activity>
+        <activity
+            android:name=".Rezerwacja"
+            android:label="@string/title_activity_rezerwacja" >
+        </activity>
     </application>
 
 </manifest>

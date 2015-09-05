@@ -18,5 +18,6 @@
     <string name="kwota_otrzymana">Kwota otrzymana</string>
     <string name="title_activity_gotowka1">Gotowka1</string>
     <string name="title_activity_faktura">Faktura</string>
+    <string name="title_activity_rezerwacja">Rezerwacja</string>
 
 </resources>
