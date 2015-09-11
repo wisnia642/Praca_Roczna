@@ -1197,6 +1197,7 @@ public class Sala_2 extends ActionBarActivity {
             case DZIEWIATY_ELEMENT:
                 wczytywanie();
                 writeToDataBase();
+                stan=false;
                 Intent i = new Intent(Sala_2.this,MainActivity.class);
                 startActivity(i);
                 break;

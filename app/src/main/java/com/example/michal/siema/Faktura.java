@@ -130,7 +130,7 @@ public class Faktura extends ActionBarActivity {
 
 
             File file = new File(dir, nr_faktura);
-            FileOutputStream fOut = new FileOutputStream(file);
+            FileOutputStream fOut = new FileOutputStream(file+".pdf");
 
             PdfWriter.getInstance(doc, fOut);
 
@@ -283,7 +283,7 @@ public class Faktura extends ActionBarActivity {
                 SqlLight();
                 zm3=(suma[i]*23)/100;
                 zm4=suma[i]-zm3;
-                Paragraph p13 = new Paragraph(""+i+". | "+danie[i]+". | SZT. |  "+ilosc[i]+". |   "+zm4+".    |    23%    |  "+zm3+".  |    "+suma[i]+".   ");
+                Paragraph p13 = new Paragraph(""+i+1+". | "+danie[i]+". | SZT. |  "+ilosc[i]+". |   "+zm4+".    |    23%    |  "+zm3+".  |    "+suma[i]+".   ");
                 Font paraFont13 = new Font(Font.COURIER, 20.1f, Color.GREEN);
                 p13.setAlignment(Paragraph.ALIGN_CENTER);
                 p13.setFont(paraFont13);
@@ -365,7 +365,6 @@ public class Faktura extends ActionBarActivity {
                 firma = Firma.getText().toString();
                 adres = Adres.getText().toString();
                 miejscowosc = Miejscowosc.getText().toString();
-
 
                     try {
                         //pobieranie daty do faktury

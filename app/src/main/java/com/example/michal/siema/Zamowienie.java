@@ -240,7 +240,7 @@ public class Zamowienie extends ActionBarActivity  {
         }
         i=c;
         c=0;
-
+        i=i+1;
         spinnerOsversions = (Spinner) findViewById(R.id.spinner);
         spinnerOsversions.setAdapter(new MyAdapter(this, R.layout.custom_spiner, listaStringow));
 
@@ -267,8 +267,8 @@ public class Zamowienie extends ActionBarActivity  {
         }
         Nazwa.setText(nazwa);
         Suma.setText(cena);
-
-
+        showToast(String.valueOf(klikniete));
+        //liczenie wszystkich zanmowien
         Kasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -314,15 +314,13 @@ public class Zamowienie extends ActionBarActivity  {
                         catch(Exception e)
                         {}
 
-                            if(klikniete=false)
+                            if(klikniete==false)
                             {
-                                sala=String.valueOf(i);
-
-
+                                sala =String.valueOf(i);
                             }
-                            if (klikniete=true)
+                            if (klikniete==true)
                             {
-                                sala=tab[w];
+                                sala=(tab[w]);
                             }
 
                         ZapisSqlLight();

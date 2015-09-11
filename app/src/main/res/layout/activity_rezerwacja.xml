@@ -12,7 +12,7 @@
         android:textSize="30dp"
         android:textIsSelectable="false"
         android:layout_marginTop="30dp"
-        android:text="Rozlicznie faktury"
+        android:text="Robienie Rezerwacji"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -21,12 +21,9 @@
         android:layout_height="100dp"
         android:id="@+id/button60"
         android:background="@drawable/plus2"
-        android:layout_marginRight="55dp"
-        android:layout_marginEnd="55dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/button61"
-        android:layout_toStartOf="@+id/button61"
-        android:layout_marginBottom="123dp" />
+        android:layout_below="@+id/data1"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4" />
 
     <Button
         android:layout_width="wrap_content"
@@ -43,10 +40,11 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:id="@+id/imageView4"
+        android:layout_marginTop="100dp"
         android:layout_below="@+id/textView33"
         android:layout_alignRight="@+id/button61"
         android:layout_alignEnd="@+id/button61"
-        android:layout_marginTop="104dp" />
+        android:background="@drawable/rezerwacja" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,8 +110,7 @@
         android:textSize="25dp"
         android:layout_alignBottom="@+id/button60"
         android:layout_alignLeft="@+id/textView43"
-        android:layout_alignStart="@+id/textView43"
-        android:layout_marginBottom="50dp" />
+        android:layout_alignStart="@+id/textView43" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -139,10 +136,9 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:id="@+id/editText10"
-        android:layout_alignTop="@+id/textView43"
-        android:layout_alignLeft="@+id/editText8"
-        android:layout_alignStart="@+id/editText8"
+        android:id="@+id/data1"
+        android:layout_below="@+id/imageView4"
+        android:layout_toRightOf="@+id/textView40"
         android:layout_alignRight="@+id/editText8"
         android:layout_alignEnd="@+id/editText8" />
 
@@ -151,11 +147,21 @@
         android:layout_height="wrap_content"
         android:inputType="time"
         android:ems="10"
-        android:id="@+id/editText11"
+        android:id="@+id/time1"
         android:layout_alignTop="@+id/textView44"
-        android:layout_alignLeft="@+id/editText10"
-        android:layout_alignStart="@+id/editText10"
-        android:layout_alignRight="@+id/editText10"
-        android:layout_alignEnd="@+id/editText10" />
+        android:layout_alignLeft="@+id/data1"
+        android:layout_alignStart="@+id/data1"
+        android:layout_alignRight="@+id/data1"
+        android:layout_alignEnd="@+id/data1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zarządzanie rezerwacją"
+        android:id="@+id/button44"
+        android:soundEffectsEnabled="true"
+        android:layout_alignTop="@+id/textView33"
+        android:layout_alignRight="@+id/button61"
+        android:layout_alignEnd="@+id/button61" />
 
 </RelativeLayout>

@@ -23,7 +23,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -53,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
     Double zm2;
     int Numer,Numer1,wartosc;
     int x,w,c,a,q,z;
+    FileOutputStream fos;
 
     List<String> listaStringow = new ArrayList<String>();
     Spinner Stolik;
@@ -74,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
     TextView Txt,Txt1;
 
     Button menu1,menu2,menu3,menu4,menu5,menu6,menu7,menu8,menu9,menu10,menu11,menu12,menu13,menu14,menu15,menu16;
-    Button rabat,napiwek,anulacja,odswierz,przerwa,wyjdz,karta,gotowka,faktura;
+    Button rabat,napiwek,anulacja,odswierz,przerwa,wyjdz,karta,gotowka,faktura,rezerwacja;
     Button dodaj,odejmnij,usun;
 
 
@@ -189,8 +195,6 @@ public class MainActivity extends ActionBarActivity {
             sampleDB.close();
         } catch (Exception a) {
         }
-        customAdapter2 adapter2=new customAdapter2(this, klient);
-        lista1.setAdapter(adapter2);
     }
     //TODO MAmy tutaj problem ziom :) - juz nie !!!
     //anulacja calego zamowienia
@@ -227,7 +231,7 @@ public class MainActivity extends ActionBarActivity {
         } catch (SQLException se) {
             showToast("brak połączenia z internetem");
         }
-        showToast("Anulacja rachunku zakończona" + Klient[Numer]);
+        showToast("Anulacja rachunku zakończona  " + Klient[Numer]);
     }
     //odczyt zamowienia
     public void SqlLight()
@@ -297,8 +301,7 @@ public class MainActivity extends ActionBarActivity {
                 e1.printStackTrace();
             }
 
-
-                String sql = "SELECT * FROM ZAMOWIENIE";
+            String sql = "SELECT * FROM Zamowienie";
 
                 try {
                     rs=st.executeQuery(sql);
@@ -306,16 +309,45 @@ public class MainActivity extends ActionBarActivity {
                     //  e1.printStackTrace();
                 }
                 try{
-                    int i=0;
+                    PreparedStatement stmt = connection.prepareStatement(sql);
+                    rs = stmt.executeQuery();
+
                     while (rs.next())
                     {
-                        Klient[i] = rs.getString(0);
-                        Danie[i] = rs.getString(1);
-                        Ilosc[i] = rs.getString(2);
-                        Suma[i] = rs.getDouble(6);
-                        i++;
-                    }
-                } catch (SQLException e1)
+                        Klient[x] = rs.getString("Klient");
+                        Danie[x] = rs.getString("Danie");
+                        Ilosc[x] = rs.getString("Ilosc");
+                        Suma[x] = rs.getDouble("Suma");
+                        File image = new File("/mnt/sdcard/"+Klient[x]+".jpg");
+                        Zdjecie[x] = "/mnt/sdcard/"+Klient[x]+".jpg";
+                        try {
+                            fos = new FileOutputStream(image);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        byte[] buffer = new byte[1];
+                        InputStream is = rs.getBinaryStream("Zdjecie");
+                        try {
+                            while (is.read(buffer) > 0)
+                            {
+                                try {
+                                    fos.write(buffer);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        x++;
+
+                } }catch (SQLException e1)
                 {
                     e1.printStackTrace();
                 }
@@ -326,9 +358,7 @@ public class MainActivity extends ActionBarActivity {
                 showToast("brak polaczenia z internetem");}
 
         }
-
     }
-
 
     private void zdjecie1() {
         //wyswietlanie zdjec na poczatku programu
@@ -502,6 +532,7 @@ public class MainActivity extends ActionBarActivity {
         karta = (Button) findViewById(R.id.Button17);
         gotowka = (Button) findViewById(R.id.button36);
         faktura = (Button) findViewById(R.id.button37);
+        rezerwacja = (Button) findViewById(R.id.button42);
 
         dodaj = (Button) findViewById(R.id.button2);
         usun = (Button) findViewById(R.id.button3);
@@ -509,7 +540,12 @@ public class MainActivity extends ActionBarActivity {
 
         //odczyt z bazy danych i z pliku
         try{readsqlLight();}catch (Exception e){}
-        try{wczytywanie();} catch (Exception e){}
+        if(Klient==null){
+            try {
+                wczytywanie();
+            } catch (Exception e) {
+            }}
+
         try{zdjecie1();}catch (Exception e){}
         try{zdjecie2();}catch (Exception e){}
         try{zdjecie3();}catch (Exception e){}
@@ -549,7 +585,6 @@ public class MainActivity extends ActionBarActivity {
             i=i+1;
         }
        c=0;
-
 
         customAdapter2 adapter2=new customAdapter2(this, klient);
         lista1.setAdapter(adapter2);
@@ -613,6 +648,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 anulacja_sqlLight_SQL();
+                Intent i = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(i);
             }
 
 
@@ -644,6 +681,14 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        rezerwacja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, Rezerwacja.class);
+                startActivity(i);
+            }
+        });
+
 
         dodaj.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -653,7 +698,7 @@ public class MainActivity extends ActionBarActivity {
                     z++;
                     ilosc[Numer1] = String.valueOf(z);
                     wartosc = 1;
-                    showToast("wybież danie do zwiększenia ilości");
+                    showToast("wybierz danie do zwiększenia ilości");
                 }catch (Exception e){}
             }
         });
@@ -666,7 +711,7 @@ public class MainActivity extends ActionBarActivity {
                     z--;
                     ilosc[Numer1] = String.valueOf(z);
                     wartosc = 1;
-                    showToast("wybież danie do zmniejszenia ilości");
+                    showToast("wybierz danie do zmniejszenia ilości");
                 }catch (Exception e) {}
             }
         });
@@ -675,7 +720,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 wartosc=2;
-                showToast("Wybież danie do usunięcia");
+                showToast("Wybierz danie do usunięcia");
             }
         });
 
@@ -684,7 +729,6 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Numer = position;
-                    // lista.setAdapter(null);
                     SqlLight();
                 } catch (Exception e) {
                 }
@@ -972,10 +1016,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -41,9 +41,9 @@ public class customAdapter extends ArrayAdapter<String> {
         String zdjencie = (zm3[position]);
 
         //dodawanie obrazu jesli go nie ma
-           Bitmap bmImg = BitmapFactory.decodeFile(zdjencie);
-            imageView.setImageBitmap(bmImg);
-          if(bmImg==null&zm[position]!=null)
+        Bitmap bmImg = BitmapFactory.decodeFile(zdjencie);
+        imageView.setImageBitmap(bmImg);
+        if(bmImg==null&zm[position]!=null)
         {
             imageView.setImageDrawable(imageView.getResources().getDrawable(R.drawable.brak));
 

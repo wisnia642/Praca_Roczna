@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="900dp"
+        android:layout_height="500dp"
+        android:background="#ffffff"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout">
+
+        <ListView
+            android:layout_width="800dp"
+            android:layout_height="370dp"
+            android:id="@+id/listView2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/button44"
+            android:layout_marginLeft="47dp"
+            android:layout_marginStart="47dp"
+            android:layout_marginBottom="20dp"
+            android:choiceMode="singleChoice"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="usun"
+            android:id="@+id/button44"
+            android:layout_marginLeft="84dp"
+            android:layout_marginStart="84dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/listView2"
+            android:layout_alignStart="@+id/listView2" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Anuluj"
+            android:id="@+id/button43"
+            android:layout_marginRight="152dp"
+            android:layout_marginEnd="152dp"
+            android:layout_alignTop="@+id/button44"
+            android:layout_alignRight="@+id/listView2"
+            android:layout_alignEnd="@+id/listView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Zarządzanie Rezerwacją"
+            android:id="@+id/textView49"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LP."
+            android:id="@+id/textView55"
+            android:layout_above="@+id/listView2"
+            android:layout_alignLeft="@+id/listView2"
+            android:layout_alignStart="@+id/listView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Stolik"
+            android:id="@+id/textView56"
+            android:layout_above="@+id/listView2"
+            android:layout_alignLeft="@+id/button44"
+            android:layout_alignStart="@+id/button44" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Firma/ Imię Nazwisko"
+            android:id="@+id/textView57"
+            android:layout_alignTop="@+id/textView56"
+            android:layout_toRightOf="@+id/button44"
+            android:layout_toEndOf="@+id/button44" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Data"
+            android:id="@+id/textView58"
+            android:layout_above="@+id/listView2"
+            android:layout_alignRight="@+id/listView2"
+            android:layout_alignEnd="@+id/listView2"
+            android:layout_marginRight="45dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Czas"
+            android:id="@+id/textView59"
+            android:layout_alignTop="@+id/textView58"
+            android:layout_alignRight="@+id/button43"
+            android:layout_alignEnd="@+id/button43"
+            android:layout_marginRight="30dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="500dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stolik Zarezerwowany"
+            android:id="@+id/textView60"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="38dp"
+            android:textSize="25dp"
+            android:textColor="#010101" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Klient / Firma"
+            android:id="@+id/textView61"
+            android:layout_below="@+id/textView60"
+            android:layout_toLeftOf="@+id/textView60"
+            android:layout_toStartOf="@+id/textView60"
+            android:layout_marginTop="45dp"
+            android:layout_marginRight="-40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Data"
+            android:id="@+id/textView62"
+            android:layout_alignTop="@+id/textView65"
+            android:layout_alignLeft="@+id/textView61"
+            android:layout_alignStart="@+id/textView61" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Czas"
+            android:id="@+id/textView63"
+            android:layout_marginTop="42dp"
+            android:layout_below="@+id/textView62"
+            android:layout_alignLeft="@+id/textView62"
+            android:layout_alignStart="@+id/textView62" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/textView64"
+            android:layout_alignTop="@+id/textView61"
+            android:layout_alignLeft="@+id/textView65"
+            android:layout_alignStart="@+id/textView65" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/textView65"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/textView66"
+            android:layout_alignStart="@+id/textView66" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/textView66"
+            android:layout_alignTop="@+id/textView63"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="82dp"
+            android:layout_marginEnd="82dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Potwierdz"
+            android:id="@+id/button45"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/textView63"
+            android:layout_alignStart="@+id/textView63"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anuluj"
+            android:id="@+id/button46"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/textView66"
+            android:layout_alignStart="@+id/textView66"
+            android:layout_marginBottom="20dp" />
+    </RelativeLayout>
+</RelativeLayout>
