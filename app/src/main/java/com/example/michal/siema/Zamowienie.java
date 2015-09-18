@@ -39,7 +39,7 @@ import java.util.List;
 public class Zamowienie extends ActionBarActivity  {
 
     Bundle applesData;
-    String cena,cena1,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc;
+    String cena,cena1,zdjecie,dodatki,dodatkowe_zyczenia,sql,nazwa,ilosc,sposob,skladniki;
     String sala=null;
     Double wartosc=0.0;
     Double suma=0.0;
@@ -96,7 +96,7 @@ public class Zamowienie extends ActionBarActivity  {
             } catch (SQLException e1) {
 
             }
-                sql = "INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma) VALUES (?,?,?,?,?,?,?) ";
+                sql = "INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma,Sposob_przygotowania,Skladniki) VALUES (?,?,?,?,?,?,?,?,?) ";
 
 
                 try {
@@ -115,6 +115,8 @@ public class Zamowienie extends ActionBarActivity  {
                     ps.setString(5,dodatkowe_zyczenia);
                     ps.setBinaryStream(6, fis, (int) file.length());
                     ps.setString(7, cena1);
+                    ps.setString(8, sposob);
+                    ps.setString(9, skladniki);
                     ps.executeUpdate();
                     connection.commit();
 
@@ -149,7 +151,7 @@ public class Zamowienie extends ActionBarActivity  {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc VARCHAR,Dodatki VARCHAR," +
-                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE);");
+                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE,Sposob_przygotowania VARCHAR,Skladniki);");
 
         }
         catch (Exception e){}
@@ -184,7 +186,7 @@ public class Zamowienie extends ActionBarActivity  {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             suma=0.0;
-            sampleDB.execSQL("INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma) VALUES ('"+sala+"','"+nazwa+"','"+ilosc+"','"+dodatki+"','"+dodatkowe_zyczenia+"','"+zdjecie+"','"+cena1+"') ");
+            sampleDB.execSQL("INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma,Sposob_przygotowania,Skladniki) VALUES ('"+sala+"','"+nazwa+"','"+ilosc+"','"+dodatki+"','"+dodatkowe_zyczenia+"','"+zdjecie+"','"+cena1+"','"+sposob+"','"+skladniki+"') ");
 
             sampleDB.close();
 
@@ -209,10 +211,12 @@ public class Zamowienie extends ActionBarActivity  {
         TextView Kasa = (TextView) findViewById(R.id.textView29);
 
         applesData = getIntent().getExtras();
-      //  sala = applesData.getString("Sala");
+        sala = applesData.getString("Sala");
         cena = applesData.getString("cena");
         zdjecie = applesData.getString("zdjecie");
         nazwa = applesData.getString("nazwa");
+        sposob = applesData.getString("sposob");
+        skladniki = applesData.getString("skladniki");
 
         try{readFromDataBase();}catch (Exception e){showToast("blad :(");}
 
@@ -243,6 +247,8 @@ public class Zamowienie extends ActionBarActivity  {
         i=i+1;
         spinnerOsversions = (Spinner) findViewById(R.id.spinner);
         spinnerOsversions.setAdapter(new MyAdapter(this, R.layout.custom_spiner, listaStringow));
+      //  spinnerOsversions.setPrompt("siema stary");
+       // spinnerOsversions.
 
         spinnerOsversions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -267,7 +273,7 @@ public class Zamowienie extends ActionBarActivity  {
         }
         Nazwa.setText(nazwa);
         Suma.setText(cena);
-        showToast(String.valueOf(klikniete));
+
         //liczenie wszystkich zanmowien
         Kasa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,7 +309,7 @@ public class Zamowienie extends ActionBarActivity  {
                         dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
                         try {
 
-                                suma = Double.parseDouble(ilosc);
+                            suma = Double.parseDouble(ilosc);
                             wartosc = Double.parseDouble(cena);
                             suma = suma * wartosc;
                             cena1 = String.valueOf(suma);
@@ -314,13 +320,13 @@ public class Zamowienie extends ActionBarActivity  {
                         catch(Exception e)
                         {}
 
-                            if(klikniete==false)
+                            if(klikniete==false & sala==null)
                             {
-                                sala =String.valueOf(i);
+                                sala = String.valueOf(i);
                             }
-                            if (klikniete==true)
+                            if (klikniete==true & sala==null)
                             {
-                                sala=(tab[w]);
+                                sala = (tab[w]);
                             }
 
                         ZapisSqlLight();

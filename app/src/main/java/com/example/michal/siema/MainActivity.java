@@ -196,7 +196,7 @@ public class MainActivity extends ActionBarActivity {
         } catch (Exception a) {
         }
     }
-    //TODO MAmy tutaj problem ziom :) - juz nie !!!
+
     //anulacja calego zamowienia
     public void anulacja_sqlLight_SQL()
     {
@@ -540,7 +540,7 @@ public class MainActivity extends ActionBarActivity {
 
         //odczyt z bazy danych i z pliku
         try{readsqlLight();}catch (Exception e){}
-        if(Klient==null){
+        if(Klient[0]==null){
             try {
                 wczytywanie();
             } catch (Exception e) {
@@ -588,6 +588,14 @@ public class MainActivity extends ActionBarActivity {
 
         customAdapter2 adapter2=new customAdapter2(this, klient);
         lista1.setAdapter(adapter2);
+
+        wyjdz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, Kuchnia.class);
+                startActivity(i);
+            }
+        });
 
         rabat.setOnClickListener(new View.OnClickListener() {
             @Override

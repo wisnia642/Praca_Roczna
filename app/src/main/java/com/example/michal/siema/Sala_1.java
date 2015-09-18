@@ -1995,6 +1995,7 @@ public class Sala_1 extends ActionBarActivity {
                 case SIUDMY_ELEMENT:
 
                        writeToDataBase();
+                       connectToDataBase();
                         stan=true;
 
                     break;
@@ -2004,8 +2005,9 @@ public class Sala_1 extends ActionBarActivity {
 
                     break;
                 case DZIEWIATY_ELEMENT:
-                          wczytywanie();
+                    wczytywanie();
                           writeToDataBase();
+                    stan=true;
                     Intent i = new Intent(Sala_1.this,MainActivity.class);
                     startActivity(i);
 

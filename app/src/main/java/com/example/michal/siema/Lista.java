@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 
 public class Lista extends ActionBarActivity {
@@ -49,6 +51,11 @@ public class Lista extends ActionBarActivity {
     final String[] zm1 = new String[50];
     final String[] zm2 = new String[50];
     final String[] zm3 = new String[50];
+    final String[] zm4 = new String[50];
+    final String[] zm5 = new String[50];
+    PreparedStatement ps;
+    FileInputStream fis = null;
+    File file;
 
     ResultSet resultSet;
     FileOutputStream fos;
@@ -93,7 +100,7 @@ public class Lista extends ActionBarActivity {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-             String sql = "SELECT Nazwa,Skladniki,Cena,Zdjecie FROM " + posilek + " ";
+             String sql = "SELECT Nazwa,Skladniki,Skladniki1,Sposob_przygotowania,Cena,Zdjecie FROM " + posilek + " ";
 
             try {
                 PreparedStatement stmt = connection.prepareStatement(sql);
@@ -101,8 +108,10 @@ public class Lista extends ActionBarActivity {
 
                 while (resultSet.next()){
                     zm[i] = resultSet.getString(1);
-                    zm1[i] = resultSet.getString(2);
-                    zm2[i] = resultSet.getString(3);
+                    zm5[i] = resultSet.getString(2);
+                    zm1[i] = resultSet.getString(3);
+                    zm4[i] = resultSet.getString(4);
+                    zm2[i] = resultSet.getString(5);
                     File image = new File("/mnt/sdcard/"+zm[i]+".jpg");
                     zm3[i] = "/mnt/sdcard/"+zm[i]+".jpg";
                     try {
@@ -111,7 +120,7 @@ public class Lista extends ActionBarActivity {
                         e.printStackTrace();
                     }
                     byte[] buffer = new byte[1];
-                    InputStream is = resultSet.getBinaryStream(4);
+                    InputStream is = resultSet.getBinaryStream(6);
                     try {
                         while (is.read(buffer) > 0)
                         {
@@ -144,25 +153,89 @@ public class Lista extends ActionBarActivity {
                 showToast("brak połączenia z internetem");
             }
         }
+/*
+    public void export()
+    {
+        connect();
+
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+            String sql = "DELETE FROM "+posilek+"";
 
 
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
+            }
 
+            sql = "INSERT INTO "+posilek+" ('Nazwa','Skladniki1','Sposob_przygotowania','Zdjecie','Cena') VALUES (?,?,?,?,?) ";
+
+            try {
+                connection.setAutoCommit(false);
+                File file =new File(zdjecie);
+                try {
+                    fis = new FileInputStream(file);
+                } catch (FileNotFoundException e) {
+
+                }
+                ps = connection.prepareStatement(sql);
+                ps.setString(1,zm[w]);
+                ps.setString(2,zm1[w]);
+                ps.setString(3,Sposob_przygotowania);
+                ps.setString(4,cena);
+                ps.setBinaryStream(5, fis,(int) file.length());
+                ps.executeUpdate();
+                connection.commit();
+
+            } catch (SQLException e) {
+
+            }
+            finally {
+                try {
+                    ps.close();
+
+                } catch (SQLException e) {
+
+                }
+                try {
+                    fis.close();
+                } catch (IOException e) {
+
+                }
+
+            }
+        }
+        try {
+            if (connection != null)
+                connection.close();
+        } catch (SQLException se) {
+            showToast("brak połączenia z internetem");
+        }
+        }
+*/
     public void readFromSqlLight()
     {
         try{
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
-                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Zdjecie VARCHAR,Cena DOUBLE);");
+                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Skladniki1 VARCHAR,Sposob_przygotowania VARCHAR,Zdjecie VARCHAR,Cena DOUBLE);");
 
             Cursor c=sampleDB.rawQuery("SELECT * FROM '"+posilek+"'",null);
                 int j=0;
                 while (c.moveToNext())
                 {
                     zm[j]=  c.getString(0);
-                    zm1[j]= c.getString(1);
-                    zm3[j]= c.getString(2);
-                    zm2[j]= c.getString(3);
+                    zm5[j] = c.getString(1);
+                    zm1[j]= c.getString(2);
+                    zm3[j]= c.getString(4);
+                    zm2[j]= c.getString(5);
+                    zm4[j] =c.getString(3);
                     j++;
                 }
             sampleDB.close();
@@ -175,13 +248,13 @@ public class Lista extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
-                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Zdjecie VARCHAR ,Cena DOUBLE);");
+                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Skladniki1 VARCHAR,Sposob_przygotowania VARCHAR,Zdjecie VARCHAR ,Cena DOUBLE);");
 
             sampleDB.execSQL("DELETE FROM "+posilek+"");
 
             i=i-1;
             for (int w = 0; w <= i; w = w + 0) {
-                sampleDB.execSQL("INSERT INTO "+posilek+" ('Nazwa','Skladniki','Zdjecie','Cena') VALUES ('"+zm[w]+"','"+zm1[w]+"','"+zm3[w]+"','"+zm2[w]+"')");
+                sampleDB.execSQL("INSERT INTO "+posilek+" ('Nazwa','Skladniki','Skladniki1','Sposob_przygotowania','Zdjecie','Cena') VALUES ('"+zm[w]+"','"+zm5[w]+"','"+zm1[w]+"','"+zm4[w]+"','"+zm3[w]+"','"+zm2[w]+"')");
                 w++;
             }
             sampleDB.close();
@@ -194,10 +267,10 @@ public class Lista extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
-                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Zdjecie VARCHAR ,Cena DOUBLE);");
+                    posilek + "(Nazwa VARCHAR, Skladniki VARCHAR,Skladniki1 VARCHAR,Sposob_przygotowania VARCHAR,Zdjecie VARCHAR ,Cena DOUBLE);");
             i=i-1;
             for (int w = 0; w <= i; w = w + 0) {
-                sampleDB.execSQL("INSERT INTO "+posilek+" ('Nazwa','Skladniki','Zdjecie','Cena') VALUES ('"+zm[w]+"','"+zm1[w]+"','"+zm3[w]+"','"+zm2[w]+"')");
+                sampleDB.execSQL("INSERT INTO "+posilek+" ('Nazwa','Skladniki','Skladniki1','Sposob_przygotowania','Zdjecie','Cena') VALUES ('"+zm[w]+"','"+zm5[w]+"','"+zm1[w]+"','"+zm4[w]+"','"+zm3[w]+"','"+zm2[w]+"')");
                 w++;
             }
             sampleDB.close();
@@ -240,6 +313,10 @@ public class Lista extends ActionBarActivity {
                                 i.putExtra("cena", Massage3);
                                 String Message4 = String.valueOf(zm3[userSelectedIndex]);
                                 i.putExtra("zdjecie", Message4);
+                                String Message5 = String.valueOf(zm4[userSelectedIndex]);
+                                i.putExtra("sposob",Message5);
+                                String Message6 = String.valueOf(zm5[userSelectedIndex]);
+                                i.putExtra("skladniki", Message6);
                                 i.putExtra("Sala", Sala);
 
 
@@ -264,6 +341,8 @@ public class Lista extends ActionBarActivity {
                     i.putExtra("cena", Massage3);
                     String Message4 = String.valueOf(zm3[userSelectedIndex]);
                     i.putExtra("zdjecie", Message4);
+                    String Message5 = String.valueOf(zm4[userSelectedIndex]);
+                    i.putExtra("Sposob_przygotowania",Message5);
                     i.putExtra("warunek", message13);
                     i.putExtra("kategoria", posilek);
                     startActivity(i);
@@ -275,12 +354,14 @@ public class Lista extends ActionBarActivity {
                     Intent i = new Intent(Lista.this, Dodawanie.class);
                     String Message1 = String.valueOf(zm[userSelectedIndex]);
                     i.putExtra("nazwa", Message1);
-                    String Massage2 = zm1[userSelectedIndex];
+                    String Massage2 = zm5[userSelectedIndex];
                     i.putExtra("skladniki", Massage2);
                     String Massage3 = zm2[userSelectedIndex];
                     i.putExtra("cena", Massage3);
                     String Message4 = String.valueOf(zm3[userSelectedIndex]);
                     i.putExtra("zdjecie", Message4);
+                    String Message5 = String.valueOf(zm4[userSelectedIndex]);
+                    i.putExtra("Sposob_przygotowania",Message5);
                     i.putExtra("warunek", message13);
                     i.putExtra("kategoria", posilek);
                     pozycja = String.valueOf(userSelectedIndex + 1);
@@ -333,11 +414,15 @@ public class Lista extends ActionBarActivity {
             case CZWARTY_ELEMENT:
                 wczytywanie();
                 saveDataSqlLight();
+                Intent j = new Intent(Lista.this,MainActivity.class);
+                startActivity(j);
 
                 break;
             case PIATY_ELEMENT:
                 wczytywanie();
                 saveDataSqlLigtUpdate();
+                Intent v = new Intent(Lista.this,MainActivity.class);
+                startActivity(v);
                 break;
 
             default:

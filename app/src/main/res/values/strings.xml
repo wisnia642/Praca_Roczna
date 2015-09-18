@@ -22,5 +22,10 @@
     <string name="Suma">Suma:</string>
     <string name="usun">New Button</string>
     <string name="anuluj">New Button</string>
+    <string name="select">select</string>
+    <string name="prompt_text">prompt_text</string>
+    <string name="title_activity_kuchnia">Kuchnia</string>
+    <string name="title_activity_karta_dodawanie">Karta_dodawanie</string>
+    <string name="title_activity_lista_dodawanie">Lista_dodawanie</string>
 
 </resources>

@@ -80,7 +80,6 @@ public class Karta extends ActionBarActivity {
         }
     }
 
-
     private void readsqlLight() {
         ToDataBase();
         try {
@@ -226,7 +225,6 @@ public class Karta extends ActionBarActivity {
             buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

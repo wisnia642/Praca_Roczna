@@ -17,7 +17,7 @@ public class customAdapter3 extends ArrayAdapter<String> {
     private final String[] Sczas;
     private final String[] Sdata;
 
-    public customAdapter3(Rezerwacja context,
+    public customAdapter3(Activity context,
                          String[] sztuki, String[] sala, String[] klient, String[] czas,String[] data) {
         super(context, R.layout.custom_row3, sztuki);
         this.context = context;
@@ -31,18 +31,17 @@ public class customAdapter3 extends ArrayAdapter<String> {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView3 = inflater.inflate(R.layout.custom_row3, null, true);
 
-        TextView Text1 = (TextView) rowView3.findViewById(R.id.textView54);
-        TextView Text2 = (TextView) rowView3.findViewById(R.id.textView50);
-       TextView Text3 = (TextView) rowView3.findViewById(R.id.textView51);
-       TextView Text4 = (TextView) rowView3.findViewById(R.id.textView52);
+             TextView Text1 = (TextView) rowView3.findViewById(R.id.textView54);
+             TextView Text2 = (TextView) rowView3.findViewById(R.id.textView50);
+             TextView Text3 = (TextView) rowView3.findViewById(R.id.textView51);
+             TextView Text4 = (TextView) rowView3.findViewById(R.id.textView52);
              TextView Text5 = (TextView) rowView3.findViewById(R.id.textView53);
 
              Text1.setText(Ssztuki[position]);
-            Text2.setText(Ssala[position]);
-            Text3.setText(Sklient[position]);
+             Text2.setText(Ssala[position]);
+             Text3.setText(Sklient[position]);
              Text4.setText(Sczas[position]);
              Text5.setText(Sdata[position]);
-
 
              return rowView3;
 

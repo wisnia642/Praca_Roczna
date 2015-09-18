@@ -26,7 +26,6 @@ public class customAdapter2 extends ArrayAdapter<String> {
 
         txtTitle.setText(Stolik[position]);
 
-
         return rowView2;
     }
 }

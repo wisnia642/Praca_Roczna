@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class customAdapter1 extends ArrayAdapter<String> {
 
     private final Activity context;
@@ -17,6 +19,7 @@ public class customAdapter1 extends ArrayAdapter<String> {
     private final String[] Ilosc;
     private final String[] Zdjecie;
     private final int poz;
+
     public customAdapter1(Activity context,
                          String[] zm,String[] zm1, String[] zm2,int zm3) {
         super(context, R.layout.custom_row1, zm);

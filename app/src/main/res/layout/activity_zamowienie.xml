@@ -212,6 +212,7 @@
         android:layout_alignRight="@+id/editText3"
         android:layout_alignEnd="@+id/editText3"
         android:layout_above="@+id/editText4"
+        android:prompt="@string/prompt_text"
         android:spinnerMode="dropdown" />
 
 </RelativeLayout>

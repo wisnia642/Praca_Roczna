@@ -24,7 +24,7 @@
             android:id="@+id/textView16"
             android:layout_marginLeft="120dp"
             android:layout_marginStart="153dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -40,7 +40,7 @@
             android:textSize="25dp"
             android:text="Kategoria"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="20dp" />
 
         <Spinner
             android:layout_width="548dp"
@@ -60,7 +60,7 @@
             android:textSize="25dp"
             android:text="Nazwa"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="30dp" />
 
         <EditText
             android:layout_width="548dp"
@@ -85,17 +85,37 @@
             android:textSize="25dp"
             android:text="Składniki"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="60dp" />
+            android:layout_marginTop="40dp" />
 
         <EditText
             android:layout_width="548dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:id="@+id/editTextS"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="-30dp"
-            android:layout_weight="0.24"
             android:layout_marginLeft="70dp"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView67"
+            android:textSize="25dp"
+            android:text="Sposób przy."
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="40dp" />
+
+        <EditText
+            android:layout_width="557dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText10"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-30dp"
+            android:layout_marginLeft="70dp"
+            android:textSize="25dp"
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,7 +125,7 @@
             android:textSize="25dp"
             android:text="Cena"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="60dp" />
+            android:layout_marginTop="40dp" />
 
         <EditText
             android:layout_width="548dp"
@@ -170,7 +190,7 @@
             android:id="@+id/but3"
             android:layout_gravity="left|bottom"
             android:textSize="25dp"
-            android:layout_marginBottom="30dp" />
+            android:layout_marginBottom="20dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -178,7 +198,7 @@
             android:id="@+id/but4"
             android:layout_gravity="right|bottom"
             android:textSize="25dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/usun1" />
     </FrameLayout>
 
