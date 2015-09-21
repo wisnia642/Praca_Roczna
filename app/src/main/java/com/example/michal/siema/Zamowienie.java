@@ -151,7 +151,7 @@ public class Zamowienie extends ActionBarActivity  {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc VARCHAR,Dodatki VARCHAR," +
-                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE,Sposob_przygotowania VARCHAR,Skladniki);");
+                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE,Sposob_przygotowania VARCHAR,Skladniki VARCHAR,Stan VARCHAR);");
 
         }
         catch (Exception e){}

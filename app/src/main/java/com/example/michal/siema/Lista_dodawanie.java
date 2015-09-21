@@ -41,7 +41,7 @@ public class Lista_dodawanie extends ActionBarActivity {
     int i = 0;
     static Statement st;
     Connection connection = null;
-    String posilek;
+    String posilek,gdzie;
     String pozycja;
     String message13 = "";
 
@@ -241,6 +241,8 @@ public class Lista_dodawanie extends ActionBarActivity {
                            Intent w = new Intent(Lista_dodawanie.this,Dodawanie.class);
                            w.putExtra("kategoria", posilek);
                            w.putExtra("warunek", message13);
+                           gdzie="true";
+                           w.putExtra("gdzie",gdzie);
                            startActivity(w);
                        }
                         //usuwanie z menu
@@ -259,6 +261,8 @@ public class Lista_dodawanie extends ActionBarActivity {
                             i.putExtra("Sposob_przygotowania", Message5);
                             i.putExtra("warunek", message13);
                             i.putExtra("kategoria", posilek);
+                            gdzie="true";
+                            i.putExtra("gdzie",gdzie);
                             startActivity(i);
                         }
 
@@ -280,12 +284,12 @@ public class Lista_dodawanie extends ActionBarActivity {
                             i.putExtra("kategoria", posilek);
                             pozycja = String.valueOf(userSelectedIndex + 1);
                             i.putExtra("pozycja", pozycja);
+                            gdzie="true";
+                            i.putExtra("gdzie",gdzie);
                             startActivity(i);
                         }
                     }
 
                 });
-
-
     }
 }

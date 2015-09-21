@@ -208,4 +208,14 @@
         android:layout_toRightOf="@+id/button40"
         android:layout_toEndOf="@+id/button40" />
 
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="90dp"
+        android:id="@+id/button50"
+        android:background="@drawable/brakkategorii"
+        android:layout_above="@+id/textView46"
+        android:layout_alignLeft="@+id/textView76"
+        android:layout_alignStart="@+id/textView76"
+        android:layout_marginLeft="-20dp" />
+
 </RelativeLayout>

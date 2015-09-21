@@ -35,24 +35,38 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Kuchnia extends ActionBarActivity {
 
-    Button wylacz,przerwa,dod_przepis,edy_przepis,usu_przepis,mroznia,lodowka,magazyn,
+    Button wylacz,przerwa,dod_przepis,edy_przepis,usu_przepis,mroznia,lodowka,magazyn,brak_kategori,
             przyjete,koniec;
     ImageView obraz;
     TextView nazwa,skladniki,sposob_przyrzadzenia,czas;
     ListView lista;
     int[] Klik = new int[20];
     String[] Klient = new String[20];
+    String[] Klient1 = new String[20];
     String[] Danie = new String[20];
     String[] Ilosc = new String[20];
+    String[] Ilosc1 = new String[20];
     String[] Zdjecie = new String[20];
     String[] Sposb = new String[20];
     String[] Skladniki = new String[20];
+    String[] Skladniki_produkty = new String[20];
+    String[] Skladniki_porcje = new String[20];
     String[] Dodatki = new String[20];
+    String[] Dodatki1 = new String[20];
     String[] Dodatkowe_zyczenia= new String[20];
-    Boolean[] Wykonane = new Boolean[20];
+    String[] Dodatkowe_zyczenia1= new String[20];
+    String[] Lodowka= new String[40];
+    String[] Lodówka_ilosc = new String[40];
+    String[] Mroznia= new String[40];
+    String[] Mroznia_ilosc = new String[40];
+    String[] Magazyn= new String[40];
+    String[] Magazyn_ilosc = new String[40];
+    String[] Wykonane = new String[20];
 
     long[] startTime = {0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L};
     private Handler customHandler = new Handler();
@@ -61,10 +75,15 @@ public class Kuchnia extends ActionBarActivity {
     long[] updatedTime = {0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L};
     int mins,secs,milliseconds;
 
-    String message,zegarek;
-    int x,q,poz;
+    String message,zegarek,data,czas1,gdzie_idzie;
+    Boolean stan1=false;
+    Boolean stan2=false;
+    Boolean stan3=false;
+
+    int x,q,poz,A,B,C,w,p;
     FileOutputStream fos;
     customAdapter4 adapter;
+    Double zm;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -85,12 +104,94 @@ public class Kuchnia extends ActionBarActivity {
     {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS WYKONANE (Data VARCHAR,Czas VARCHAR,Nazwa VARCHAR," +
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Wykonane (Data VARCHAR,Czas VARCHAR,Nazwa VARCHAR," +
                     "Ilosc VARCHAR,Czas_wykonania VARCHAR,Kto_wykonal VARCHAR);");
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Lodowka (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Mroznia (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Magazyn (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Brak_kategori (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
 
         }
         catch (Exception e){}
 
+    }
+
+    private void SqlLigtKoniec() {
+        ToDataBase();
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            sampleDB.execSQL("UPDATE Zamowienie SET Stan=('" + Wykonane[q] + "') WHERE Klient=('" + Klient[q] + "') AND Danie=('" + Danie[q] + "') ");
+
+            sampleDB.close();
+        } catch (Exception e) {
+            showToast("Blad w update");
+        }
+
+        try {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            data = sdf.format(new Date());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("kk:mm:ss");
+            czas1 = sdf1.format(new Date());
+
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+            sampleDB.execSQL("INSERT INTO Wykonane (Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal) VALUES ('" + data + "','" + czas1 + "','" + Danie[q] + "','" + Ilosc[q] + "','" + zegarek + "','"+"Kucharz"+"') ");
+
+            sampleDB.close();
+        } catch (Exception e) {
+            showToast("Blad w update");
+        }
+
+        connect();
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+
+            String sql = "UPDATE Zamowienie SET Stan=('" + Wykonane[q] + "') WHERE Klient=('" + Klient[q] + "') AND Danie=('" + Danie[q] + "') ";
+
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
+            }
+
+            String sql1 = "INSERT INTO Wykonane (Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal) VALUES" +
+                    " (?,?,?,?,?,?)";
+
+            try {
+                ps = connection.prepareStatement(sql1);
+                ps.setString(1, data);
+                ps.setString(2, czas1);
+                ps.setString(3, Danie[q]);
+                ps.setString(4, Ilosc[q]);
+                ps.setString(5, zegarek);
+                ps.setString(6, "Kucharz");
+                ps.executeUpdate();
+                connection.commit();
+
+            } catch (SQLException e) {
+
+            }
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+        }
     }
 
     private void readsqlLight() {
@@ -98,7 +199,7 @@ public class Kuchnia extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-            Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
+            Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE", null);
 
             while (c.moveToNext()) {
                 String zm = String.valueOf(c.getString(1));
@@ -111,11 +212,47 @@ public class Kuchnia extends ActionBarActivity {
                     Zdjecie[x] = String.valueOf(c.getString(5));
                     Sposb[x] = String.valueOf(c.getString(7));
                     Skladniki[x] = String.valueOf(c.getString(8));
+                    Wykonane[x] = String.valueOf(c.getString(9));
                     x++;}
             }
+
+            A=0;
+            Cursor a  = sampleDB.rawQuery("SELECT * FROM Lodowka",null);
+
+            while (a.moveToNext()) {
+                String zm = String.valueOf(a.getString(0));
+                if(zm!=null){
+                    Lodowka[A] = String.valueOf(a.getString(0));
+                    Lodówka_ilosc[A] = String.valueOf(a.getString(1));
+                    A++;}
+            }
+
+             C=0;
+            Cursor b  = sampleDB.rawQuery("SELECT * FROM Magazyn",null);
+
+            while (b.moveToNext()) {
+                String zm = String.valueOf(b.getString(0));
+                if(zm!=null){
+                    Magazyn[C] = String.valueOf(b.getString(0));
+                    Magazyn_ilosc[C] = String.valueOf(b.getString(1));
+                    C++;}
+            }
+
+              B=0;
+            Cursor d  = sampleDB.rawQuery("SELECT * FROM Mroznia",null);
+
+            while (d.moveToNext()) {
+                String zm = String.valueOf(d.getString(0));
+                if(zm!=null){
+                    Mroznia[B] = String.valueOf(d.getString(0));
+                    Mroznia_ilosc[B] = String.valueOf(d.getString(1));
+                    B++;}
+            }
+
             sampleDB.close();
         } catch (Exception a) {
         }
+
     }
 
     //tworzenie polaczenia z baza danych
@@ -172,6 +309,7 @@ public class Kuchnia extends ActionBarActivity {
                     Sposb[x] = rs.getString("Sposob_przygotowania");
                     Skladniki[x] = rs.getString("Skladniki");
                     Dodatki[x] = rs.getString("Dodatki");
+                    Wykonane[x] = rs.getString("Stan");
                     Dodatkowe_zyczenia[x] = rs.getString("Dodatkowe_Zyczenia");
                     File image = new File("/mnt/sdcard/"+Klient[x]+".jpg");
                     Zdjecie[x] = "/mnt/sdcard/"+Klient[x]+".jpg";
@@ -206,6 +344,7 @@ public class Kuchnia extends ActionBarActivity {
             {
                 e1.printStackTrace();
             }
+
             try{
                 if(connection!=null)
                     connection.close();
@@ -245,6 +384,33 @@ public class Kuchnia extends ActionBarActivity {
 
     };
 
+    public void UpdateSql()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+//poprawić ma być insert bo tych składników jeszcze nie ma
+            sampleDB.execSQL("UPDATE "+gdzie_idzie+" SET Ilosc=('" + zm + "'),Przynaleznosc=('" + gdzie_idzie + "')  WHERE Nazwa=('" + Skladniki_produkty[p] + "') ");
+
+            sampleDB.close();
+        } catch (Exception e) {
+            showToast("Blad w update");
+        }
+    }
+
+    public void UpdateSql1()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            //poprawić ma być insert bo tych składników jeszcze nie ma
+            sampleDB.execSQL("INSERT INTO Brak_kategori (Nazwa,Ilosc,Kategoria,Stan_krytyczny,Przynaleznosc) VALUES ('" + Skladniki_produkty[p] + "','" + Skladniki_porcje[p] + "','" + "brak" + "','" + "0" + "','" + gdzie_idzie + "') ");
+
+
+            sampleDB.close();
+        } catch (Exception e) {
+            showToast("Blad w update");
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +425,7 @@ public class Kuchnia extends ActionBarActivity {
         mroznia = (Button) findViewById(R.id.button47);
         lodowka = (Button) findViewById(R.id.button39);
         magazyn = (Button) findViewById(R.id.button48);
+        brak_kategori = (Button) findViewById(R.id.button50);
         przyjete = (Button) findViewById(R.id.button40);
         koniec = (Button) findViewById(R.id.button41);
 
@@ -271,10 +438,24 @@ public class Kuchnia extends ActionBarActivity {
         obraz = (ImageView) findViewById(R.id.imageView5);
 
 
-        //  wczytywanie();
-        readsqlLight();
 
-        adapter = new customAdapter4(this, Klient, Dodatki, Dodatkowe_zyczenia, Ilosc);
+        readsqlLight();
+        if(Klient[0]==null){
+            try {
+                wczytywanie();
+            } catch (Exception e) {
+            }}
+        int j=0;
+        for(int i=0;i<Klient.length;i=i+0) {
+            if (Wykonane[i]=="null") {
+                Klient1[j] = Klient[i];
+                Dodatki1[j] = Dodatki[i];
+                Dodatkowe_zyczenia1[j]=Dodatkowe_zyczenia[i];
+                Ilosc1[j]=Ilosc[i];
+                j++;
+            }i++;
+        }
+        adapter = new customAdapter4(this, Klient1, Dodatki1, Dodatkowe_zyczenia1, Ilosc1);
         lista.setAdapter(adapter);
 
         wylacz.setOnClickListener(new View.OnClickListener() {
@@ -288,7 +469,7 @@ public class Kuchnia extends ActionBarActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(Danie[i]!=null) {
+                if (Danie[i] != null) {
                     poz = i;
                     q = i;
                     if (Klik[poz] == 2) {
@@ -339,6 +520,43 @@ public class Kuchnia extends ActionBarActivity {
             }
         });
 
+        mroznia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                message = "Mroznia";
+                c.putExtra("wartosc", message);
+                startActivity(c);
+            }
+        });
+        lodowka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                message = "Lodowka";
+                c.putExtra("wartosc", message);
+                startActivity(c);
+            }
+        });
+        magazyn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                message = "Magazyn";
+                c.putExtra("wartosc", message);
+                startActivity(c);
+            }
+        });
+        brak_kategori.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                message = "Brak_kategorii";
+                c.putExtra("wartosc", message);
+                startActivity(c);
+            }
+        });
+
         przyjete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -346,9 +564,11 @@ public class Kuchnia extends ActionBarActivity {
                 czas.setVisibility(view.VISIBLE);
                 startTime[q] = SystemClock.uptimeMillis();
                 customHandler.postDelayed(updateTimerThread, 0);
-                Wykonane[q]=false;
+                Wykonane[q]="false";
             }
         });
+
+
 
         koniec.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -360,8 +580,76 @@ public class Kuchnia extends ActionBarActivity {
 
                         + String.format("%03d", milliseconds));
 
-                Wykonane[q]=true;
+                Wykonane[q]="true";
+                Skladniki_produkty = (Skladniki[q].split("[-,0-99999+]+"));;
+                String filtered = Skladniki[q].replaceAll("[^0-9,]", "");
+                Skladniki_porcje = filtered.split(",");
+
+
+
+               for(p=0;p<Skladniki_produkty.length;p=p+0) {
+
+                    for(int j=0;j<Lodowka.length;j=j+0)
+                    {
+                        if(Lodowka[p]!=null){
+                        if(Skladniki_produkty[p].equals(Lodowka[j])) {
+                            Double zm1;
+                            Double zm2;
+                            zm1= Double.parseDouble(Skladniki_porcje[p]);
+                            zm2= Double.parseDouble(Lodówka_ilosc[j]);
+                            zm = zm2-zm1;
+                            showToast(String.valueOf(zm));
+                            gdzie_idzie="Lodowka";
+                            stan1=true;
+                           UpdateSql();
+                        }
+                            j++;
+                    }}
+                   if(Magazyn[p]!=null){
+                    for(int j=0;j<Magazyn.length;j=j+0)
+                    {
+                        if(Skladniki_produkty[p].equals(Magazyn[j])) {
+                            Double zm1;
+                            Double zm2;
+                            zm1= Double.parseDouble(Skladniki_porcje[p]);
+                            zm2= Double.parseDouble(Magazyn_ilosc[j]);
+                            zm = zm1-zm2;
+                            w=p;
+                            gdzie_idzie="Magazyn";
+                            stan2=true;
+                            UpdateSql();
+
+                        }
+
+                    }}
+                   if(Magazyn[p]!=null){
+                    for(int j=0;j<Mroznia.length;j=j+0)
+                    {
+                        if(Skladniki_produkty[p].equals(Mroznia[j])) {
+                            Double zm1;
+                            Double zm2;
+                            zm1= Double.parseDouble(Skladniki_porcje[p]);
+                            zm2= Double.parseDouble(Mroznia_ilosc[j]);
+                            zm = zm1-zm2;
+                            w=p;
+                            stan3=true;
+                            gdzie_idzie="Mroznia";
+                            UpdateSql();
+                        }
+
+                    }}
+
+                   if (stan1 == false & stan2 == false & stan3 == false) {
+                       gdzie_idzie="Brak Kategorii";
+                       UpdateSql1();
+                  }
+                   p++;
+               }
+                  SqlLigtKoniec();
+                finish();
+                startActivity(getIntent());
             }
+
         });
 
     }

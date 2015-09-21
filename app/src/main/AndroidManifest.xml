@@ -81,6 +81,10 @@
             android:name=".Lista_dodawanie"
             android:label="@string/title_activity_lista_dodawanie" >
         </activity>
+        <activity
+            android:name=".Pprodukty_kategoria"
+            android:label="@string/title_activity_pprodukty_kategoria" >
+        </activity>
     </application>
 
 </manifest>
