@@ -11,28 +11,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:id="@+id/textView77"
         android:textSize="30dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="400dp"
         android:id="@+id/listView4"
-        android:layout_marginBottom="86dp"
+        android:layout_marginBottom="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Spinner
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:id="@+id/spinner5"
         android:layout_alignBottom="@+id/editText13"
-        android:layout_alignRight="@+id/textView77"
-        android:layout_alignEnd="@+id/textView77" />
+        android:layout_toRightOf="@+id/editText13"
+        android:layout_toEndOf="@+id/editText13"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,17 +42,16 @@
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/editText11"
-        android:layout_alignTop="@+id/spinner5"
-        android:layout_toRightOf="@+id/spinner5"
-        android:layout_toEndOf="@+id/spinner5"
-        android:layout_marginLeft="49dp"
-        android:layout_marginStart="49dp" />
+        android:layout_alignBottom="@+id/spinner6"
+        android:layout_toLeftOf="@+id/spinner6"
+        android:layout_toStartOf="@+id/spinner6"
+        android:layout_marginRight="47dp"
+        android:layout_marginEnd="47dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/editText12"
         android:layout_marginBottom="38dp"
@@ -62,7 +63,6 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/editText13"
         android:layout_alignTop="@+id/editText12"
@@ -117,30 +117,29 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ok"
+        android:text="Przenieś"
         android:id="@+id/button51"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView79"
-        android:layout_alignEnd="@+id/textView79" />
+        android:layout_toLeftOf="@+id/textView77"
+        android:layout_toStartOf="@+id/textView77" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/button52"
-        android:layout_alignTop="@+id/button51"
-        android:layout_toLeftOf="@+id/editText11"
-        android:layout_toStartOf="@+id/editText11"
-        android:layout_marginRight="45dp"
-        android:layout_marginEnd="45dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/textView81"
+        android:layout_alignEnd="@+id/textView81" />
 
     <Spinner
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:id="@+id/spinner6"
         android:layout_alignBottom="@+id/editText13"
         android:layout_alignRight="@+id/listView4"
-        android:layout_alignEnd="@+id/listView4" />
+        android:layout_alignEnd="@+id/listView4"
+        android:visibility="invisible" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -150,6 +149,25 @@
         android:id="@+id/textView86"
         android:layout_alignTop="@+id/textView81"
         android:layout_alignLeft="@+id/spinner6"
-        android:layout_alignStart="@+id/spinner6" />
+        android:layout_alignStart="@+id/spinner6"
+        android:visibility="invisible" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuń"
+        android:id="@+id/button53"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/editText11"
+        android:layout_toStartOf="@+id/editText11" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Utwórz"
+        android:id="@+id/button54"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/textView80"
+        android:layout_toStartOf="@+id/textView80" />
 
 </RelativeLayout>

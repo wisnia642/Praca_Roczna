@@ -107,8 +107,7 @@ public class Kuchnia extends ActionBarActivity {
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Wykonane (Data VARCHAR,Czas VARCHAR,Nazwa VARCHAR," +
                     "Ilosc VARCHAR,Czas_wykonania VARCHAR,Kto_wykonal VARCHAR);");
 
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Lodowka (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
-                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Lodowka (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR,Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Mroznia (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
                     "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
@@ -195,7 +194,7 @@ public class Kuchnia extends ActionBarActivity {
     }
 
     private void readsqlLight() {
-
+            ToDataBase();
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
@@ -437,13 +436,13 @@ public class Kuchnia extends ActionBarActivity {
         lista = (ListView) findViewById(R.id.listView);
         obraz = (ImageView) findViewById(R.id.imageView5);
 
-
-
         readsqlLight();
+
         if(Klient[0]==null){
             try {
-                wczytywanie();
-            } catch (Exception e) {
+               readsqlLight();
+               wczytywanie();
+           } catch (Exception e) {
             }}
         int j=0;
         for(int i=0;i<Klient.length;i=i+0) {
@@ -457,6 +456,7 @@ public class Kuchnia extends ActionBarActivity {
         }
         adapter = new customAdapter4(this, Klient1, Dodatki1, Dodatkowe_zyczenia1, Ilosc1);
         lista.setAdapter(adapter);
+        //lista.invalidateViews();
 
         wylacz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -589,9 +589,10 @@ public class Kuchnia extends ActionBarActivity {
 
                for(p=0;p<Skladniki_produkty.length;p=p+0) {
 
+                   if(Lodowka[p]!=null){
                     for(int j=0;j<Lodowka.length;j=j+0)
                     {
-                        if(Lodowka[p]!=null){
+
                         if(Skladniki_produkty[p].equals(Lodowka[j])) {
                             Double zm1;
                             Double zm2;
@@ -608,6 +609,7 @@ public class Kuchnia extends ActionBarActivity {
                    if(Magazyn[p]!=null){
                     for(int j=0;j<Magazyn.length;j=j+0)
                     {
+
                         if(Skladniki_produkty[p].equals(Magazyn[j])) {
                             Double zm1;
                             Double zm2;
@@ -620,9 +622,9 @@ public class Kuchnia extends ActionBarActivity {
                             UpdateSql();
 
                         }
-
+                            j++;
                     }}
-                   if(Magazyn[p]!=null){
+                   if(Mroznia[p]!=null){
                     for(int j=0;j<Mroznia.length;j=j+0)
                     {
                         if(Skladniki_produkty[p].equals(Mroznia[j])) {
@@ -636,7 +638,7 @@ public class Kuchnia extends ActionBarActivity {
                             gdzie_idzie="Mroznia";
                             UpdateSql();
                         }
-
+                        j++;
                     }}
 
                    if (stan1 == false & stan2 == false & stan3 == false) {
@@ -645,7 +647,7 @@ public class Kuchnia extends ActionBarActivity {
                   }
                    p++;
                }
-                  SqlLigtKoniec();
+                SqlLigtKoniec();
                 finish();
                 startActivity(getIntent());
             }

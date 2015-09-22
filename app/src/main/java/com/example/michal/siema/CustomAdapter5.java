@@ -28,21 +28,22 @@ public class CustomAdapter5 extends ArrayAdapter<String> {
 
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
-        View rowView4 = inflater.inflate(R.layout.custom_row5, null, true);
-
-        TextView Text1 = (TextView) rowView4.findViewById(R.id.textView82);
-        TextView Text2 = (TextView) rowView4.findViewById(R.id.textView83);
-        TextView Text3 = (TextView) rowView4.findViewById(R.id.textView84);
-        TextView Text4 = (TextView) rowView4.findViewById(R.id.textView85);
+        View rowView5 = inflater.inflate(R.layout.custom_row5, null, true);
 
         if (Nazwa[position] != null) {
-            Text1.setText( Nazwa[position]);
+
+            TextView Text1 = (TextView) rowView5.findViewById(R.id.textView82);
+            TextView Text2 = (TextView) rowView5.findViewById(R.id.textView83);
+            TextView Text3 = (TextView) rowView5.findViewById(R.id.textView84);
+            TextView Text4 = (TextView) rowView5.findViewById(R.id.textView85);
+
+            Text1.setText(Nazwa[position]);
             Text2.setText(Dodatki[position]);
             Text3.setText(Dodatkowe_Zyczenia[position]);
             Text4.setText(Ilosc[position]);
 
         }
-        return rowView4;
+        return rowView5;
 
 
     }

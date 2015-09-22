@@ -24,16 +24,16 @@ import java.util.List;
 
 public class Pprodukty_kategoria extends ActionBarActivity {
 
-    TextView nazwa;
+    TextView nazwa,przyn;
     EditText stan_krytyczny,danie,ilosc;
     Spinner kategoria,przynaleznosc;
     ListView produkty;
-    Button ok,cancel;
-    String wartosc,Danie,Ilosc,Stan_krytyczny;
-    String[] Wagi = {"Szt","Kg","dag","gram"};
+    Button ok,cancel,usun,utworz;
+    String wartosc,Danie,Ilosc,Stan_krytyczny,wagi;
+    String[] Wagi = {"Szt","Kg","Dag","Gram"};
     String[] listaStringow = {"Lodówka","Mroźnia","Magazyn","Brak Kategorii"};
 
-    CustomAdapter5 adapter;
+    CustomAdapter5 adapter1;
 
     String[] Brak_kategorii= new String[40];
     String[] Brak_kategorii_ilosc = new String[40];
@@ -56,6 +56,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
     int A,B,C,D,p,o;
+    boolean klikniecie=false;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -141,6 +142,20 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         } catch (Exception e) {
             showToast("Blad w update");
         }
+
+    }
+
+    public void deletefromSQLlight()
+    {
+        Danie=danie.getText().toString();
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            //poprawić ma być insert bo tych składników jeszcze nie ma
+            sampleDB.execSQL("DELETE FROM " + wartosc + " WHERE Nazwa = ('" + Danie + "') ");
+            sampleDB.close();
+        } catch (Exception e) {
+            showToast("Blad w update");
+        }
     }
 
     @Override
@@ -149,6 +164,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         setContentView(R.layout.activity_pprodukty_kategoria);
 
         nazwa = (TextView) findViewById(R.id.textView77);
+        przyn = (TextView) findViewById(R.id.textView86);
         danie = (EditText) findViewById(R.id.editText12);
         ilosc = (EditText) findViewById(R.id.editText13);
         stan_krytyczny = (EditText) findViewById(R.id.editText11);
@@ -157,11 +173,14 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         produkty = (ListView) findViewById(R.id.listView4);
         ok = (Button) findViewById(R.id.button51);
         cancel = (Button) findViewById(R.id.button52);
+        usun = (Button) findViewById(R.id.button53);
+        utworz = (Button) findViewById(R.id.button54);
 
         Bundle applesData = getIntent().getExtras();
         if (applesData == null) {
             return;
         }
+
         wartosc = applesData.getString("wartosc");
 
         readsqlLight();
@@ -170,66 +189,135 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         przynaleznosc.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, listaStringow));
 
         if (wartosc.equals("Mroznia")) {
-            adapter = new CustomAdapter5(this, Mroznia, Mroznia_ilosc, Mroznia_kategoria, Mroznia_stankrytyczny);
-            produkty.setAdapter(adapter);
+            nazwa.setText("MROŹNIA");
+            przynaleznosc.setSelection(1);
+            adapter1 = new CustomAdapter5(this, Mroznia, Mroznia_ilosc, Mroznia_kategoria, Mroznia_stankrytyczny);
+            produkty.setAdapter(adapter1);
         }
 
         if (wartosc.equals("Magazyn")) {
-            adapter = new CustomAdapter5(this, Magazyn, Magazyn_ilosc, Magazyn_kategoria, Magazyn_stankrytyczny);
-            produkty.setAdapter(adapter);
+            nazwa.setText("MAGAZYN");
+            przynaleznosc.setSelection(2);
+            adapter1 = new CustomAdapter5(this, Magazyn, Magazyn_ilosc, Magazyn_kategoria, Magazyn_stankrytyczny);
+            produkty.setAdapter(adapter1);
         }
 
         if (wartosc.equals("Lodowka")) {
-            adapter = new CustomAdapter5(this, Lodowka, Lodowka_ilosc, Lodowka_kategoria, Lodowka_stankrytyczny);
-            produkty.setAdapter(adapter);
+            nazwa.setText("LODÓWKA");
+            przynaleznosc.setSelection(0);
+            adapter1 = new CustomAdapter5(this, Lodowka, Lodowka_ilosc, Lodowka_kategoria, Lodowka_stankrytyczny);
+            produkty.setAdapter(adapter1);
         }
         if (wartosc.equals("Brak_kategorii")) {
-            adapter = new CustomAdapter5(this, Brak_kategorii, Brak_kategorii_ilosc, Brak_kategorii_kategoria, Brak_kategorii_stankrytyczny);
-            produkty.setAdapter(adapter);
+            nazwa.setText("BRAK KATEGORII");
+            przynaleznosc.setSelection(3);
+            adapter1 = new CustomAdapter5(this, Brak_kategorii, Brak_kategorii_ilosc, Brak_kategorii_kategoria, Brak_kategorii_stankrytyczny);
+            produkty.setAdapter(adapter1);
         }
 
         produkty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                klikniecie=true;
+
                 if (wartosc.equals("Mroznia")) {
-                    nazwa.setText("MROŹNIA");
+                    wagi = Mroznia_kategoria[i];
                     danie.setText(Mroznia[i]);
                     ilosc.setText(Mroznia_ilosc[i]);
-                    przynaleznosc.setSelection(1);
                     stan_krytyczny.setText(Mroznia_stankrytyczny[i]);
+                    przyn.setVisibility(View.VISIBLE);
+                    przynaleznosc.setVisibility(View.VISIBLE);
+
                 }
                 if (wartosc.equals("Magazyn")) {
-                    nazwa.setText("MAGAZYN");
+                    wagi= Magazyn_kategoria[i];
                     danie.setText(Magazyn[i]);
                     ilosc.setText(Magazyn_ilosc[i]);
-                    przynaleznosc.setSelection(2);
                     stan_krytyczny.setText(Magazyn_stankrytyczny[i]);
+                    przyn.setVisibility(View.VISIBLE);
+                    przynaleznosc.setVisibility(View.VISIBLE);
                 }
                 if (wartosc.equals("Lodowka")) {
-                    nazwa.setText("LODÓWKA");
+                    wagi= Lodowka_kategoria[i];
                     danie.setText(Lodowka[i]);
                     ilosc.setText(Lodowka_ilosc[i]);
-                    przynaleznosc.setSelection(0);
                     stan_krytyczny.setText(Lodowka_stankrytyczny[i]);
+                    przyn.setVisibility(View.VISIBLE);
+                    przynaleznosc.setVisibility(View.VISIBLE);
                 }
                 if (wartosc.equals("Brak_kategorii")) {
-                    nazwa.setText("BRAK KATEGORII");
+                    wagi=Brak_kategorii_kategoria[i];
                     danie.setText(Brak_kategorii[i]);
                     ilosc.setText(Brak_kategorii_ilosc[i]);
-                    przynaleznosc.setSelection(3);
                     stan_krytyczny.setText(Brak_kategorii_stankrytyczny[i]);
+                    przyn.setVisibility(View.VISIBLE);
+                    przynaleznosc.setVisibility(View.VISIBLE);
                 }
+
+                if(wagi.equals("Szt"))
+                {
+                    kategoria.setSelection(0);
+                }
+                if(wagi.equals("Dag"))
+                {
+                    kategoria.setSelection(2);
+                }
+                if(wagi.equals("Gram"))
+                {
+                    kategoria.setSelection(3);
+                }
+                if(wagi.equals("Kg"))
+                {
+                    kategoria.setSelection(1);
+                }
+
             }
         });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               saveSqlLight();
+                if (klikniecie == true) {
+                    deletefromSQLlight();
+                    if (p == 0) {
+                        wartosc = "Lodowka";
+                    }
+                    if (p == 1) {
+                        wartosc = "Mroznia";
+                    }
+                    if (p == 2) {
+                        wartosc = "Magazyn";
+                    }
+                    if (p == 3) {
+                        wartosc = "Brak_kategorii";
+                    }
+                }
+                saveSqlLight();
                 finish();
                 startActivity(getIntent());
 
+            }
+        });
+
+        usun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (klikniecie == true) {
+                    deletefromSQLlight();
+                    finish();
+                    startActivity(getIntent());
+                }
+            }
+        });
+
+        utworz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveSqlLight();
+                finish();
+                startActivity(getIntent());
             }
         });
 

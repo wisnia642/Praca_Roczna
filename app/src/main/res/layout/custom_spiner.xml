@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/text1"
         android:layout_width="300dp"
-        android:layout_height="30dp"
+        android:layout_height="45dp"
         android:padding="3px"
         android:textColor="#ff000103"
         android:textSize="22dp"
