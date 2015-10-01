@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView93" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView94"
+        android:layout_marginLeft="175dp"
+        android:layout_marginStart="182dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView93"
+        android:layout_toEndOf="@+id/textView93" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView102"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textView95"
+        android:layout_toStartOf="@+id/textView95"
+        android:layout_marginRight="149dp"
+        android:layout_marginEnd="149dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView95"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView103"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView95"
+        android:layout_marginLeft="170dp"
+        android:layout_marginStart="108dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView96"
+        android:layout_marginRight="211dp"
+        android:layout_marginEnd="211dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textView97"
+        android:layout_toStartOf="@+id/textView97" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView97"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

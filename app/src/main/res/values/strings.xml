@@ -28,5 +28,7 @@
     <string name="title_activity_karta_dodawanie">Karta_dodawanie</string>
     <string name="title_activity_lista_dodawanie">Lista_dodawanie</string>
     <string name="title_activity_pprodukty_kategoria">Pprodukty_kategoria</string>
+    <string name="title_activity_glowne_menu">Glowne_menu</string>
+    <string name="title_activity_magzyn">Magzyn</string>
 
 </resources>

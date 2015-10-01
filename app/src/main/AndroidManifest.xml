@@ -12,9 +12,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:name=".Glowne_menu"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -84,6 +83,17 @@
         <activity
             android:name=".Pprodukty_kategoria"
             android:label="@string/title_activity_pprodukty_kategoria" >
+        </activity>
+        <activity android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Magzyn"
+            android:label="@string/title_activity_magzyn" >
         </activity>
     </application>
 

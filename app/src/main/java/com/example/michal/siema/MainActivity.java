@@ -52,6 +52,8 @@ public class MainActivity extends ActionBarActivity {
     String[] Danie = new String[20];
     String[] Ilosc = new String[20];
     String[] Zdjecie = new String[20];
+    String[] Stan = new String[20];
+    String[] stan1 = new String[20];
     Double[] Suma = new Double[20];
     String zm=null;
     Double zm1;
@@ -61,7 +63,6 @@ public class MainActivity extends ActionBarActivity {
     FileOutputStream fos;
 
     List<String> listaStringow = new ArrayList<String>();
-    Spinner Stolik;
 
     private PopupWindow mpopup;
     customAdapter1 adapter1;
@@ -190,6 +191,7 @@ public class MainActivity extends ActionBarActivity {
                    Ilosc[x] = String.valueOf(c.getString(2));
                    Zdjecie[x] = String.valueOf(c.getString(5));
                    Suma[x] = Double.valueOf(c.getDouble(6));
+                   Stan[x] = String.valueOf(c.getString(9));
                 x++;}
             }
             sampleDB.close();
@@ -241,6 +243,7 @@ public class MainActivity extends ActionBarActivity {
             danie[i]=null;
             ilosc[i]=null;
             zdj[i]=null;
+            stan1[i]=null;
             i++;
         }
        // a=q;
@@ -252,6 +255,7 @@ public class MainActivity extends ActionBarActivity {
                 danie[q]=Danie[i];
                 ilosc[q]=Ilosc[i];
                 zdj[q]=Zdjecie[i];
+                stan1[q]=Stan[i];
                 zm1=zm2+Suma[i];
                 zm2=zm1;
                 q=q+1;
@@ -259,7 +263,7 @@ public class MainActivity extends ActionBarActivity {
             i++;
         }
 
-        adapter1=new customAdapter1(this, danie,ilosc,zdj,q);
+        adapter1=new customAdapter1(this, danie,ilosc,zdj,q,stan1);
         lista.setAdapter(adapter1);
         Txt.setText("Nazwa: " + klient[Numer]);
         Txt1.setText("Suma: " + String.valueOf(zm1));
@@ -592,7 +596,7 @@ public class MainActivity extends ActionBarActivity {
         wyjdz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Kuchnia.class);
+                Intent i = new Intent(MainActivity.this, Glowne_menu.class);
                 startActivity(i);
             }
         });

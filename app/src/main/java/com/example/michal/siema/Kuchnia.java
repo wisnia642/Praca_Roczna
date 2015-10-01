@@ -61,11 +61,14 @@ public class Kuchnia extends ActionBarActivity {
     String[] Dodatkowe_zyczenia= new String[20];
     String[] Dodatkowe_zyczenia1= new String[20];
     String[] Lodowka= new String[40];
+    String[] Lodówka_stan_krytyczny = new String[40];
     String[] Lodówka_ilosc = new String[40];
     String[] Mroznia= new String[40];
     String[] Mroznia_ilosc = new String[40];
+    String[] Mroznia_stan_krytyczny = new String[40];
     String[] Magazyn= new String[40];
     String[] Magazyn_ilosc = new String[40];
+    String[] Magazyn_stan_krytyczny = new String[40];
     String[] Wykonane = new String[20];
 
     long[] startTime = {0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L};
@@ -79,6 +82,7 @@ public class Kuchnia extends ActionBarActivity {
     Boolean stan1=false;
     Boolean stan2=false;
     Boolean stan3=false;
+    Boolean komunikat=false;
 
     int x,q,poz,A,B,C,w,p;
     FileOutputStream fos;
@@ -107,13 +111,14 @@ public class Kuchnia extends ActionBarActivity {
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Wykonane (Data VARCHAR,Czas VARCHAR,Nazwa VARCHAR," +
                     "Ilosc VARCHAR,Czas_wykonania VARCHAR,Kto_wykonal VARCHAR);");
 
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Lodowka (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR,Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Lodowka (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR,Stan_krytyczny VARCHAR," +
+                    "Przynaleznosc VARCHAR,Komunikat VARCHAR,Cena_detaliczna VARCHAR,Ilosc_detaliczna VARCHAR);");
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Mroznia (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
-                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR,Komunikat VARCHAR,Cena_detaliczna VARCHAR,Ilosc_detaliczna VARCHAR);");
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Magazyn (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
-                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR,Komunikat VARCHAR,Cena_detaliczna VARCHAR,Ilosc_detaliczna VARCHAR);");
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Brak_kategori (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
                     "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
@@ -223,6 +228,7 @@ public class Kuchnia extends ActionBarActivity {
                 if(zm!=null){
                     Lodowka[A] = String.valueOf(a.getString(0));
                     Lodówka_ilosc[A] = String.valueOf(a.getString(1));
+                    Lodówka_stan_krytyczny[A] = String.valueOf(a.getString(3));
                     A++;}
             }
 
@@ -234,6 +240,7 @@ public class Kuchnia extends ActionBarActivity {
                 if(zm!=null){
                     Magazyn[C] = String.valueOf(b.getString(0));
                     Magazyn_ilosc[C] = String.valueOf(b.getString(1));
+                    Magazyn_stan_krytyczny[C] = String.valueOf(b.getString(3));
                     C++;}
             }
 
@@ -245,6 +252,7 @@ public class Kuchnia extends ActionBarActivity {
                 if(zm!=null){
                     Mroznia[B] = String.valueOf(d.getString(0));
                     Mroznia_ilosc[B] = String.valueOf(d.getString(1));
+                    Mroznia_stan_krytyczny[B] = String.valueOf(d.getString(3));
                     B++;}
             }
 
@@ -401,7 +409,7 @@ public class Kuchnia extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             //poprawić ma być insert bo tych składników jeszcze nie ma
-            sampleDB.execSQL("INSERT INTO Brak_kategori (Nazwa,Ilosc,Kategoria,Stan_krytyczny,Przynaleznosc) VALUES ('" + Skladniki_produkty[p] + "','" + Skladniki_porcje[p] + "','" + "brak" + "','" + "0" + "','" + gdzie_idzie + "') ");
+            sampleDB.execSQL("INSERT INTO Brak_kategori (Nazwa,Ilosc,Kategoria,Stan_krytyczny,Przynaleznosc,Komunikat) VALUES ('" + Skladniki_produkty[p] + "','" + Skladniki_porcje[p] + "','" + "brak" + "','" + "0" + "','" + gdzie_idzie + "','" + komunikat + "') ");
 
 
             sampleDB.close();
@@ -461,7 +469,7 @@ public class Kuchnia extends ActionBarActivity {
         wylacz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent x = new Intent(Kuchnia.this, MainActivity.class);
+                Intent x = new Intent(Kuchnia.this, Glowne_menu.class);
                 startActivity(x);
             }
         });
@@ -551,7 +559,7 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
-                message = "Brak_kategorii";
+                message = "Brak_kategori";
                 c.putExtra("wartosc", message);
                 startActivity(c);
             }
@@ -599,9 +607,13 @@ public class Kuchnia extends ActionBarActivity {
                             zm1= Double.parseDouble(Skladniki_porcje[p]);
                             zm2= Double.parseDouble(Lodówka_ilosc[j]);
                             zm = zm2-zm1;
-                            showToast(String.valueOf(zm));
                             gdzie_idzie="Lodowka";
                             stan1=true;
+                            zm1= Double.valueOf(Lodówka_stan_krytyczny[j]);
+                            if(zm1<zm)
+                            {
+                                komunikat=true;
+                            }
                            UpdateSql();
                         }
                             j++;
@@ -616,9 +628,13 @@ public class Kuchnia extends ActionBarActivity {
                             zm1= Double.parseDouble(Skladniki_porcje[p]);
                             zm2= Double.parseDouble(Magazyn_ilosc[j]);
                             zm = zm1-zm2;
-                            w=p;
                             gdzie_idzie="Magazyn";
                             stan2=true;
+                            zm1= Double.valueOf(Magazyn_stan_krytyczny[j]);
+                            if(zm1<zm)
+                            {
+                                komunikat=true;
+                            }
                             UpdateSql();
 
                         }
@@ -633,16 +649,20 @@ public class Kuchnia extends ActionBarActivity {
                             zm1= Double.parseDouble(Skladniki_porcje[p]);
                             zm2= Double.parseDouble(Mroznia_ilosc[j]);
                             zm = zm1-zm2;
-                            w=p;
                             stan3=true;
                             gdzie_idzie="Mroznia";
+                            zm1= Double.valueOf(Mroznia_stan_krytyczny[j]);
+                            if(zm1<zm)
+                            {
+                                komunikat=true;
+                            }
                             UpdateSql();
                         }
                         j++;
                     }}
 
                    if (stan1 == false & stan2 == false & stan3 == false) {
-                       gdzie_idzie="Brak Kategorii";
+                       gdzie_idzie="Brak Kategori";
                        UpdateSql1();
                   }
                    p++;

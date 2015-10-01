@@ -48,7 +48,7 @@ public class Zamowienie extends ActionBarActivity  {
     int x,w,c;
     String tab[] = new String[20];
     Connection connection = null;
-    int i =0;
+    int i;
 
     List<String> listaStringow = new ArrayList<String>();
 
@@ -76,7 +76,6 @@ public class Zamowienie extends ActionBarActivity  {
         } catch (ClassNotFoundException e) {
             return;
         }
-
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
@@ -209,7 +208,7 @@ public class Zamowienie extends ActionBarActivity  {
         Button anulacja = (Button) findViewById(R.id.button);
         TextView Nazwa = (TextView) findViewById(R.id.textView32);
         TextView Kasa = (TextView) findViewById(R.id.textView29);
-
+        showToast(String.valueOf(i));
         applesData = getIntent().getExtras();
         sala = applesData.getString("Sala");
         cena = applesData.getString("cena");
@@ -226,7 +225,6 @@ public class Zamowienie extends ActionBarActivity  {
                 {
                     j=j+i;
                 }
-
                 if (tab[j].equals(tab[i])) {
                     w = w + 1;
                 }
@@ -237,7 +235,6 @@ public class Zamowienie extends ActionBarActivity  {
                 listaStringow.add(tab[i]);
                 //showToast(String.valueOf(tab[i]));
                 c=c+1;
-
             }
             w = 0;
             i=i+1;
@@ -269,7 +266,6 @@ public class Zamowienie extends ActionBarActivity  {
         if(bmImg==null&zdjecie!=null)
         {
            Zdjecie.setImageDrawable(Zdjecie.getResources().getDrawable(R.drawable.brak));
-
         }
         Nazwa.setText(nazwa);
         Suma.setText(cena);

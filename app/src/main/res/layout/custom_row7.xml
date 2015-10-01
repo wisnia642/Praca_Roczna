@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView104" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView105"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="164dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView104"
+        android:layout_toEndOf="@+id/textView104" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView106"
+        android:layout_marginRight="162dp"
+        android:layout_marginEnd="162dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textView107"
+        android:layout_toStartOf="@+id/textView107" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView107"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textView108"
+        android:layout_toStartOf="@+id/textView108"
+        android:layout_marginRight="164dp"
+        android:layout_marginEnd="164dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView108"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView109"
+        android:layout_marginRight="81dp"
+        android:layout_marginEnd="81dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textView106"
+        android:layout_toStartOf="@+id/textView106" />
+</RelativeLayout>

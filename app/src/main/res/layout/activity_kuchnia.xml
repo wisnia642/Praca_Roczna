@@ -212,7 +212,7 @@
         android:layout_width="80dp"
         android:layout_height="90dp"
         android:id="@+id/button50"
-        android:background="@drawable/brakkategorii"
+        android:background="@drawable/brakkat"
         android:layout_above="@+id/textView46"
         android:layout_alignLeft="@+id/textView76"
         android:layout_alignStart="@+id/textView76"
