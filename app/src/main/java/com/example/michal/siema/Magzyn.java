@@ -397,6 +397,14 @@ public class Magzyn extends ActionBarActivity {
                 startActivity(c);
             }
         });
+
+        koszty_potrawy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Magzyn.this, Koszt_potrawy.class);
+                startActivity(c);
+            }
+        });
     }
 
     @Override

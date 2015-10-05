@@ -1,0 +1,192 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.michal.siema.Koszt_potrawy"
+    android:background="@drawable/images1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Obliczanie kosztu potrawy"
+        android:id="@+id/textView111"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp" />
+
+    <ListView
+        android:layout_width="100dp"
+        android:layout_height="400dp"
+        android:id="@+id/listView6"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/textView111" />
+
+    <ListView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:id="@+id/listView7"
+        android:layout_alignTop="@+id/listView6"
+        android:layout_toLeftOf="@+id/textView115"
+        android:layout_alignLeft="@+id/button64"
+        android:layout_alignStart="@+id/button64" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nazwa potrawy"
+        android:id="@+id/textView112"
+        android:layout_marginLeft="90dp"
+        android:layout_marginStart="90dp"
+        android:textSize="25dp"
+        android:layout_above="@+id/listView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Produkty"
+        android:id="@+id/textView113"
+        android:textSize="25dp"
+        android:layout_alignTop="@+id/textView112"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dodatki"
+        android:id="@+id/textView114"
+        android:layout_marginRight="140dp"
+        android:layout_marginEnd="140dp"
+        android:layout_alignTop="@+id/textView112"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Narzut w %"
+        android:id="@+id/textView115"
+        android:layout_alignTop="@+id/listView7"
+        android:layout_toRightOf="@+id/textView111"
+        android:layout_toEndOf="@+id/textView111"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:textSize="24dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText18"
+        android:layout_below="@+id/textView115"
+        android:layout_alignLeft="@+id/textView115"
+        android:layout_alignStart="@+id/textView115" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="VAT w %"
+        android:id="@+id/textView116"
+        android:layout_below="@+id/editText18"
+        android:layout_alignLeft="@+id/editText18"
+        android:layout_alignStart="@+id/editText18"
+        android:layout_marginTop="30dp"
+        android:textSize="24dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText19"
+        android:layout_below="@+id/textView116"
+        android:layout_alignLeft="@+id/textView116"
+        android:layout_alignStart="@+id/textView116" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="90dp"
+        android:id="@+id/button64"
+        android:background="@drawable/anulacja"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/textView113"
+        android:layout_toStartOf="@+id/textView113" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oblicz"
+        android:id="@+id/button65"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView113"
+        android:layout_toEndOf="@+id/textView113" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Wynik"
+        android:id="@+id/textView117"
+        android:layout_marginTop="40dp"
+        android:textSize="25dp"
+        android:layout_below="@+id/editText19"
+        android:layout_toRightOf="@+id/textView116"
+        android:layout_toEndOf="@+id/textView116" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Koszt wszystkich składników"
+        android:id="@+id/textView118"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/textView117"
+        android:layout_alignLeft="@+id/editText19"
+        android:layout_alignStart="@+id/editText19" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText20"
+        android:layout_below="@+id/textView118"
+        android:layout_alignLeft="@+id/textView118"
+        android:layout_alignStart="@+id/textView118" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cena dla Klienta"
+        android:id="@+id/textView119"
+        android:layout_below="@+id/editText20"
+        android:layout_alignLeft="@+id/editText20"
+        android:layout_alignStart="@+id/editText20"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText21"
+        android:layout_below="@+id/textView119"
+        android:layout_alignLeft="@+id/textView119"
+        android:layout_alignStart="@+id/textView119" />
+</RelativeLayout>

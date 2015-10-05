@@ -95,6 +95,10 @@
             android:name=".Magzyn"
             android:label="@string/title_activity_magzyn" >
         </activity>
+        <activity
+            android:name=".Koszt_potrawy"
+            android:label="@string/title_activity_koszt_potrawy" >
+        </activity>
     </application>
 
 </manifest>
