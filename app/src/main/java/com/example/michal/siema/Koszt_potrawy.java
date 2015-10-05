@@ -268,7 +268,7 @@ public class Koszt_potrawy extends ActionBarActivity {
         //readsqlLigtData();
        // if(Nazwa[0]!=null)
        // {
-         wczytywanie();
+        // wczytywanie();
         //}
 
 
