@@ -56,6 +56,10 @@ public class Sala_5 extends ActionBarActivity {
     String[] Czas = new String[20];
     double[] Czas1 = new double[20];
 
+    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     double[] tab = new double[32];
     int[] licz = new int[31];
     String data;
@@ -300,7 +304,7 @@ public class Sala_5 extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("brak połączenia z internetem");
             return;

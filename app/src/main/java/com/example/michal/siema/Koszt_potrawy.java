@@ -1,5 +1,6 @@
 package com.example.michal.siema;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
@@ -36,6 +37,10 @@ public class Koszt_potrawy extends ActionBarActivity {
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
+    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     static ResultSet rs;
     static Statement st;
     PreparedStatement ps;
@@ -45,10 +50,11 @@ public class Koszt_potrawy extends ActionBarActivity {
     CustomAdapter5 adapter2;
     customAdapter1 adapter1;
 
+    Double wynik1,wynik2,wynik3,wynik4,cena1,cena2,cena3;
+    Integer procent1,procent2;
 
     String[] produkty = {"Magazyn","Lodowka","Brak_kategori","Mroznia"};
-    String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza","Suszi","Wina","Piwo","Desery","Dodatki, " +
-                    "Napoje_Gazownane","Napoje_Zimne","Napoje_Gorace","Soki"};
+    String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza","Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazownane","Napoje_Zimne","Napoje_Gorace","Soki"};
     String[] ilosc = new String[30];
     String[] stan1 = new String[30];
     String[] Nazwa= new String[30];
@@ -65,7 +71,8 @@ public class Koszt_potrawy extends ActionBarActivity {
     ResultSet resultSet;
     FileOutputStream fos;
 
-    int x,q,y,c;
+    String cena_d,kat;
+    int x,q,y,c,z,w;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -135,7 +142,7 @@ public class Koszt_potrawy extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url ,user, pass);
         } catch (SQLException e) {
             showToast("brak polaczenia z internetem");
             return;
@@ -175,43 +182,43 @@ public class Koszt_potrawy extends ActionBarActivity {
                     rs = stmt.executeQuery();
 
                     while (rs.next()) {
-                        if (Nazwa[x] != null) {
-                            Nazwa[x] = rs.getString("Nazwa");
-                            Skladniki[x] = rs.getString("Skladniki");
-                            File image = new File("/mnt/sdcard/" + Nazwa[x] + ".jpg");
-                            Zdjęcie[x] = "/mnt/sdcard/" + Nazwa[x] + ".jpg";
-                            try {
-                                fos = new FileOutputStream(image);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                            byte[] buffer = new byte[1];
-                            InputStream is = resultSet.getBinaryStream(5);
-                            try {
-                                while (is.read(buffer) > 0) {
-                                    try {
-                                        fos.write(buffer);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
+                        Nazwa[x] = rs.getString("Nazwa");
+                        Skladniki[x] = rs.getString("Skladniki");
+                        File image = new File("/mnt/sdcard/" + Nazwa[x] + ".jpg");
+                        Zdjęcie[x] = "/mnt/sdcard/" + Nazwa[x] + ".jpg";
+                        try {
+                            fos = new FileOutputStream(image);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        byte[] buffer = new byte[1];
+                        InputStream is = rs.getBinaryStream("Zdjecie");
+                        try {
+                            while (is.read(buffer) > 0) {
                                 try {
-                                    fos.close();
+                                    fos.write(buffer);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                            }
+                            try {
+                                fos.close();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        x++;
-                    }
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                        x++;
+
+                    }
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
                 }i++;
             }
         }
+
         for (int i=0;i<4;i=i+0) {
             String sql = "SELECT * FROM " + produkty[i] + "";
 
@@ -241,7 +248,8 @@ public class Koszt_potrawy extends ActionBarActivity {
                         connection.close();
                 } catch (SQLException se) {
                     showToast("brak połączenia z internetem");
-                }i++;
+                }
+                i++;
             }
         }}
 
@@ -265,21 +273,54 @@ public class Koszt_potrawy extends ActionBarActivity {
         dania = (ListView) findViewById(R.id.listView6);
         skladniki = (ListView) findViewById(R.id.listView7);
 
-        //readsqlLigtData();
-       // if(Nazwa[0]!=null)
-       // {
-        // wczytywanie();
-        //}
+       // readsqlLigtData();
+      //  if(Nazwa[0]==null)
+       try{
+         wczytywanie();
+       }
+        catch(Exception e){}
+     //  }
 
+        adapter1=new customAdapter1(this, Nazwa,ilosc,Zdjęcie,q,stan1);
+        dania.setAdapter(adapter1);
 
-       // adapter1=new customAdapter1(this, Nazwa,ilosc,Zdjęcie,q,stan1);
-       // skladniki.setAdapter(adapter1);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Koszt_potrawy.this,Magzyn.class);
+                startActivity(i);
+
+            }
+        });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast(String.valueOf(y));
-                showToast(String.valueOf(x));
+
+                if(narzut.getText().toString()!=null)
+                {
+                    procent1= Integer.valueOf(narzut.getText().toString());
+
+                    wynik1=wynik2*procent1/100;
+                    wynik3=wynik1;
+                }
+                if(vat.getText().toString()!=null)
+                {
+                    procent2 = Integer.valueOf(vat.getText().toString());
+
+                    wynik1=wynik2*procent2/100;
+                    wynik4=wynik1;
+                }
+                wynik1=wynik2+wynik3+wynik4;
+                wynik1 *= 100;
+
+                wynik1 = Double.valueOf(Math.round(wynik1));
+                wynik1 /= 100;
+                cena_z.setText(String.valueOf(wynik1));
+                wynik2 *= 100;
+                wynik2 = Double.valueOf(Math.round(wynik2));
+                wynik2 /= 100;
+                cena_bez.setText(String.valueOf(wynik2));
 
             }
         });
@@ -287,7 +328,14 @@ public class Koszt_potrawy extends ActionBarActivity {
         dania.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                for(int b=0;b<c;b=b+0)
+                {
+                    wyswietlanie[b]="";
+                    b++;
+                }
+                c=0;
+                wynik1=0.0;
+                wynik2=0.0;
 
                 for(int j=0;j<x;j=j+0)
                 {
@@ -297,22 +345,32 @@ public class Koszt_potrawy extends ActionBarActivity {
                         String filtered = Skladniki[j].replaceAll("[^0-9,]", "");
                         miarka = filtered.split(",");
 
-                        for(int z=0;Produkt[z]!=null;z=z+0)
+                        for(int a=0;a<Produkt.length;a=a+0)
                         {
-                            for(int w=0;Nazwa_produktu!=null;w=w+0) {
-                                if (Produkt[z] == Nazwa_produktu[w])
+                            if(Produkt[a]!=null) {
+                                for(w=0;w<Nazwa_produktu.length;w=w+0)
                                 {
-                                    wyswietlanie[c] = Nazwa_produktu[w]+" " +miarka[z]+" "+cena_detaliczna[w];
-                                    c++;
+
+                                    if(Nazwa_produktu[w].equals(Produkt[a]))
+                                    {
+
+                                        cena_d = cena_detaliczna[w];
+                                        kat = kategoria[w];
+                                        cena1 = Double.valueOf(cena_detaliczna[w]);
+                                        cena3 = Double.valueOf(miarka[a]);
+                                        wynik1 = cena1*cena3;
+                                    }
+                                    w++;
                                 }
-                                w++;
+                                    wyswietlanie[c] = Produkt[a]+" " +miarka[a]+" "+kat+" "+cena_d;
+                                    c++;
+                                    wynik2=wynik1+wynik2;
                             }
-                            z++;
+                            a++;
                         }
                     }
                     j++;
                 }
-
                 lista();
             }
         });

@@ -62,6 +62,10 @@ public class MainActivity extends ActionBarActivity {
     int x,w,c,a,q,z;
     FileOutputStream fos;
 
+    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     List<String> listaStringow = new ArrayList<String>();
 
     private PopupWindow mpopup;
@@ -115,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 if(wartosc==3)
                 {
-                    sampleDB.execSQL("INSERT INTO Zamowienie (Suma) VALUES ('"+zm2+"') WHERE Klient= ('"+klient[w]+"')" );
+                    sampleDB.execSQL("INSERT INTO Zamowienie VALUES ('"+zm2+"') WHERE Klient= ('"+klient[w]+"')" );
                 }
                 sampleDB.close();
 
@@ -285,9 +289,9 @@ public class MainActivity extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
-            showToast("brak polaczenia z internetem");
+            showToast("" + e);
             return;
         }
 
@@ -616,6 +620,7 @@ public class MainActivity extends ActionBarActivity {
 
                 Button btnOk = (Button) popUpView.findViewById(R.id.button60);
                 final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
+
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -626,9 +631,13 @@ public class MainActivity extends ActionBarActivity {
                             zm2 = Double.valueOf(Math.round(zm2));
                             zm2 /= 100;
                             Txt1.setText("Suma + rabat: " + String.valueOf(zm2));
-                            mpopup.dismiss();
+                            try {
+                                wartosc = 3;
+                                funkcjonalnosci();
+                            }catch (Exception w){}
                         } catch (Exception e) {
                         }
+                        mpopup.dismiss();
                     }
                 });
 
@@ -640,8 +649,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
-                wartosc = 3;
-                funkcjonalnosci();
+
 
             }
         });
@@ -784,8 +792,13 @@ public class MainActivity extends ActionBarActivity {
                             zm2 = Double.valueOf(editT.getText().toString());
                             zm2 = zm1 + zm2;
                             Txt1.setText("Suma + napiwek: " + String.valueOf(zm2));
-                            mpopup.dismiss();
+
                         }catch (Exception e){}
+                        try {
+                            wartosc = 3;
+                            funkcjonalnosci();
+                        }catch (Exception e){}
+                        mpopup.dismiss();
                     }
                 });
 
@@ -798,8 +811,6 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
-                wartosc=3;
-                funkcjonalnosci();
             }
         });
 

@@ -35,6 +35,10 @@ public class Pprodukty_kategoria extends ActionBarActivity {
 
     CustomAdapter6 adapter1;
 
+    private static final String url="jdbc:mysql://192.168.1.102:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     String[] Brak_kategorii= new String[40];
     String[] Brak_kategorii_ilosc = new String[40];
     String[] Brak_kategorii_kategoria = new String[40];

@@ -84,6 +84,10 @@ public class Kuchnia extends ActionBarActivity {
     Boolean stan3=false;
     Boolean komunikat=false;
 
+    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     int x,q,poz,A,B,C,w,p;
     FileOutputStream fos;
     customAdapter4 adapter;
@@ -277,7 +281,7 @@ public class Kuchnia extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("brak polaczenia z internetem");
             return;

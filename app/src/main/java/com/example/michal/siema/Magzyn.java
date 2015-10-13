@@ -41,6 +41,10 @@ public class Magzyn extends ActionBarActivity {
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
+    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     String[] Data = new String[40];
     String[] Czas = new String[40];
     String[] Nazwa = new String[40];
@@ -137,7 +141,7 @@ public class Magzyn extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url ,user,pass);
         } catch (SQLException e) {
             showToast("brak polaczenia z internetem");
             return;

@@ -45,6 +45,10 @@ public class Zamowienie extends ActionBarActivity  {
     Double suma=0.0;
     boolean klikniete = false;
 
+    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     int x,w,c;
     String tab[] = new String[20];
     Connection connection = null;
@@ -78,7 +82,7 @@ public class Zamowienie extends ActionBarActivity  {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("Brak polaczenia z internetem");
             return;
