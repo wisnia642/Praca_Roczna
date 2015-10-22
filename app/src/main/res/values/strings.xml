@@ -31,5 +31,7 @@
     <string name="title_activity_glowne_menu">Glowne_menu</string>
     <string name="title_activity_magzyn">Magzyn</string>
     <string name="title_activity_koszt_potrawy">Koszt_potrawy</string>
+    <string name="title_activity_wykonane_potrawy">Wykonane_potrawy</string>
+    <string name="title_activity_lista_zakupow">Lista_zakupow</string>
 
 </resources>

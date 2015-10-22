@@ -64,7 +64,7 @@
         android:layout_alignTop="@+id/button5"
         android:layout_toRightOf="@+id/button5"
         android:layout_toEndOf="@+id/button5"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginStart="45dp"
         android:background="@drawable/przerwa" />
 
@@ -75,9 +75,9 @@
         android:layout_alignTop="@+id/button34"
         android:layout_toRightOf="@+id/button34"
         android:layout_toEndOf="@+id/button34"
-        android:layout_marginLeft="44dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginStart="44dp"
-        android:background="@drawable/dodaj_przepis" />
+        android:background="@drawable/odswierz" />
 
     <Button
         android:layout_width="80dp"
@@ -88,7 +88,7 @@
         android:layout_toEndOf="@+id/button35"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="51dp"
-        android:background="@drawable/edytuj_przepis" />
+        android:background="@drawable/dodaj_przepis" />
 
     <Button
         android:layout_width="100dp"
@@ -104,11 +104,11 @@
         android:layout_width="80dp"
         android:layout_height="90dp"
         android:id="@+id/button39"
-        android:background="@drawable/lodowka"
+        android:background="@drawable/usun_przepis"
         android:layout_alignTop="@+id/button38"
         android:layout_toRightOf="@+id/textView48"
         android:layout_toEndOf="@+id/textView48"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="10dp" />
 
     <Button
         android:layout_width="80dp"
@@ -117,9 +117,9 @@
         android:layout_alignTop="@+id/button39"
         android:layout_toRightOf="@+id/button39"
         android:layout_toEndOf="@+id/button39"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginStart="42dp"
-        android:background="@drawable/mroznia" />
+        android:background="@drawable/lodowka" />
 
     <Button
         android:layout_width="80dp"
@@ -128,9 +128,9 @@
         android:layout_alignTop="@+id/button47"
         android:layout_toRightOf="@+id/button47"
         android:layout_toEndOf="@+id/button47"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginStart="53dp"
-        android:background="@drawable/magazyn" />
+        android:background="@drawable/mroznia" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -196,8 +196,8 @@
         android:layout_alignTop="@+id/button39"
         android:layout_alignRight="@+id/textView48"
         android:layout_alignEnd="@+id/textView48"
-        android:background="@drawable/usun_przepis"
-        android:layout_marginRight="20dp" />
+        android:background="@drawable/edytuj_przepis"
+        android:layout_marginRight="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -212,10 +212,20 @@
         android:layout_width="80dp"
         android:layout_height="90dp"
         android:id="@+id/button50"
-        android:background="@drawable/brakkat"
+        android:background="@drawable/magazyn"
         android:layout_above="@+id/textView46"
         android:layout_alignLeft="@+id/textView76"
         android:layout_alignStart="@+id/textView76"
-        android:layout_marginLeft="-20dp" />
+        android:layout_marginLeft="-25dp" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="90dp"
+        android:id="@+id/button66"
+        android:background="@drawable/brakkat"
+        android:layout_alignTop="@+id/button50"
+        android:layout_alignRight="@+id/imageView5"
+        android:layout_alignEnd="@+id/imageView5"
+        android:layout_marginRight="-30dp" />
 
 </RelativeLayout>

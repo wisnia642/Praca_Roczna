@@ -41,7 +41,7 @@ import java.util.Date;
 public class Kuchnia extends ActionBarActivity {
 
     Button wylacz,przerwa,dod_przepis,edy_przepis,usu_przepis,mroznia,lodowka,magazyn,brak_kategori,
-            przyjete,koniec;
+            przyjete,koniec,odswiez;
     ImageView obraz;
     TextView nazwa,skladniki,sposob_przyrzadzenia,czas;
     ListView lista;
@@ -430,13 +430,14 @@ public class Kuchnia extends ActionBarActivity {
 
         wylacz = (Button) findViewById(R.id.button5);
         przerwa = (Button) findViewById(R.id.button34);
-        dod_przepis = (Button) findViewById(R.id.button35);
-        edy_przepis = (Button) findViewById(R.id.button38);
-        usu_przepis = (Button) findViewById(R.id.button49);
-        mroznia = (Button) findViewById(R.id.button47);
-        lodowka = (Button) findViewById(R.id.button39);
-        magazyn = (Button) findViewById(R.id.button48);
-        brak_kategori = (Button) findViewById(R.id.button50);
+        odswiez = (Button) findViewById(R.id.button35);
+        dod_przepis = (Button) findViewById(R.id.button38);
+        edy_przepis = (Button) findViewById(R.id.button49);
+        usu_przepis = (Button) findViewById(R.id.button39);
+        mroznia = (Button) findViewById(R.id.button48);
+        lodowka = (Button) findViewById(R.id.button47);
+        magazyn = (Button) findViewById(R.id.button50);
+        brak_kategori = (Button) findViewById(R.id.button66);
         przyjete = (Button) findViewById(R.id.button40);
         koniec = (Button) findViewById(R.id.button41);
 
@@ -499,6 +500,14 @@ public class Kuchnia extends ActionBarActivity {
                     skladniki.setText(Skladniki[i]);
                     sposob_przyrzadzenia.setText(Sposb[i]);
                 }
+            }
+        });
+
+        odswiez.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(getIntent());
             }
         });
 

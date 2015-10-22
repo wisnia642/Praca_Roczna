@@ -17,6 +17,7 @@ import android.widget.TextView;
         private final String[] Kto_wykonal;
         int i=0;
 
+
         public CustomAdapter7(Activity context,String[] data,String[] czas,
                               String[] nazwa, String[] ilosc, String[] czas_wykonania,String[] kto_wykonal) {
             super(context, R.layout.custom_row7, nazwa);
@@ -27,12 +28,13 @@ import android.widget.TextView;
             this.Ilosc = ilosc;
             this.Czas_wykonania = czas_wykonania;
             this.Kto_wykonal = kto_wykonal;
+
+
         }
 
         public View getView(int position,View view,ViewGroup parent) {
             LayoutInflater inflater=context.getLayoutInflater();
             View rowView5 = inflater.inflate(R.layout.custom_row7, null, true);
-
 
                 TextView Text1 = (TextView) rowView5.findViewById(R.id.textView104);
                 TextView Text2 = (TextView) rowView5.findViewById(R.id.textView105);
@@ -41,13 +43,14 @@ import android.widget.TextView;
                 TextView Text5 = (TextView) rowView5.findViewById(R.id.textView107);
                 TextView Text6 = (TextView) rowView5.findViewById(R.id.textView108);
 
+            if(Data!=null) {
                 Text1.setText(Data[position]);
                 Text2.setText(Czas[position]);
                 Text3.setText(Nazwa[position]);
                 Text4.setText(Ilosc[position]);
                 Text5.setText(Czas_wykonania[position]);
                 Text6.setText(Kto_wykonal[position]);
-                i++;
+            }
             return rowView5;
 
 

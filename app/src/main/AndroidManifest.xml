@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -98,6 +99,14 @@
         <activity
             android:name=".Koszt_potrawy"
             android:label="@string/title_activity_koszt_potrawy" >
+        </activity>
+        <activity
+            android:name=".Wykonane_potrawy"
+            android:label="@string/title_activity_wykonane_potrawy" >
+        </activity>
+        <activity
+            android:name=".Lista_zakupow"
+            android:label="@string/title_activity_lista_zakupow" >
         </activity>
     </application>
 

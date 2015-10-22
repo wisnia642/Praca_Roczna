@@ -273,13 +273,13 @@ public class Koszt_potrawy extends ActionBarActivity {
         dania = (ListView) findViewById(R.id.listView6);
         skladniki = (ListView) findViewById(R.id.listView7);
 
-       // readsqlLigtData();
-      //  if(Nazwa[0]==null)
+        readsqlLigtData();
+        if(Nazwa[0]==null)
        try{
          wczytywanie();
        }
         catch(Exception e){}
-     //  }
+
 
         adapter1=new customAdapter1(this, Nazwa,ilosc,Zdjęcie,q,stan1);
         dania.setAdapter(adapter1);
@@ -297,30 +297,30 @@ public class Koszt_potrawy extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                if(narzut.getText().toString()!=null)
-                {
-                    procent1= Integer.valueOf(narzut.getText().toString());
+                try {
+                    if (narzut.getText().toString() != null) {
+                        procent1 = Integer.valueOf(narzut.getText().toString());
 
-                    wynik1=wynik2*procent1/100;
-                    wynik3=wynik1;
-                }
-                if(vat.getText().toString()!=null)
-                {
-                    procent2 = Integer.valueOf(vat.getText().toString());
+                        wynik1 = wynik2 * procent1 / 100;
+                        wynik3 = wynik1;
+                    }
+                    if (vat.getText().toString() != null) {
+                        procent2 = Integer.valueOf(vat.getText().toString());
 
-                    wynik1=wynik2*procent2/100;
-                    wynik4=wynik1;
-                }
-                wynik1=wynik2+wynik3+wynik4;
-                wynik1 *= 100;
+                        wynik1 = wynik2 * procent2 / 100;
+                        wynik4 = wynik1;
+                    }
+                    wynik1 = wynik2 + wynik3 + wynik4;
+                    wynik1 *= 100;
 
-                wynik1 = Double.valueOf(Math.round(wynik1));
-                wynik1 /= 100;
-                cena_z.setText(String.valueOf(wynik1));
-                wynik2 *= 100;
-                wynik2 = Double.valueOf(Math.round(wynik2));
-                wynik2 /= 100;
-                cena_bez.setText(String.valueOf(wynik2));
+                    wynik1 = Double.valueOf(Math.round(wynik1));
+                    wynik1 /= 100;
+                    cena_z.setText(String.valueOf(wynik1));
+                    wynik2 *= 100;
+                    wynik2 = Double.valueOf(Math.round(wynik2));
+                    wynik2 /= 100;
+                    cena_bez.setText(String.valueOf(wynik2));
+                }catch (Exception e){showToast("Błąd w obliczeniach");}
 
             }
         });

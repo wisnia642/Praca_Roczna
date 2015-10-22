@@ -28,7 +28,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     EditText stan_krytyczny,danie,ilosc,ilosc_detaliczna,cena_detaliczna;
     Spinner kategoria,przynaleznosc;
     ListView produkty;
-    Button ok,cancel,usun,utworz;
+    Button ok,cancel,usun,utworz,popraw;
     String wartosc,Danie,Ilosc,Stan_krytyczny,wagi,cena_d,ilosc_d;
     String[] Wagi = {"Szt","Kg","Dag","Gram"};
     String[] listaStringow = {"Lodówka","Mroźnia","Magazyn","Brak Kategorii"};
@@ -69,6 +69,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
 
     int A,B,C,D,p,o;
     boolean klikniecie=false;
+    String Nazwa_dania;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -198,12 +199,14 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             //poprawić ma być insert bo tych składników jeszcze nie ma
-            sampleDB.execSQL("DELETE FROM " + wartosc + " WHERE Nazwa = ('" + Danie + "') ");
+            sampleDB.execSQL("DELETE FROM " + wartosc + " WHERE Nazwa = ('" + Nazwa_dania + "') ");
             sampleDB.close();
         } catch (Exception e) {
             showToast("Blad w update");
         }
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +225,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         cancel = (Button) findViewById(R.id.button52);
         usun = (Button) findViewById(R.id.button53);
         utworz = (Button) findViewById(R.id.button54);
+        popraw = (Button) findViewById(R.id.button67);
         ilosc_detaliczna = (EditText) findViewById(R.id.editText16);
         cena_detaliczna = (EditText) findViewById(R.id.editText13);
 
@@ -274,6 +278,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     if (wartosc.equals("Mroznia")) {
                         wagi = Mroznia_kategoria[i];
                         danie.setText(Mroznia[i]);
+                        Nazwa_dania=Mroznia[i];
                         ilosc.setText(Mroznia_ilosc[i]);
                         stan_krytyczny.setText(Mroznia_stankrytyczny[i]);
                         cena_detaliczna.setText(Mroznia_cena_detaliczna[i]);
@@ -285,6 +290,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     if (wartosc.equals("Magazyn")) {
                         wagi = Magazyn_kategoria[i];
                         danie.setText(Magazyn[i]);
+                        Nazwa_dania=Magazyn[i];
                         ilosc.setText(Magazyn_ilosc[i]);
                         stan_krytyczny.setText(Magazyn_stankrytyczny[i]);
                         cena_detaliczna.setText(Magazyn_cena_detaliczna[i]);
@@ -295,6 +301,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     if (wartosc.equals("Lodowka")) {
                         wagi = Lodowka_kategoria[i];
                         danie.setText(Lodowka[i]);
+                        Nazwa_dania=Lodowka[i];
                         ilosc.setText(Lodowka_ilosc[i]);
                         stan_krytyczny.setText(Lodowka_stankrytyczny[i]);
                         cena_detaliczna.setText(Lodówka_cena_detaliczna[i]);
@@ -305,6 +312,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     if (wartosc.equals("Brak_kategori")) {
                         wagi = Brak_kategorii_kategoria[i];
                         danie.setText(Brak_kategorii[i]);
+                        Nazwa_dania=Brak_kategorii[i];
                         ilosc.setText(Brak_kategorii_ilosc[i]);
                         stan_krytyczny.setText(Brak_kategorii_stankrytyczny[i]);
                         cena_detaliczna.setText(Brak_kategorii_cena_detaliczna[i]);
@@ -327,6 +335,16 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     }
                 }catch (Exception e){}
 
+            }
+        });
+
+        popraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletefromSQLlight();
+                saveSqlLight();
+                finish();
+                startActivity(getIntent());
             }
         });
 

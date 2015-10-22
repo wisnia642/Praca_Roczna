@@ -14,16 +14,16 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView77"
         android:textSize="30dp"
+        android:text="LISTA ZAKUPÓW"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/editText17"
-        android:layout_alignEnd="@+id/editText17"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nazwa"
+        android:text="Produkty"
         android:id="@+id/textView78"
         android:layout_marginTop="51dp"
         android:layout_below="@+id/textView77"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ilość"
+        android:text="Kategoria"
         android:id="@+id/textView79"
         android:layout_marginLeft="44dp"
         android:layout_above="@+id/editText11"
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Miarka"
+        android:text="Ilość"
         android:id="@+id/textView80"
         android:layout_marginLeft="64dp"
         android:layout_marginStart="64dp"
@@ -58,11 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Stan krytyczny"
+        android:text="Stan Krytyczny"
         android:id="@+id/textView81"
-        android:layout_alignTop="@+id/textView80"
-        android:layout_alignLeft="@+id/editText17"
-        android:layout_alignStart="@+id/editText17" />
+        android:layout_alignTop="@+id/textView101"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,21 +70,21 @@
         android:text="Ilość dettal."
         android:id="@+id/textView86"
         android:layout_alignTop="@+id/textView101"
-        android:layout_toLeftOf="@+id/spinner6"
-        android:layout_toStartOf="@+id/spinner6" />
+        android:layout_alignRight="@+id/textView100"
+        android:visibility="invisible" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Kategoria"
+        android:text="Przynależność"
         android:id="@+id/textView100"
-        android:layout_alignBottom="@+id/textView86"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="44dp"
-        android:layout_marginEnd="44dp"
-        android:visibility="invisible" />
+        android:visibility="visible"
+        android:layout_above="@+id/editText11"
+        android:layout_toRightOf="@+id/editText13"
+        android:layout_toEndOf="@+id/editText13"
+        android:layout_marginLeft="69dp"
+        android:layout_marginStart="69dp" />
 
     <EditText
         android:layout_width="120dp"
@@ -116,20 +115,18 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editText13"
-        android:layout_marginRight="47dp"
-        android:layout_marginEnd="47dp"
-        android:layout_alignBottom="@+id/spinner6"
-        android:layout_toLeftOf="@+id/editText16"
-        android:layout_toStartOf="@+id/editText16"
-        android:textSize="22dp" />
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/editText17"
+        android:layout_toRightOf="@+id/textView77"
+        android:layout_toEndOf="@+id/textView77" />
 
     <Spinner
-        android:layout_width="120dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/spinner5"
-        android:layout_alignBottom="@+id/editText12"
-        android:layout_alignLeft="@+id/textView80"
-        android:layout_alignStart="@+id/textView80" />
+        android:layout_alignBottom="@+id/editText13"
+        android:layout_alignLeft="@+id/textView100"
+        android:layout_alignStart="@+id/textView100" />
 
     <EditText
         android:layout_width="120dp"
@@ -137,20 +134,10 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editText16"
-        android:layout_alignBottom="@+id/spinner5"
-        android:layout_alignLeft="@+id/textView86"
-        android:layout_alignStart="@+id/textView86"
-        android:textSize="22dp" />
-
-    <Spinner
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner6"
-        android:layout_alignBottom="@+id/editText16"
-        android:layout_alignRight="@+id/textView100"
-        android:layout_alignEnd="@+id/textView100"
-        android:layout_marginLeft="30dp"
-        android:visibility="invisible" />
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/editText12"
+        android:layout_toLeftOf="@+id/textView77"
+        android:layout_toStartOf="@+id/textView77" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -162,24 +149,24 @@
         android:layout_marginTop="44dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CANCEL"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="POPRAW"
         android:id="@+id/button52"
-        android:layout_marginTop="47dp"
-        android:layout_below="@+id/editText17"
-        android:layout_toRightOf="@+id/spinner5"
-        android:layout_toEndOf="@+id/spinner5" />
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/editText16"
+        android:layout_toLeftOf="@+id/editText17"
+        android:layout_toStartOf="@+id/editText17" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cena detal."
+        android:text="Cena    "
         android:id="@+id/textView101"
         android:layout_above="@+id/editText11"
-        android:layout_alignLeft="@+id/editText13"
-        android:layout_alignStart="@+id/editText13" />
+        android:layout_alignRight="@+id/editText13"
+        android:layout_alignEnd="@+id/editText13" />
 
     <EditText
         android:layout_width="120dp"
@@ -187,48 +174,56 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/editText17"
-        android:layout_alignBottom="@+id/spinner5"
-        android:layout_centerHorizontal="true"
-        android:textSize="22dp" />
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/editText16"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PRZENIES"
-        android:id="@+id/button51"
-        android:layout_above="@+id/listView4"
-        android:layout_toRightOf="@+id/editText17"
-        android:layout_toEndOf="@+id/editText17"
-        android:layout_marginLeft="-20dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:text="USUN"
-        android:id="@+id/button53"
-        android:layout_alignTop="@+id/button52"
-        android:layout_alignRight="@+id/textView80"
-        android:layout_alignEnd="@+id/textView80"
-        android:layout_marginLeft="10dp" />
+        android:id="@+id/button51"
+        android:layout_alignTop="@+id/button53"
+        android:layout_toLeftOf="@+id/editText13"
+        android:layout_toStartOf="@+id/editText13"
+        android:layout_marginRight="-7dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DODAJ"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Wyślij EMAIL"
+        android:id="@+id/button53"
+        android:layout_above="@+id/listView4"
+        android:layout_toLeftOf="@+id/spinner5"
+        android:layout_toStartOf="@+id/spinner5" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="CANCEL"
         android:id="@+id/button54"
         android:layout_above="@+id/listView4"
-        android:layout_toRightOf="@+id/textView101"
-        android:layout_toEndOf="@+id/textView101"
-        android:layout_marginLeft="-20dp" />
+        android:layout_toRightOf="@+id/textView79"
+        android:layout_toEndOf="@+id/textView79" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="POPRAW"
-        android:id="@+id/button67"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Dodaj"
+        android:id="@+id/button68"
         android:layout_above="@+id/listView4"
-        android:layout_alignLeft="@+id/editText12"
-        android:layout_alignStart="@+id/editText12"
-        android:layout_marginLeft="15dp" />
+        android:layout_toRightOf="@+id/textView78"
+        android:layout_toEndOf="@+id/textView78" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Wyślij SMS"
+        android:id="@+id/button69"
+        android:layout_marginLeft="71dp"
+        android:layout_marginStart="71dp"
+        android:layout_alignTop="@+id/button53"
+        android:layout_toRightOf="@+id/button53"
+        android:layout_toEndOf="@+id/button53" />
 
 </RelativeLayout>

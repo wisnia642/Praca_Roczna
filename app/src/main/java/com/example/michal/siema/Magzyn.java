@@ -37,6 +37,7 @@ public class Magzyn extends ActionBarActivity {
 
     Button wylacz,przerwa,lodowka,mroznia,magazyn,brak_kategorii,przychody,koszty_potrawy,potrawy_wykonane,
     lista_zakupow,odswierz,pokaz;
+    ListView lista;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -120,7 +121,6 @@ public class Magzyn extends ActionBarActivity {
         {
 
         }
-        ListView lista = (ListView) findViewById(R.id.listView5);
         CustomAdapter7 adapter1 = new CustomAdapter7(this,Data1,czas1,nazwa1,ilosc1,czas_wykonania1,kto_wykonal1);
         lista.setAdapter(adapter1);
 
@@ -243,7 +243,6 @@ public class Magzyn extends ActionBarActivity {
                 showToast("brak polaczenia z internetem");}
 
         }
-        ListView lista = (ListView) findViewById(R.id.listView5);
         CustomAdapter7 adapter1 = new CustomAdapter7(this,Data1,czas1,nazwa1,ilosc1,czas_wykonania1,kto_wykonal1);
         lista.setAdapter(adapter1);
 
@@ -289,19 +288,19 @@ public class Magzyn extends ActionBarActivity {
         koszty_potrawy = (Button) findViewById(R.id.button49);
         potrawy_wykonane = (Button) findViewById(R.id.button50);
         lista_zakupow = (Button) findViewById(R.id.button62);
-        ListView lista = (ListView) findViewById(R.id.listView5);
+        lista = (ListView) findViewById(R.id.listView5);
         pokaz = (Button) findViewById(R.id.button63);
         myCalendar = Calendar.getInstance();
         data1 = (EditText) findViewById(R.id.editText14);
         data2 = (EditText) findViewById(R.id.editText15);
 
-        readsqlLight();
-        if(Czas!=null) {
+     //   readsqlLight();
+     //    if(Czas[0]!=null) {
             wczytywanie();
-            wartosc = true;
-        }
+       //     wartosc = true;
+      //  }
 
-        CustomAdapter7  adapter1 = new CustomAdapter7(this,Data, Czas, Nazwa,Ilosc,Czas_wykonania,Kto_wykonal);
+        final CustomAdapter7  adapter1 = new CustomAdapter7(this,Data, Czas, Nazwa,Ilosc,Czas_wykonania,Kto_wykonal);
        lista.setAdapter(adapter1);
 
 
@@ -342,6 +341,17 @@ public class Magzyn extends ActionBarActivity {
         pokaz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                for(int i=0;i<x;i=i+0)
+                {
+                    Data1[i]=null;
+                    czas1[i]=null;
+                    nazwa1[i]=null;
+                    ilosc1[i]=null;
+                    czas_wykonania1[i]=null;
+                    kto_wykonal1[i]=null;
+                    i++;
+                }
 
                 data11 = data1.getText().toString();
                 data22 = data2.getText().toString();
@@ -406,6 +416,22 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Koszt_potrawy.class);
+                startActivity(c);
+            }
+        });
+
+        potrawy_wykonane.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Magzyn.this, Wykonane_potrawy.class);
+                startActivity(c);
+            }
+        });
+
+        lista_zakupow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Magzyn.this, Lista_zakupow.class);
                 startActivity(c);
             }
         });
