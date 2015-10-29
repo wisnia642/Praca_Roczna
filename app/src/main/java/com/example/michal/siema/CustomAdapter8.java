@@ -21,7 +21,7 @@ public class CustomAdapter8 extends ArrayAdapter<String> {
 
     public CustomAdapter8(Activity context,String[] data,String[] czas,
                           Double[] nazwa, Double[] ilosc, Double[] czas_wykonania,String[] kto_wykonal) {
-        super(context, R.layout.custom_row7,data);
+        super(context, R.layout.custom_row8,data);
         this.context = context;
         this.Data1 = data;
         this.Czas = czas;
@@ -35,7 +35,7 @@ public class CustomAdapter8 extends ArrayAdapter<String> {
 
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
-        View rowView5 = inflater.inflate(R.layout.custom_row7, null, true);
+        View rowView5 = inflater.inflate(R.layout.custom_row8, null, true);
 
         TextView Text1 = (TextView) rowView5.findViewById(R.id.textView104);
         TextView Text2 = (TextView) rowView5.findViewById(R.id.textView105);
@@ -44,7 +44,7 @@ public class CustomAdapter8 extends ArrayAdapter<String> {
         TextView Text5 = (TextView) rowView5.findViewById(R.id.textView107);
         TextView Text6 = (TextView) rowView5.findViewById(R.id.textView108);
 
-        if(Data1!=null) {
+        if(Data1[position]!=null) {
             Text1.setText(Data1[position]);
             Text2.setText(Czas[position]);
             Text3.setText(String.valueOf(Nazwa[position]));
@@ -57,4 +57,6 @@ public class CustomAdapter8 extends ArrayAdapter<String> {
 
     }
 }
+
+
 

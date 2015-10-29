@@ -107,7 +107,8 @@
         android:layout_alignBottom="@+id/editText11"
         android:layout_alignLeft="@+id/textView79"
         android:layout_alignStart="@+id/textView79"
-        android:textSize="22dp" />
+        android:textSize="22dp"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="120dp"
@@ -225,5 +226,15 @@
         android:layout_alignTop="@+id/button53"
         android:layout_toRightOf="@+id/button53"
         android:layout_toEndOf="@+id/button53" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner7"
+        android:layout_above="@+id/button52"
+        android:layout_alignLeft="@+id/editText12"
+        android:layout_alignStart="@+id/editText12"
+        android:layout_toLeftOf="@+id/textView80"
+        android:layout_toStartOf="@+id/textView80" />
 
 </RelativeLayout>

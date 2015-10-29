@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -27,8 +29,11 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +68,12 @@ public class Faktura extends ActionBarActivity {
 
     List<String> listaStringow = new ArrayList<String>();
     Spinner Stolik;
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG).show();
+    }
 
     private void readsqlLight() {
 
@@ -318,7 +329,7 @@ public class Faktura extends ActionBarActivity {
             doc.add(p16);
 
             //Fakturę wystawił
-            Paragraph p27 = new Paragraph("Fakture wystawił:");
+            Paragraph p27 = new Paragraph("Fakture wystawil:");
             Font paraFont27 = new Font(Font.COURIER,41.1f, Color.GREEN);
             p27.setAlignment(Paragraph.ALIGN_LEFT);
             p27.setFont(paraFont27);
@@ -346,6 +357,24 @@ public class Faktura extends ActionBarActivity {
 
     }
 
+    public void open()
+    {
+        File file = new File ("/sdcard/droidText/"+nr_faktura+".pdf");
+        Uri path = Uri.fromFile(file);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(path, "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        Kwota.setText("");
+        Firma.setText("");
+        Adres.setText("");
+        Miejscowosc.setText("");
+        Stolik.setSelection(7);
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -358,6 +387,7 @@ public class Faktura extends ActionBarActivity {
         ok = (Button) findViewById(R.id.button60);
         anuluj = (Button) findViewById(R.id.button61);
         SqlLight();
+
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,8 +403,8 @@ public class Faktura extends ActionBarActivity {
                         SimpleDateFormat sdf1 = new SimpleDateFormat("mmssyyyyMMdd");
                         nr_faktura = sdf1.format(new Date());
                         createPDF();
-                        Intent i = new Intent(Faktura.this,MainActivity.class);
-                        startActivity(i);
+                        open();
+
                     }catch (Exception e){}
                 }
         });

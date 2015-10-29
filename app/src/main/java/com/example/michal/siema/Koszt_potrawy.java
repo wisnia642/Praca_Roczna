@@ -182,6 +182,8 @@ public class Koszt_potrawy extends ActionBarActivity {
                     rs = stmt.executeQuery();
 
                     while (rs.next()) {
+                        String zm = rs.getString("Nazwa");
+                        if (zm != null) {
                         Nazwa[x] = rs.getString("Nazwa");
                         Skladniki[x] = rs.getString("Skladniki");
                         File image = new File("/mnt/sdcard/" + Nazwa[x] + ".jpg");
@@ -212,7 +214,7 @@ public class Koszt_potrawy extends ActionBarActivity {
 
                         x++;
 
-                    }
+                    }}
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }i++;

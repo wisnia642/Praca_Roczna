@@ -42,7 +42,7 @@ public class Magzyn extends ActionBarActivity {
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -174,14 +174,16 @@ public class Magzyn extends ActionBarActivity {
 
                 while (rs.next())
                 {
-                    Data[x] = rs.getString("Data");
-                    Czas[x] = rs.getString("Czas");
-                    Nazwa[x] = rs.getString("Nazwa");
-                    Ilosc[x] = rs.getString("Ilosc");
-                    Czas_wykonania[x] = rs.getString("Czas_wykonania");
-                    Kto_wykonal[x] = rs.getString("Kto_wykonal");
-                    x++;
-
+                    String zm = rs.getString("Data");
+                    if (zm != null) {
+                        Data[x] = rs.getString("Data");
+                        Czas[x] = rs.getString("Czas");
+                        Nazwa[x] = rs.getString("Nazwa");
+                        Ilosc[x] = rs.getString("Ilosc");
+                        Czas_wykonania[x] = rs.getString("Czas_wykonania");
+                        Kto_wykonal[x] = rs.getString("Kto_wykonal");
+                        x++;
+                    }
                 } }catch (SQLException e1)
             {
                 e1.printStackTrace();
@@ -294,11 +296,11 @@ public class Magzyn extends ActionBarActivity {
         data1 = (EditText) findViewById(R.id.editText14);
         data2 = (EditText) findViewById(R.id.editText15);
 
-     //   readsqlLight();
-     //    if(Czas[0]!=null) {
+        readsqlLight();
+         if(Czas[0]!=null) {
             wczytywanie();
-       //     wartosc = true;
-      //  }
+            wartosc = true;
+        }
 
         final CustomAdapter7  adapter1 = new CustomAdapter7(this,Data, Czas, Nazwa,Ilosc,Czas_wykonania,Kto_wykonal);
        lista.setAdapter(adapter1);

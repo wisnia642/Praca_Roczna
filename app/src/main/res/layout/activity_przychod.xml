@@ -1,0 +1,206 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.michal.siema.Przychod"
+    android:background="@drawable/images1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Obliczanie przychodu"
+        android:id="@+id/textView83"
+        android:textSize="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Data od"
+        android:id="@+id/textView84"
+        android:layout_marginTop="84dp"
+        android:layout_below="@+id/textView83"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="154dp"
+        android:layout_marginStart="154dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/editText22"
+        android:layout_alignBottom="@+id/textView84"
+        android:layout_alignLeft="@+id/textView84"
+        android:layout_alignStart="@+id/textView84"
+        android:layout_marginLeft="106dp"
+        android:layout_marginStart="106dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Data do"
+        android:id="@+id/textView85"
+        android:layout_alignBottom="@+id/editText22"
+        android:layout_toRightOf="@+id/editText22"
+        android:layout_toEndOf="@+id/editText22"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/editText23"
+        android:layout_alignBottom="@+id/textView85"
+        android:layout_toRightOf="@+id/textView85"
+        android:layout_toEndOf="@+id/textView85"
+        android:layout_marginLeft="53dp"
+        android:layout_marginStart="53dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pokaż"
+        android:id="@+id/button70"
+        android:layout_alignBottom="@+id/editText23"
+        android:layout_toRightOf="@+id/editText23"
+        android:layout_toEndOf="@+id/editText23"
+        android:layout_marginLeft="53dp"
+        android:layout_marginStart="53dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Liczba wykonanych potraw"
+        android:id="@+id/textView120"
+        android:layout_marginTop="86dp"
+        android:layout_below="@+id/textView84"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:textSize="22dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Koszty (prąd, woda, gaz) w ZŁ"
+        android:id="@+id/textView121"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView120"
+        android:layout_alignStart="@+id/textView120" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Przychody z wykonanych dań"
+        android:id="@+id/textView122"
+        android:layout_below="@+id/textView121"
+        android:layout_alignLeft="@+id/textView121"
+        android:layout_alignStart="@+id/textView121"
+        android:layout_marginTop="69dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oblicz"
+        android:id="@+id/button71"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView83"
+        android:layout_alignStart="@+id/textView83"
+        android:layout_marginBottom="47dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/button72"
+        android:layout_alignBottom="@+id/button71"
+        android:layout_toRightOf="@+id/textView85"
+        android:layout_toEndOf="@+id/textView85" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView123"
+        android:layout_alignBottom="@+id/textView120"
+        android:layout_toLeftOf="@+id/editText23"
+        android:layout_toStartOf="@+id/editText23" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView125"
+        android:layout_alignTop="@+id/textView122"
+        android:layout_alignLeft="@+id/textView123"
+        android:layout_alignStart="@+id/textView123" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Narzut VAT "
+        android:id="@+id/textView126"
+        android:layout_above="@+id/button71"
+        android:layout_alignLeft="@+id/textView122"
+        android:layout_alignStart="@+id/textView122"
+        android:layout_marginBottom="44dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="W danym okresie czasu        zarobiłeś"
+        android:id="@+id/textView128"
+        android:layout_toRightOf="@+id/textView83"
+        android:layout_toEndOf="@+id/textView83"
+        android:layout_below="@+id/textView123"
+        android:textSize="30dp"
+        android:layout_alignBottom="@+id/editText24"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView129"
+        android:textSize="30dp"
+        android:layout_alignBottom="@+id/textView125"
+        android:layout_toRightOf="@+id/editText23"
+        android:layout_toEndOf="@+id/editText23"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/editText24"
+        android:layout_alignBottom="@+id/textView121"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/editText25"
+        android:layout_alignBottom="@+id/textView126"
+        android:layout_toRightOf="@+id/editText22"
+        android:layout_toEndOf="@+id/editText22" />
+</RelativeLayout>

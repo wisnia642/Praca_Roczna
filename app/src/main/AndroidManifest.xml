@@ -108,6 +108,10 @@
             android:name=".Lista_zakupow"
             android:label="@string/title_activity_lista_zakupow" >
         </activity>
+        <activity
+            android:name=".Przychod"
+            android:label="@string/title_activity_przychod" >
+        </activity>
     </application>
 
 </manifest>

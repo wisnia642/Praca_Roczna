@@ -47,6 +47,10 @@ public class Lista extends ActionBarActivity {
     String pozycja;
     String message13="";
 
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     final String[] zm = new String[50];
     final String[] zm1 = new String[50];
     final String[] zm2 = new String[50];
@@ -82,7 +86,7 @@ public class Lista extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("" + e);
             return;

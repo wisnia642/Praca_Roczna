@@ -37,6 +37,10 @@ public class Lista_dodawanie extends ActionBarActivity {
     public static final int CZWARTY_ELEMENT = 4;
     public static final int PIATY_ELEMENT = 5;
 
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     private static final String SAMPLE_DB_NAME = "Restalracja";
     int i = 0;
     static Statement st;
@@ -79,7 +83,7 @@ public class Lista_dodawanie extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("" + e);
             return;

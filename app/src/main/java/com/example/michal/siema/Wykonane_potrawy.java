@@ -54,7 +54,7 @@ public class Wykonane_potrawy extends ActionBarActivity {
     String[] Kto_wykonal = new String[40];
     String[] uzytkownik = {"Paweł","Piotr","Agnieszka","Kucharz"};
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 

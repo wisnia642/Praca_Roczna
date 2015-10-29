@@ -54,16 +54,17 @@ import java.util.Properties;
 public class Lista_zakupow extends ActionBarActivity {
 
     ListView lista;
-    EditText produkty1,kategoria,stan_krytyczny,ilosc,koszt;
+    EditText produkty1,stan_krytyczny,ilosc,koszt;
     Button usun,popraw,email,cancel,dodaj,sms;
-    Spinner kto_wykonal;
+    Spinner kto_wykonal,kategoria;
 
     String[] produkty = {"Magazyn","Lodowka","Brak_kategori","Mroznia"};
+    String[] Wagi = {"Szt","Kg","Dag","Gram"};
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -85,14 +86,15 @@ public class Lista_zakupow extends ActionBarActivity {
     Double[] Ilosc1 =new Double[30];
     Double[] Cena1 = new Double[30];
     String[] Przynaleznosc1 =new String[30];
+    String zakupy,zakupy1;
 
     String phoneNumber = "0790510703";
     String smsBody = "Lista Zakupów stary nie zapomnij :)";
 
 
 
-    int y,x,o,v,w,b,n;
-    Double wynik,cena,cena_zakopow;
+    int y,x,o,v,w,n,b,p;
+    Double wynik;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -124,9 +126,17 @@ public class Lista_zakupow extends ActionBarActivity {
     }
 
     public void readfromMySql(){
+        connect();
+        if (connection != null) {
 
-    for (int i=0;i<4;i=i+0) {
-        String sql = "SELECT * FROM " + produkty[i] + "";
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+    for (int i=0;i<4;i=i+0){
+        String sql = "SELECT * FROM "+produkty[i]+"";
 
         try {
             rs = st.executeQuery(sql);
@@ -144,24 +154,22 @@ public class Lista_zakupow extends ActionBarActivity {
                     Ilosc[y] = rs.getDouble("Ilosc");
                     Kategoria[y] = rs.getString("Kategoria");
                     Stan_krytyczny[y] = rs.getDouble("Stan_krytyczny");
-                    Cena[y] = rs.getDouble("Cena");
+                    Cena[y] = rs.getDouble("Cena_detaliczna");
                     Przynaleznosc[y] = rs.getString("Przynaleznosc");
                     y++;
                 }
             }
-        } catch (SQLException e1) {
-            e1.printStackTrace();
+            } catch (SQLException e1){}
 
+                try {
+                    if (connection != null)
+                        connection.close();
+                } catch (SQLException se) {
+                    showToast("brak połączenia z internetem");
+                }
+                i++;
 
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException se) {
-                showToast("brak połączenia z internetem");
-            }
-            i++;
-        }
-    }}
+        }}}
 
     public void readsqlLight()
     {
@@ -169,7 +177,7 @@ public class Lista_zakupow extends ActionBarActivity {
         for (int i=0;i<4;i=i+0) {
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
         try {
-        Cursor c = sampleDB.rawQuery("SELECT * FROM " + produkty[i] + "", null);
+        Cursor c = sampleDB.rawQuery("SELECT * FROM  "+produkty[i]+"", null);
 
         while (c.moveToNext()) {
         String zm = String.valueOf(c.getString(0));
@@ -185,7 +193,6 @@ public class Lista_zakupow extends ActionBarActivity {
         }
         sampleDB.close();
         } catch (Exception e) {
-        showToast("dupa");
         }
         i++;
         }
@@ -194,7 +201,7 @@ public class Lista_zakupow extends ActionBarActivity {
     protected void sendEmail() {
         String recipients = "wisnia642@gmail.com";
         String subject = "Lista Zakupów";
-        String body ="Siema nie zapomniałeś o czymś :)";
+      //  String body ="Siema nie zapomniałeś o czymś :)";
 
         Intent email = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
 
@@ -202,7 +209,7 @@ public class Lista_zakupow extends ActionBarActivity {
         email.setType("message/rfc822");
         email.putExtra(Intent.EXTRA_EMAIL, recipients);
         email.putExtra(Intent.EXTRA_SUBJECT, subject);
-        email.putExtra(Intent.EXTRA_TEXT, body);
+        email.putExtra(Intent.EXTRA_TEXT, zakupy);
         try {
             // the user can choose the email client
             startActivity(Intent.createChooser(email, "Choose an email client from..."));
@@ -238,7 +245,7 @@ public class Lista_zakupow extends ActionBarActivity {
         Uri uri = Uri.parse("smsto:" + phoneNumber);
         Intent smsSIntent = new Intent(Intent.ACTION_SENDTO, uri);
         // add the message at the sms_body extra field
-        smsSIntent.putExtra("sms_body", smsBody);
+        smsSIntent.putExtra("sms_body", zakupy);
         try{
             startActivity(smsSIntent);
         } catch (Exception ex) {
@@ -267,7 +274,11 @@ public class Lista_zakupow extends ActionBarActivity {
 
     }
 
-
+    public void lista()
+    {
+        CustomAdapter8 adapter1 = new CustomAdapter8(this, Nazwa_produktu1, Kategoria1, Ilosc1, Stan_krytyczny1, Cena1, Przynaleznosc1);
+        lista.setAdapter(adapter1);
+    }
 
 
 @Override
@@ -276,7 +287,7 @@ public class Lista_zakupow extends ActionBarActivity {
         setContentView(R.layout.activity_lista_zakupow);
 
         produkty1 = (EditText) findViewById(R.id.editText11);
-        kategoria = (EditText) findViewById(R.id.editText12);
+        kategoria = (Spinner) findViewById(R.id.spinner7);
         stan_krytyczny = (EditText) findViewById(R.id.editText17);
         kto_wykonal = (Spinner) findViewById(R.id.spinner5);
         usun = (Button) findViewById(R.id.button51);
@@ -289,57 +300,54 @@ public class Lista_zakupow extends ActionBarActivity {
         dodaj = (Button) findViewById(R.id.button68);
         sms = (Button) findViewById(R.id.button69);
 
-      //  readsqlLight();
-  //  if(Nazwa_produktu[0]==null)
-   // {
-      //  readfromMySql();
-  //  }
-
-    kto_wykonal.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, produkty));
-
-    for(int i=0;i<y;i=i+0)
-    {
-        if(Stan_krytyczny[i]<=Ilosc[i])
-        {
-            Nazwa_produktu1[x]=Nazwa_produktu[i];
-            Ilosc1[x]=Ilosc[i];
-            Kategoria1[x]=Kategoria[i];
-            Stan_krytyczny1[x]=Stan_krytyczny[i];
-            Cena1[x]=Cena[i];
-            Przynaleznosc1[x]=Przynaleznosc[i];
-
-            wynik=Stan_krytyczny[i]-Ilosc[i];
-
-            if(wynik<0)
-            {
-                cena = wynik * Cena[i];
-                wynik= cena_zakopow;
-                cena_zakopow= cena+wynik;
-
-            }
-            x++;
-        }
-        i++;
+       readsqlLight();
+    if(Nazwa_produktu[0]==null) {
+        readfromMySql();
     }
 
-       CustomAdapter8  adapter1 = new CustomAdapter8(this,Nazwa_produktu1, Kategoria1, Ilosc1,Stan_krytyczny1,Cena,Przynaleznosc1);
-       lista.setAdapter(adapter1);
+    kto_wykonal.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, produkty));
+    kategoria.setAdapter(new MyAdapter(this, R.layout.custom_spiner, Wagi));
+
+    for(int i=0;i<y;i++)
+    {
+        if(Stan_krytyczny[i]>Ilosc[i]) {
+
+            Nazwa_produktu1[x] = Nazwa_produktu[i];
+            Ilosc1[x] = Ilosc[i];
+            Kategoria1[x] = Kategoria[i];
+            Stan_krytyczny1[x] = Stan_krytyczny[i];
+            Cena1[x] = Cena[i];
+            Przynaleznosc1[x] = Przynaleznosc[i];
+            wynik = Stan_krytyczny[i] - Ilosc[i];
+            x++;
+        }
+        }
+
+        CustomAdapter8 adapter1 = new CustomAdapter8(this, Nazwa_produktu1, Kategoria1, Ilosc1, Stan_krytyczny1, Cena1, Przynaleznosc1);
+        lista.setAdapter(adapter1);
+
+
 
     lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             produkty1.setText(Nazwa_produktu1[i]);
-            kategoria.setText(Kategoria1[i]);
-            ilosc.setText(String.valueOf(Ilosc1[i]));
-            stan_krytyczny.setText(String.valueOf(Stan_krytyczny1[i]));
-            koszt.setText(String.valueOf(Cena1[i]));
-            for (int j = 0; j < Nazwa_produktu1.length; j = j + 0) {
-                if (produkty[i].equals(Przynaleznosc1[j])) {
-                    w = j;
+            for (int j = 0; j <4; j = j + 0) {
+                if (Wagi[j].equals(Kategoria1[i])) {
+                    kategoria.setSelection(j);
                 }
                 j++;
             }
-            kto_wykonal.setSelection(w);
+            ilosc.setText(String.valueOf(Ilosc1[i]));
+            stan_krytyczny.setText(String.valueOf(Stan_krytyczny1[i]));
+            koszt.setText(String.valueOf(Cena1[i]));
+            for (int j = 0; j <4; j = j + 0) {
+                if (produkty[j].equals(Przynaleznosc1[i])) {
+                    kto_wykonal.setSelection(j);
+                }
+                j++;
+            }
+
             b = i;
         }
     });
@@ -347,14 +355,15 @@ public class Lista_zakupow extends ActionBarActivity {
     dodaj.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Nazwa_produktu1[x + 1] = produkty1.getText().toString();
-            Kategoria1[x + 1] = kategoria.getText().toString();
-            Ilosc1[x + 1] = Double.valueOf(ilosc.getText().toString());
-            Stan_krytyczny1[x + 1] = Double.valueOf(stan_krytyczny.getText().toString());
-            Cena1[x + 1] = Double.valueOf(koszt.getText().toString());
-            Przynaleznosc1[x + 1] = produkty[o];
-            finish();
-            startActivity(getIntent());
+            try {
+                Nazwa_produktu1[x] = produkty1.getText().toString();
+                Kategoria1[x] = produkty[p];
+                Ilosc1[x] = Double.valueOf(ilosc.getText().toString());
+                Stan_krytyczny1[x] = Double.valueOf(stan_krytyczny.getText().toString());
+                Cena1[x] = Double.valueOf(koszt.getText().toString());
+                Przynaleznosc1[x] = produkty[o];
+                lista();
+            }catch (Exception e){showToast(""+e);}
         }
     });
 
@@ -369,36 +378,46 @@ public class Lista_zakupow extends ActionBarActivity {
     usun.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Nazwa_produktu1[b] = null;
-            Kategoria1[b] = null;
-            Ilosc1[b] = null;
-            Stan_krytyczny1[b] = null;
-            Cena1[b] = null;
-            Przynaleznosc1[b] = null;
-            finish();
-            startActivity(getIntent());
+            try {
+                Nazwa_produktu1[b] = null;
+                Kategoria1[b] = null;
+                Ilosc1[b] = null;
+                Stan_krytyczny1[b] = null;
+                Cena1[b] = null;
+                Przynaleznosc1[b] = null;
+                lista();
+            }catch (Exception e){}
+
         }
     });
 
     popraw.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Nazwa_produktu1[b] = produkty1.getText().toString();
-            Kategoria1[b] = kategoria.getText().toString();
-            Ilosc1[b] = Double.valueOf(ilosc.getText().toString());
-            Stan_krytyczny1[b] = Double.valueOf(stan_krytyczny.getText().toString());
-            Cena1[b] = Double.valueOf(koszt.getText().toString());
-            Przynaleznosc1[b] = produkty[o];
-            finish();
-            startActivity(getIntent());
+            try {
+                Nazwa_produktu1[b] = produkty1.getText().toString();
+                Kategoria1[b] = Wagi[p];
+                Ilosc1[b] = Double.valueOf(ilosc.getText().toString());
+                Stan_krytyczny1[b] = Double.valueOf(stan_krytyczny.getText().toString());
+                Cena1[b] = Double.valueOf(koszt.getText().toString());
+                Przynaleznosc1[b] = produkty[o];
+                lista();
+            }catch (Exception e){}
         }
     });
 
     sms.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-           sendSmsByManager();
-           // sendSmsBySIntent();
+            zakupy="Produkt, Kategoria, Ilość, Stan krytyczny, Cena";
+            for(int i = 0;i<x;i=i+0)
+            {
+                zakupy1=zakupy+"\n"+Nazwa_produktu1[i]+"  ,         "+ Kategoria1[i]+"  ,         "+Ilosc1[i]+"  ,         "+Stan_krytyczny1[i]+"  ,         "+Cena1[i];
+                zakupy=zakupy1;
+                i++;
+            }
+          // sendSmsByManager();
+            sendSmsBySIntent();
            // sendSmsByVIntent();
         }
     });
@@ -406,6 +425,13 @@ public class Lista_zakupow extends ActionBarActivity {
     email.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            zakupy="Produkt, Kategoria, Ilość, Stan krytyczny, Cena";
+            for(int i = 0;i<x;i=i+0)
+            {
+                zakupy1=zakupy+"\n"+Nazwa_produktu1[i]+"  ,         "+ Kategoria1[i]+"  ,         "+Ilosc1[i]+"  ,         "+Stan_krytyczny1[i]+"  ,         "+Cena1[i];
+                zakupy=zakupy1;
+                i++;
+            }
             sendEmail();
         }
     });
@@ -458,6 +484,34 @@ public class Lista_zakupow extends ActionBarActivity {
             View mySpinner = inflater.inflate(R.layout.custom_spiner, parent, false);
             TextView main_text = (TextView) mySpinner .findViewById(R.id.text1);
             main_text.setText(produkty[position]);
+            return mySpinner;
+        }}
+
+    public class MyAdapter extends ArrayAdapter<String>
+    {
+        public MyAdapter(Context ctx, int txtViewResourceId, String[] objects)
+        {
+            super(ctx, txtViewResourceId, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent)
+        {
+            p=position;
+            LayoutInflater inflater = getLayoutInflater();
+            View mySpinner = inflater.inflate(R.layout.custom_spiner, parent, false);
+            TextView main_text = (TextView) mySpinner .findViewById(R.id.text1);
+            main_text.setText(Wagi[position]);
             return mySpinner;
         }}
 }

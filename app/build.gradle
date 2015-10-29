@@ -27,4 +27,5 @@ dependencies {
     compile files('libs/twilio-java-sdk-3.3.12-jar-with-dependencies.jar')
     compile files('libs/commons-codec-1.4.jar')
     compile files('libs/javaee.jar')
+    compile files('libs/itextpdf-5.5.7.jar')
 }

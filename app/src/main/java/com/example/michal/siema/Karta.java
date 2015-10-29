@@ -41,6 +41,7 @@ public class Karta extends ActionBarActivity {
 
     Bitmap thumbnail;
 
+
     public static final int PIERWSZY_ELEMENT = 1;
     public static final int DRUGI_ELEMENT = 2;
     public static final int TRZECI_ELEMENT = 3;
