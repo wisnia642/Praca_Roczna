@@ -355,7 +355,7 @@ public class Przychod extends ActionBarActivity {
         oblicz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//
                     wynik=0.0;
                 try{
                     wynik2.setText("0.0 Zł");
