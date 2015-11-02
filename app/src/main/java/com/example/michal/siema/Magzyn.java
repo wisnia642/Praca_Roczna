@@ -82,7 +82,7 @@ public class Magzyn extends ActionBarActivity {
 
     private void updateLabel() {
 
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         if(y==1) {
@@ -297,7 +297,7 @@ public class Magzyn extends ActionBarActivity {
         data2 = (EditText) findViewById(R.id.editText15);
 
         readsqlLight();
-         if(Czas[0]!=null) {
+         if(Nazwa[0]==null) {
             wczytywanie();
             wartosc = true;
         }
@@ -326,7 +326,7 @@ public class Magzyn extends ActionBarActivity {
                 new DatePickerDialog(Magzyn.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                        y=1;
+                y=1;
             }
         });
 
@@ -434,6 +434,14 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Lista_zakupow.class);
+                startActivity(c);
+            }
+        });
+
+        przychody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Magzyn.this, Przychod.class);
                 startActivity(c);
             }
         });

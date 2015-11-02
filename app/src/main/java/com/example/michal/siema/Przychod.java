@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +53,8 @@ public class Przychod extends ActionBarActivity {
     PreparedStatement ps;
     FileInputStream fis = null;
     Connection connection = null;
+    boolean kosz=false;
+    boolean narz=false;
 
     String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza",
             "Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazownane","Napoje_Zimne","Napoje_Gorace","Soki"};
@@ -61,10 +64,11 @@ public class Przychod extends ActionBarActivity {
     private SimpleDateFormat sdf;
     DatePickerDialog.OnDateSetListener date;
 
-    String data,dat2,data11,data22;
-    int x=0,y=0,z=0,Ilosc1=0,Ilosc2=0,cena1=0,cena2=0;
-    boolean wartosc = false;
-    Double koszty1=0.0,procenty1=0.0,wynik=0.0;
+    String data,dat2,data11,data22,koszty2,procenty2;
+    int x=0,y=0,z=0,Ilosc1=0,Ilosc2=0,cena1=0,cena2=0,cena3=0;
+    Double koszty1=0.0;
+    Double procenty1=0.0;
+    Double cena4=0.0,wynik;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -77,7 +81,7 @@ public class Przychod extends ActionBarActivity {
 
     private void updateLabel() {
 
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         if(y==1) {
@@ -120,7 +124,7 @@ public class Przychod extends ActionBarActivity {
 
         try
         {
-            Cursor c = sampleDB.rawQuery("select  Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal from Wykonane where Data BETWEEN '" + data11 + "' AND '" + data22 + "'", null);
+            Cursor c = sampleDB.rawQuery("select * from Wykonane where Data BETWEEN '" + data11 + "' AND '" + data22 + "'", null);
 
             while (c.moveToNext()) {
                 String  zm = String.valueOf(c.getString(2));
@@ -149,7 +153,7 @@ public class Przychod extends ActionBarActivity {
                 e1.printStackTrace();
             }
 
-            String sql = ("select  Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal from Wykonane where Data BETWEEN '" + data11 + "' AND '" + data22 + "'");
+            String sql = ("select * from Wykonane where Data BETWEEN '" + data11 + "' AND '" + data22 + "'");
 
             try {
                 rs=st.executeQuery(sql);
@@ -209,8 +213,8 @@ public class Przychod extends ActionBarActivity {
                     while (rs.next()) {
                         String zm = rs.getString("Nazwa");
                         if (zm != null) {
-                            Nazwa[x] = rs.getString("Nazwa");
-                            Cena[x] = rs.getString("Cena");
+                            Nazwa[z] = rs.getString("Nazwa");
+                            Cena[z] = rs.getString("Cena");
                             z++;
 
                         }
@@ -239,8 +243,8 @@ public class Przychod extends ActionBarActivity {
                 while (c.moveToNext()) {
                     String zm = String.valueOf(c.getString(0));
                     if (zm != null) {
-                        Nazwa[x] = String.valueOf(c.getString(0));
-                        Cena[x] = String.valueOf(c.getString(4));
+                        Nazwa[z] = String.valueOf(c.getString(0));
+                        Cena[z] = String.valueOf(c.getString(4));
                         z++;
                     }
                 }
@@ -257,6 +261,7 @@ public class Przychod extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_przychod);
 
+        myCalendar = Calendar.getInstance();
         pokaz =  (Button) findViewById(R.id.button70);
         oblicz = (Button) findViewById(R.id.button71);
         cancel = (Button) findViewById(R.id.button72);
@@ -269,10 +274,10 @@ public class Przychod extends ActionBarActivity {
         wynik1 = (TextView) findViewById(R.id.textView128);
         wynik2 = (TextView) findViewById(R.id.textView129);
 
-        readsqlLigtData();
-        if(Nazwa[0]!=null) {
+      //  readsqlLigtData();
+      //  if(Nazwa[0]==null) {
             wczytywanie();
-        }
+      //  }
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -305,61 +310,89 @@ public class Przychod extends ActionBarActivity {
                 new DatePickerDialog(Przychod.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                y = 2;
+                y=2;
             }
         });
 
         pokaz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cena1=0;
+                cena2=0;
+                Ilosc1=0;
+                przychody.setText("");
+                wykonywane.setText("");
+                data11 = data1.getText().toString();
+                data22 = data2.getText().toString();
 
-                readsqlLigt();
-                if(Nazwa1[0]!=null) {
-                    wczytywanie2();
-                }
-
+                //   readsqlLigt();
+               // if(Nazwa1[0]==null) {
+                wczytywanie2();
+             //   }
                 for(int i=0;i<x;i=i+0)
                 {
                     Ilosc2=Ilosc1+Integer.parseInt(Ilosc[i]);
-                    Ilosc1= Ilosc2;
+                    Ilosc1 = Ilosc2;
 
-                    for(int j=0;i<z;j=j+0) {
+                    for(int j=0;j<z;j=j+0) {
                         if (Nazwa1[i].equals(Nazwa[j])) {
-                                cena2 = cena1 + Integer.parseInt(Cena[j])*Integer.parseInt(Ilosc[i]);
-                                 cena1 = cena2;
+                                cena3 = Integer.parseInt(Cena[j]) * Integer.parseInt(Ilosc[i]);
+                                cena1 = cena2+cena3;
+                                cena2 = cena3;
                         }
                         j++;
                     }
                     i++;
                 }
 
-                przychody.setText(String.valueOf(cena2));
+                przychody.setText(String.valueOf(cena1));
                 wykonywane.setText(String.valueOf(Ilosc2));
-                data11 = data1.getText().toString();
-                data22 = data2.getText().toString();
+
             }
         });
+
 
         oblicz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(narzut.getText().toString()!=null)
-                {
-                    koszty1= Double.parseDouble(koszty.getText().toString());
-                    procenty1 = Double.parseDouble(narzut.getText().toString());
-                    wynik=((koszty1+cena2)*procenty1)/100;
 
-                }
-                else
-                {
-                    koszty1= Double.parseDouble(koszty.getText().toString());
-                    wynik = koszty1+cena2;
+                    wynik=0.0;
+                try{
+                    wynik2.setText("0.0 Zł");
 
-                }
+                    String value = narzut.getText().toString();
+                    String value1 = koszty.getText().toString();
+
+                    if (TextUtils.isEmpty(value) || TextUtils.isEmpty(value1)) {
+                    }else{
+                        koszty2 = koszty.getText().toString();
+                        procenty2 = narzut.getText().toString();
+                        cena4= Double.valueOf(cena1);
+                        wynik =  cena4 - Double.parseDouble(koszty2) ;
+                        koszty1= wynik*Double.parseDouble(procenty2);
+                        procenty1= koszty1/ 100;
+                        wynik = cena4-procenty1;
+                    }
+
+                    if (TextUtils.isEmpty(value) ) {
+                        koszty2 = koszty.getText().toString();
+                        cena4= Double.valueOf(cena1);
+                        wynik = cena4 - Double.parseDouble(koszty2);
+                    }else{
+                        procenty2 = narzut.getText().toString();
+                        cena4= Double.valueOf(cena1);
+                        koszty1= cena4*Double.parseDouble(procenty2);
+                        procenty1= koszty1/ 100;
+                        wynik = cena4-procenty1;
+                   }
+
 
                 wynik1.setVisibility(View.VISIBLE);
                 wynik2.setVisibility(View.VISIBLE);
-                wynik2.setText(String.valueOf(wynik));
+                wynik2.setText(String.valueOf(wynik) + " Zł");
+                    kosz=false;
+                    narz=false;
+            }catch (Exception e){showToast("blad w liczeniu");}
             }
         });
 
