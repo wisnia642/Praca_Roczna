@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class Glowne_menu extends ActionBarActivity {
 
-    Button kuchnia,magazyn,sala_sprzedaży,ustawienia;
+    Button kuchnia,magazyn,sala_sprzedaży,wyloguj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class Glowne_menu extends ActionBarActivity {
 
         kuchnia = (Button) findViewById(R.id.button56);
         magazyn = (Button) findViewById(R.id.button57);
-        ustawienia = (Button) findViewById(R.id.button58);
+        wyloguj = (Button) findViewById(R.id.button58);
         sala_sprzedaży = (Button) findViewById(R.id.button55);
 
         kuchnia.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +43,14 @@ public class Glowne_menu extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Glowne_menu.this, MainActivity.class);
+                startActivity(c);
+            }
+        });
+
+        wyloguj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Glowne_menu.this, Logowanie.class);
                 startActivity(c);
             }
         });
