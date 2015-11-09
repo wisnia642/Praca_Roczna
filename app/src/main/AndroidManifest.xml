@@ -121,6 +121,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Nowe_konto"
+            android:label="@string/title_activity_nowe_konto" >
+        </activity>
     </application>
 
 </manifest>

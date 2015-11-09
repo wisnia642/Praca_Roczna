@@ -35,5 +35,6 @@
     <string name="title_activity_lista_zakupow">Lista_zakupow</string>
     <string name="title_activity_przychod">Przychod</string>
     <string name="title_activity_logowanie">Logowanie</string>
+    <string name="title_activity_nowe_konto">Nowe_konto</string>
 
 </resources>

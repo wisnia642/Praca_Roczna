@@ -7,11 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class Glowne_menu extends ActionBarActivity {
 
-    Button kuchnia,magazyn,sala_sprzedaży,wyloguj;
+    Button kuchnia,magazyn,sala_sprzedaży,wyloguj,faktura,konto;
+    Bundle applesData;
+    String Magazyn,Kuchnia,Sala_sprzedazy,Wszystko;
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,32 +31,82 @@ public class Glowne_menu extends ActionBarActivity {
         magazyn = (Button) findViewById(R.id.button57);
         wyloguj = (Button) findViewById(R.id.button58);
         sala_sprzedaży = (Button) findViewById(R.id.button55);
+        faktura = (Button) findViewById(R.id.button78);
+        konto = (Button) findViewById(R.id.button78);
+
+        applesData = getIntent().getExtras();
+        Magazyn = applesData.getString("magazyn");
+        Kuchnia = applesData.getString("kuchnia");
+        Sala_sprzedazy = applesData.getString("sala_sprzedazy");
+        Wszystko = applesData.getString("wszystko");
 
         kuchnia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Kuchnia=="1" || Wszystko=="1"){
                 Intent a = new Intent(Glowne_menu.this, Kuchnia.class);
-                startActivity(a);
+                    a.putExtra("Wszystko", Wszystko);
+                startActivity(a);}
+                else {
+                    showToast("Brak uprawnień");
+                }
             }
         });
 
         magazyn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Magazyn=="1" || Wszystko=="1"){
                 Intent b = new Intent(Glowne_menu.this, Magzyn.class);
-                startActivity(b);
+                    b.putExtra("Wszystko", Wszystko);
+                startActivity(b);}
+                else
+                {
+                    showToast("Brak uprawmień");
+                }
             }
         });
 
         sala_sprzedaży.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(Sala_sprzedazy=="1" || Wszystko=="1"){
                 Intent c = new Intent(Glowne_menu.this, MainActivity.class);
-                startActivity(c);
+                    c.putExtra("Wszystko", Wszystko);
+                startActivity(c);}
+                else
+                {
+                    showToast("Brak uprawnień");
+                }
             }
         });
 
         wyloguj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Wszystko=="1")
+                {}
+                else
+                {
+                    showToast("Brak uprawnień");
+                }
+            }
+        });
+
+        konto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Wszystko=="1"){
+                Intent c = new Intent(Glowne_menu.this, Nowe_konto.class);
+                startActivity(c);}
+                else
+                {
+                    showToast("Brak uprawnień");
+                }
+            }
+        });
+
+        faktura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Glowne_menu.this, Logowanie.class);
