@@ -84,7 +84,7 @@ public class Kuchnia extends ActionBarActivity {
     Boolean stan3=false;
     Boolean komunikat=false;
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -92,6 +92,9 @@ public class Kuchnia extends ActionBarActivity {
     FileOutputStream fos;
     customAdapter4 adapter;
     Double zm;
+
+    Bundle applesData;
+    String s,m,k,W;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -449,6 +452,12 @@ public class Kuchnia extends ActionBarActivity {
         lista = (ListView) findViewById(R.id.listView);
         obraz = (ImageView) findViewById(R.id.imageView5);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+
         readsqlLight();
 
         if(Klient[0]==null){
@@ -475,6 +484,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent x = new Intent(Kuchnia.this, Glowne_menu.class);
+                x.putExtra("sala_sprzedazy", s);
+                x.putExtra("wszystko", W);
+                x.putExtra("magazyn", m);
+                x.putExtra("kuchnia", k);
                 startActivity(x);
             }
         });

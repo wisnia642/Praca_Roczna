@@ -36,5 +36,8 @@
     <string name="title_activity_przychod">Przychod</string>
     <string name="title_activity_logowanie">Logowanie</string>
     <string name="title_activity_nowe_konto">Nowe_konto</string>
+    <string name="title_activity_glown_menu">Glown_menu</string>
+    <string name="title_activity_glowne_men">Glowne_men</string>
+    <string name="title_activity_gmenu">GMenu</string>
 
 </resources>

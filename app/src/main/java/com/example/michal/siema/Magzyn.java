@@ -39,6 +39,9 @@ public class Magzyn extends ActionBarActivity {
     lista_zakupow,odswierz,pokaz;
     ListView lista;
 
+    Bundle applesData;
+    String s,m,k,w;
+
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
@@ -296,6 +299,12 @@ public class Magzyn extends ActionBarActivity {
         data1 = (EditText) findViewById(R.id.editText14);
         data2 = (EditText) findViewById(R.id.editText15);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
+
         readsqlLight();
          if(Nazwa[0]==null) {
             wczytywanie();
@@ -372,6 +381,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Glowne_menu.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", w);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 startActivity(c);
             }
         });

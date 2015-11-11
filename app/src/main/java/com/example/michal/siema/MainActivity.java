@@ -62,6 +62,9 @@ public class MainActivity extends ActionBarActivity {
     int x,w,c,a,q,z;
     FileOutputStream fos;
 
+    Bundle applesData;
+    String s,m,k,W;
+
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
@@ -86,6 +89,7 @@ public class MainActivity extends ActionBarActivity {
 
     Button menu1,menu2,menu3,menu4,menu5,menu6,menu7,menu8,menu9,menu10,menu11,menu12,menu13,menu14,menu15,menu16;
     Button rabat,napiwek,anulacja,odswierz,przerwa,wyjdz,karta,gotowka,faktura,rezerwacja;
+    Button sala1,sala2,sala3,sala4,sala5;
     Button dodaj,odejmnij,usun;
 
 
@@ -502,11 +506,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       Button Sala1 = (Button) findViewById(R.id.button6);
-       Button Sala2 = (Button) findViewById(R.id.button7);
-       Button Sala3 = (Button) findViewById(R.id.button8);
-       Button Sala4 = (Button) findViewById(R.id.button9);
-       Button Sala5 = (Button) findViewById(R.id.button10);
+       sala1 = (Button) findViewById(R.id.button6);
+       sala2 = (Button) findViewById(R.id.button7);
+       sala3 = (Button) findViewById(R.id.button8);
+       sala4 = (Button) findViewById(R.id.button9);
+       sala5 = (Button) findViewById(R.id.button10);
 
         Txt = (TextView) findViewById(R.id.textView);
         Txt1 = (TextView) findViewById(R.id.textView2);
@@ -546,13 +550,19 @@ public class MainActivity extends ActionBarActivity {
         usun = (Button) findViewById(R.id.button3);
         odejmnij = (Button) findViewById(R.id.button4);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+
         //odczyt z bazy danych i z pliku
-        try{readsqlLight();}catch (Exception e){}
+        try{
+            readsqlLight();
         if(Klient[0]==null){
-            try {
                 wczytywanie();
-            } catch (Exception e) {
-            }}
+            } }catch (Exception e) {showToast(""+e);
+            }
 
         try{zdjecie1();}catch (Exception e){}
         try{zdjecie2();}catch (Exception e){}
@@ -571,28 +581,28 @@ public class MainActivity extends ActionBarActivity {
         try{zdjecie15();}catch (Exception e){}
         try{zdjecie16();}catch (Exception e){}
 
-        for (int i=0; i < x; i = i+ 0) {
-            for (int j = 0; j < x; j = j+ 0) {
-                if(j==0)
-                {
-                    j=j+i;
-                }
+            for (int i = 0; i < x; i = i + 0) {
+                for (int j = 0; j < x; j = j + 0) {
+                    if (j == 0) {
+                        j = j + i;
+                    }
 
-                if (Klient[j].equals(Klient[i])) {
-                    w = w + 1;
+                    if (Klient[j].equals(Klient[i])) {
+                        w = w + 1;
+                    }
+                    j = j + 1;
                 }
-                j = j + 1;
-            }
-            if (w == 1) {
-                klient[c] = Klient[i];
-                listaStringow.add(klient[c]);
-                c=c+1;
+                if (w == 1) {
+                    klient[c] = Klient[i];
+                    listaStringow.add(klient[c]);
+                    c = c + 1;
 
+                }
+                w = 0;
+                i = i + 1;
             }
-            w = 0;
-            i=i+1;
-        }
-       c=0;
+            c = 0;
+
 
         customAdapter2 adapter2=new customAdapter2(this, klient);
         lista1.setAdapter(adapter2);
@@ -600,8 +610,12 @@ public class MainActivity extends ActionBarActivity {
         wyjdz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Glowne_menu.class);
-                startActivity(i);
+                Intent c = new Intent(MainActivity.this, Glowne_menu.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
+                startActivity(c);
             }
         });
 
@@ -814,35 +828,35 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        Sala1.setOnClickListener(new View.OnClickListener() {
+        sala1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_1.class);
                 startActivity(i);
             }
         });
-        Sala2.setOnClickListener(new View.OnClickListener() {
+        sala2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_2.class);
                 startActivity(i);
             }
         });
-        Sala4.setOnClickListener(new View.OnClickListener() {
+        sala4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_3.class);
                 startActivity(i);
             }
         });
-        Sala3.setOnClickListener(new View.OnClickListener() {
+        sala3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_4.class);
                 startActivity(i);
             }
         });
-        Sala5.setOnClickListener(new View.OnClickListener() {
+        sala5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_5.class);

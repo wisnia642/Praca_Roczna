@@ -85,13 +85,6 @@
             android:name=".Pprodukty_kategoria"
             android:label="@string/title_activity_pprodukty_kategoria" >
         </activity>
-        <activity android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Magzyn"
             android:label="@string/title_activity_magzyn" >
@@ -113,17 +106,16 @@
             android:label="@string/title_activity_przychod" >
         </activity>
         <activity
-            android:name=".Glowne_menu"
-            android:label="Glowne_menu" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".Nowe_konto"
             android:label="@string/title_activity_nowe_konto" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="main" >
+        </activity>
+        <activity
+            android:name=".Glowne_menu"
+            android:label="@string/title_activity_glowne_menu" >
         </activity>
     </application>
 

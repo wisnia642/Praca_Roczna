@@ -31,6 +31,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Nowe_konto extends ActionBarActivity {
 
@@ -38,6 +40,9 @@ public class Nowe_konto extends ActionBarActivity {
     Spinner edycja;
     CheckBox Magazyn,Kuchnia,Sala_sprzedazy,Wszystko;
     Button ok,annuluj;
+    Bundle applesData;
+    String s,m,k,w;
+    List<String> listaStringow = new ArrayList<String>();
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
@@ -56,8 +61,12 @@ public class Nowe_konto extends ActionBarActivity {
     String[] sala_sprzedazy = new String[15];
     String[] wszystko = new String[15];
     String[] wartosc = new String[5];
-    int x,z,q;
+    boolean[] czy_puste = new boolean[5];
+    int x,z,q,i,p;
+    boolean stan=false;
+    boolean stan1 =false;
     String hash1,login1,haslo1,powtorz_haslo1;
+
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -91,25 +100,12 @@ public class Nowe_konto extends ActionBarActivity {
 
     }
 
-    private void ToDataBase()
-    {
-        try {
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS logowanie (Uzytkownik VARCHAR,Haslo VARCHAR,Sala_sprzedazy VARCHAR," +
-                    "Magazyn VARCHAR,Kuchnia VARCHAR,Wszystko VARCHAR);");
-        }
-        catch (Exception e){}
-
-    }
 
     private void Hash()
     {
         try {
-            String plaintext = Haslo.getText().toString();
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(StandardCharsets.UTF_8.encode(plaintext));
-            hash1="%032x"+ new BigInteger(1, md5.digest());
-
+            String input = Haslo.getText().toString();
+            hash1 = "%032x440472108104"+String.valueOf(input.hashCode());
         }
         catch (Exception e){}
     }
@@ -117,12 +113,10 @@ public class Nowe_konto extends ActionBarActivity {
 
     public void UpdateSql()
     {
-        ToDataBase();
-
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             //poprawić ma być insert bo tych składników jeszcze nie ma
-            sampleDB.execSQL("INSERT INTO logowanie (Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES ('"+login1+"','"+haslo1+"'," +
+            sampleDB.execSQL("INSERT INTO logowanie (Id,Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES ('"+String.valueOf(p)+"','"+login1+"','"+hash1+"'," +
                     "'"+wartosc[0]+"','"+wartosc[1]+"','"+wartosc[2]+"','"+wartosc[3]+"') ");
             sampleDB.close();
         } catch (Exception e) {
@@ -139,17 +133,18 @@ public class Nowe_konto extends ActionBarActivity {
             }
 
 
-            String sql1 = "INSERT INTO logowanie (Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES" +
-                    " (?,?,?,?,?,?)";
+            String sql1 = "INSERT INTO logowanie (Id,Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES" +
+                    " (?,?,?,?,?,?,?)";
 
             try {
                 ps = connection.prepareStatement(sql1);
-                ps.setString(1, login1);
-                ps.setString(2, haslo1);
-                ps.setString(3, wartosc[0]);
-                ps.setString(4, wartosc[1]);
-                ps.setString(5, wartosc[2]);
-                ps.setString(6, wartosc[3]);
+                ps.setString(1, String.valueOf(p));
+                ps.setString(2, login1);
+                ps.setString(3, hash1);
+                ps.setString(4, wartosc[0]);
+                ps.setString(5, wartosc[1]);
+                ps.setString(6, wartosc[2]);
+                ps.setString(7, wartosc[3]);
                 ps.executeUpdate();
                 connection.commit();
 
@@ -165,9 +160,45 @@ public class Nowe_konto extends ActionBarActivity {
         }
     }
 
+    private void writeToDataBase()
+    {
+
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+                sampleDB.execSQL("DELETE FROM logowanie WHERE Id=('" + q + "') ");
+
+            sampleDB.close();
+        }catch (Exception e){showToast("Blad w update");}
+
+        connect();
+
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+
+                String sql ="DELETE FROM logowanie WHERE Id=('" + q + "') ";
+
+                try {
+                    st.executeUpdate(sql);
+                } catch (SQLException e1) {
+                    // e1.printStackTrace();
+                }
+            }
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+        }
+
+
     private void readsqlLigt()
     {x=0;
-        ToDataBase();
 
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
@@ -176,14 +207,14 @@ public class Nowe_konto extends ActionBarActivity {
             Cursor c = sampleDB.rawQuery("select * from logowanie", null);
 
             while (c.moveToNext()) {
-                String  zm = String.valueOf(c.getString(0));
+                String  zm = String.valueOf(c.getString(1));
                 if(zm!=null){
-                    uzytkonkik[x] = String.valueOf(c.getString(0));
-                    haslo[x] = String.valueOf(c.getString(1));
-                    sala_sprzedazy[x] = String.valueOf(c.getString(2));
-                    magazyn[x] = String.valueOf(c.getString(3));
-                    kuchnia[x] = String.valueOf(c.getString(4));
-                    wszystko[x] = String.valueOf(c.getString(5));
+                    uzytkonkik[x] = String.valueOf(c.getString(1));
+                    haslo[x] = String.valueOf(c.getString(2));
+                    sala_sprzedazy[x] = String.valueOf(c.getString(3));
+                    magazyn[x] = String.valueOf(c.getString(4));
+                    kuchnia[x] = String.valueOf(c.getString(5));
+                    wszystko[x] = String.valueOf(c.getString(6));
                     x++;}
             }
             sampleDB.close();
@@ -259,80 +290,164 @@ public class Nowe_konto extends ActionBarActivity {
         ok = (Button) findViewById(R.id.button75);
         annuluj = (Button) findViewById(R.id.button76);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
+
+        czy_puste[0]=false;
+        czy_puste[1]=false;
+        czy_puste[2]=false;
+        czy_puste[3]=false;
+
         readsqlLigt();
         if(uzytkonkik[0]==null)
         {
             wczytywanie();
         }
 
-        edycja.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, uzytkonkik));
+        for(int j=0;j<uzytkonkik.length;j++)
+        {
+            if(uzytkonkik[j]!=null)
+            {
+                listaStringow.add(uzytkonkik[j]);
+            }
+        }
+          edycja.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, listaStringow));
 
-        edycja.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        edycja.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Login.setText(uzytkonkik[i]);
-                Haslo.setText(haslo[i]);
-                Powtorz_haslo.setText(haslo[i]);
-                if(sala_sprzedazy[i]=="1");
-                {
-                    Sala_sprzedazy.setChecked(true);
-                }
-                if(magazyn[i]=="1");
-                {
-                    Magazyn.setChecked(true);
-                }
-                if(kuchnia[i]=="1");
-                {
-                    Kuchnia.setChecked(true);
-                }
-                if(wszystko[i]=="1");
-                {
-                    Wszystko.setChecked(true);
-                    Kuchnia.setChecked(true);
-                    Magazyn.setChecked(true);
-                    Sala_sprzedazy.setChecked(true);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (stan==true) {
+                    stan=false;
+                    stan1=true;
+                    Login.setText(uzytkonkik[position]);
+                    Haslo.setText(haslo[position]);
+                    Powtorz_haslo.setText(haslo[position]);
+                    if (sala_sprzedazy[q] == "1") ;
+                    {
+                        Sala_sprzedazy.setChecked(true);
+                    }
+                    if (magazyn[q] == "1") ;
+                    {
+                        Magazyn.setChecked(true);
+                    }
+                    if (kuchnia[q] == "1") ;
+                    {
+                        Kuchnia.setChecked(true);
+                    }
+                    if (wszystko[q] == "1") ;
+                    {
+                        Wszystko.setChecked(true);
+                        Kuchnia.setChecked(true);
+                        Magazyn.setChecked(true);
+                        Sala_sprzedazy.setChecked(true);
+
+                    }
 
                 }
+                stan=true;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
 
         annuluj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Nowe_konto.this,Glowne_menu.class);
-                startActivity(i);
+                Intent c = new Intent(Nowe_konto.this,Glowne_menu.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", w);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
+                startActivity(c);
             }
         });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login1= Login.getText().toString();
-                haslo1=Haslo.getText().toString();
-                powtorz_haslo1=Powtorz_haslo.getText().toString();
-                if(login1!=null & haslo1!=null & powtorz_haslo1!=null)
-                {
-                    if(haslo1==powtorz_haslo1)
-                    {
-                        UpdateSql();
-                    }
-                    else
-                    {
-                        showToast("Hasła nie są identyczne");
-                    }
+                login1 = Login.getText().toString();
+                haslo1 = Haslo.getText().toString();
+                powtorz_haslo1 = Powtorz_haslo.getText().toString();
+                try {
+                    if (login1 != null & haslo1 != null & powtorz_haslo1 != null) {
+                        if (haslo1.equals(powtorz_haslo1)) {
+                            if (stan1 == true) {
+                                if (haslo[q].equals(hash1)) {
+                                    p=x-1;
+                                    if(czy_puste[0]!=true&czy_puste[1]!=true&czy_puste[2]!=true&czy_puste[3]!=true)
+                                    {
+                                        wartosc[0]=sala_sprzedazy[i];
+                                        wartosc[1] =magazyn[i];
+                                        wartosc[2] =kuchnia[i];
+                                        wartosc[3]=wszystko[i];
+                                    }
+                                    writeToDataBase();
+                                    UpdateSql();
+                                    Intent c = new Intent(Nowe_konto.this, Glowne_menu.class);
+                                    c.putExtra("sala_sprzedazy", s);
+                                    c.putExtra("wszystko", w);
+                                    c.putExtra("magazyn", m);
+                                    c.putExtra("kuchnia", k);
+                                    startActivity(c);
+                                } else {
+                                    p=x-1;
+                                    Hash();
+                                    if(czy_puste[0]!=true&czy_puste[1]!=true&czy_puste[2]!=true&czy_puste[3]!=true)
+                                    {
+                                        wartosc[0]=sala_sprzedazy[i];
+                                        wartosc[1] =magazyn[i];
+                                        wartosc[2] =kuchnia[i];
+                                        wartosc[3]=wszystko[i];
+                                    }
+                                    writeToDataBase();
+                                    UpdateSql();
+                                    Intent c = new Intent(Nowe_konto.this, Glowne_menu.class);
+                                    c.putExtra("sala_sprzedazy", s);
+                                    c.putExtra("wszystko", w);
+                                    c.putExtra("magazyn", m);
+                                    c.putExtra("kuchnia", k);
+                                    startActivity(c);
+                                }
+                            } else {
+                                p=x;
+                                Hash();
+                                if(czy_puste[0]!=true&czy_puste[1]!=true&czy_puste[2]!=true&czy_puste[3]!=true)
+                                {
+                                    wartosc[0]=sala_sprzedazy[i];
+                                    wartosc[1] =magazyn[i];
+                                    wartosc[2] =kuchnia[i];
+                                    wartosc[3]=wszystko[i];
+                                }
+                                UpdateSql();
+                                Intent c = new Intent(Nowe_konto.this, Glowne_menu.class);
+                                c.putExtra("sala_sprzedazy", s);
+                                c.putExtra("wszystko", w);
+                                c.putExtra("magazyn", m);
+                                c.putExtra("kuchnia", k);
+                                startActivity(c);
+                            }
+                        } else {
+                            showToast("Hasła nie są identyczne");
+                        }
 
-                }
-                else
-                {
-                    showToast("Uzupełnij wszystkie pola");
-                }
+                    } else {
+                        showToast("Uzupełnij wszystkie pola");
+                    }
+                }catch (Exception e){showToast(""+ e);}
             }
         });
 
         Sala_sprzedazy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                czy_puste[0]=true;
                 if (((CheckBox) view).isChecked()) {
                     Sala_sprzedazy.setChecked(true);
                     wartosc[0]="1";
@@ -346,6 +461,7 @@ public class Nowe_konto extends ActionBarActivity {
         Magazyn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                czy_puste[1]=true;
                 if (((CheckBox) view).isChecked()) {
                     Magazyn.setChecked(true);
                     wartosc[1] = "1";
@@ -358,6 +474,7 @@ public class Nowe_konto extends ActionBarActivity {
         Kuchnia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                czy_puste[2]=true;
                 if (((CheckBox) view).isChecked()) {
                 Kuchnia.setChecked(true);
                     wartosc[2] = "1";
@@ -370,18 +487,25 @@ public class Nowe_konto extends ActionBarActivity {
         Wszystko.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                czy_puste[3]=true;
                 if (((CheckBox) view).isChecked()) {
                     Sala_sprzedazy.setChecked(true);
                     Wszystko.setChecked(true);
                     Magazyn.setChecked(true);
                     Kuchnia.setChecked(true);
                     wartosc[3]="1";
+                    wartosc[2]="1";
+                    wartosc[1]="1";
+                    wartosc[0]="1";
                 } else {
                     Sala_sprzedazy.setChecked(false);
                     Wszystko.setChecked(false);
                     Magazyn.setChecked(false);
                     Kuchnia.setChecked(false);
                     wartosc[3]="0";
+                    wartosc[2]="0";
+                    wartosc[1]="0";
+                    wartosc[0]="0";
                 }
             }
         });
@@ -411,7 +535,7 @@ public class Nowe_konto extends ActionBarActivity {
     }
     public class MyAdapter1 extends ArrayAdapter<String>
     {
-        public MyAdapter1(Context ctx, int txtViewResourceId, String[] objects)
+        public MyAdapter1(Context ctx, int txtViewResourceId, List<String> objects)
         {
             super(ctx, txtViewResourceId, objects);
         }

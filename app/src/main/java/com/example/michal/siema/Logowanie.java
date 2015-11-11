@@ -50,7 +50,7 @@ public class Logowanie extends ActionBarActivity {
     String[] sala_sprzedazy = new String[15];
     String[] wszystko = new String[15];
 
-    int x,z;
+    int x,z,d;
     String hash1;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
@@ -89,7 +89,7 @@ public class Logowanie extends ActionBarActivity {
     {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS logowanie (Uzytkownik VARCHAR,Haslo VARCHAR,Sala_sprzedazy VARCHAR," +
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS logowanie (Id VARCHAR,Uzytkownik VARCHAR,Haslo VARCHAR,Sala_sprzedazy VARCHAR," +
                     "Magazyn VARCHAR,Kuchnia VARCHAR,Wszystko VARCHAR);");
         }
         catch (Exception e){}
@@ -99,13 +99,11 @@ public class Logowanie extends ActionBarActivity {
     private void Hash()
     {
         try {
-            String plaintext = password.getText().toString();
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(StandardCharsets.UTF_8.encode(plaintext));
-            hash1="%032x"+ new BigInteger(1, md5.digest());
+            String input = password.getText().toString();
+            hash1 = "%032x440472108104"+String.valueOf(input.hashCode());
 
         }
-        catch (Exception e){}
+        catch (Exception e){showToast(""+e);}
     }
 
 
@@ -116,7 +114,7 @@ public class Logowanie extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             //poprawić ma być insert bo tych składników jeszcze nie ma
-            sampleDB.execSQL("INSERT INTO logowanie (Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES ('admin','%032x44047210810420107506624974438055026627','1','1','1','1') ");
+            sampleDB.execSQL("INSERT INTO logowanie (Id,Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES ('0','admin','%032x44047210810492668751','1','1','1','1') ");
             sampleDB.close();
         } catch (Exception e) {
             showToast("Blad w update");
@@ -132,17 +130,18 @@ public class Logowanie extends ActionBarActivity {
             }
 
 
-            String sql1 = "INSERT INTO logowanie (Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES" +
-                    " (?,?,?,?,?,?)";
+            String sql1 = "INSERT INTO logowanie (Id,Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES" +
+                    " (?,?,?,?,?,?,?)";
 
             try {
                 ps = connection.prepareStatement(sql1);
-                ps.setString(1, "admin");
-                ps.setString(2, "%032x44047210810420107506624974438055026627");
-                ps.setString(3, "1");
+                ps.setString(1, "0");
+                ps.setString(2, "admin");
+                ps.setString(3, "%032x44047210810492668751");
                 ps.setString(4, "1");
                 ps.setString(5, "1");
                 ps.setString(6, "1");
+                ps.setString(7, "1");
                 ps.executeUpdate();
                 connection.commit();
 
@@ -169,14 +168,14 @@ public class Logowanie extends ActionBarActivity {
             Cursor c = sampleDB.rawQuery("select * from logowanie", null);
 
             while (c.moveToNext()) {
-                String  zm = String.valueOf(c.getString(0));
+                String  zm = String.valueOf(c.getString(1));
                 if(zm!=null){
-                    uzytkonkik[x] = String.valueOf(c.getString(0));
-                    haslo[x] = String.valueOf(c.getString(1));
-                    sala_sprzedazy[x] = String.valueOf(c.getString(2));
-                    magazyn[x] = String.valueOf(c.getString(3));
-                    kuchnia[x] = String.valueOf(c.getString(4));
-                    wszystko[x] = String.valueOf(c.getString(5));
+                    uzytkonkik[x] = String.valueOf(c.getString(1));
+                    haslo[x] = String.valueOf(c.getString(2));
+                    sala_sprzedazy[x] = String.valueOf(c.getString(3));
+                    magazyn[x] = String.valueOf(c.getString(4));
+                    kuchnia[x] = String.valueOf(c.getString(5));
+                    wszystko[x] = String.valueOf(c.getString(6));
                     x++;}
             }
             sampleDB.close();
@@ -263,31 +262,35 @@ public class Logowanie extends ActionBarActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Hash();
-                String login = users.getText().toString();
-                for(int i=0;i<uzytkonkik.length;i=i+0) {
-                    if (login.equals(uzytkonkik[i])) {
-                        if(hash1.equals(haslo[i])) {
-                            showToast("Logowanie Udane:)");
-                            Intent c = new Intent(Logowanie.this, Glowne_menu.class);
-                            c.putExtra("sala_sprzedazy", sala_sprzedazy[i]);
-                            c.putExtra("wszystko", wszystko[i]);
-                            c.putExtra("magazyn", magazyn[i]);
-                            c.putExtra("kuchnia", kuchnia[i]);
-                            startActivity(c);
+                    try {
+                        d=0;
+                        Hash();
+                        String login = users.getText().toString();
+                        for (int i = 0; i < uzytkonkik.length; i = i + 0) {
+                            if (login.equals(uzytkonkik[i])) {
+                                if (hash1.equals(haslo[i])) {
+                                    showToast("Logowanie Udane:)");
+                                    Intent c = new Intent(Logowanie.this, Glowne_menu.class);
+                                    c.putExtra("sala_sprzedazy", sala_sprzedazy[i]);
+                                    c.putExtra("wszystko", wszystko[i]);
+                                    c.putExtra("magazyn", magazyn[i]);
+                                    c.putExtra("kuchnia", kuchnia[i]);
+                                    startActivity(c);
+                                    d=1;
+                                }
+                            }
+                            i++;
                         }
-                    } else {
-                    }
-                    i++;
-                }
-                if(TextUtils.isEmpty(users.getText().toString()) & TextUtils.isEmpty(password.getText().toString()))
-                {
-                    showToast("Wszystkie pola muszą być wypełnione");
-                }
-                else
-                {
-                    showToast("Błędny login lub hasło");
-                }
+
+                        if (TextUtils.isEmpty(users.getText().toString()) & TextUtils.isEmpty(password.getText().toString())) {
+
+                            showToast("Uzupełnij wszystkie pola");
+                        }
+                        else if(d==0)
+                        {
+                            showToast("Błędny login lub hasło");
+                        }
+                    }catch (Exception e){}
             }
         });
 

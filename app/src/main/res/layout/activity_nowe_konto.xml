@@ -2,8 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.michal.siema.Dodawanie"
     android:background="@drawable/images1">
 
@@ -145,7 +143,7 @@
             android:layout_gravity="center_horizontal"
             android:textSize="20dp"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-36dp"
             android:checked="false" />
 
         <CheckBox
@@ -156,7 +154,7 @@
             android:layout_gravity="center_horizontal"
             android:textSize="20dp"
             android:layout_marginLeft="140dp"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-37dp"
             android:checked="false" />
 
         <CheckBox
@@ -167,7 +165,7 @@
             android:layout_gravity="center_horizontal"
             android:textSize="20dp"
             android:layout_marginLeft="300dp"
-            android:layout_marginTop="-33dp"
+            android:layout_marginTop="-38dp"
             android:checked="false" />
 
         <Button
