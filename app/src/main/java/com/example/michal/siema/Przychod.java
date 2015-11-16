@@ -56,6 +56,9 @@ public class Przychod extends ActionBarActivity {
     boolean kosz=false;
     boolean narz=false;
 
+    Bundle applesData;
+    String s,m,k,w;
+
     String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza",
             "Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazownane","Napoje_Zimne","Napoje_Gorace","Soki"};
 
@@ -274,10 +277,16 @@ public class Przychod extends ActionBarActivity {
         wynik1 = (TextView) findViewById(R.id.textView128);
         wynik2 = (TextView) findViewById(R.id.textView129);
 
-      //  readsqlLigtData();
-      //  if(Nazwa[0]==null) {
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
+
+        readsqlLigtData();
+        if(Nazwa[0]==null) {
             wczytywanie();
-      //  }
+        }
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -399,31 +408,13 @@ public class Przychod extends ActionBarActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Przychod.this,Magzyn.class);
-                startActivity(i);
+                Intent c = new Intent(Przychod.this,Magzyn.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", w);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
+                startActivity(c);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_przychod, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

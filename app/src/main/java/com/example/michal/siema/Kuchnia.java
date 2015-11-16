@@ -94,7 +94,7 @@ public class Kuchnia extends ActionBarActivity {
     Double zm;
 
     Bundle applesData;
-    String s,m,k,W;
+    String s,m,k,W,u;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -156,7 +156,7 @@ public class Kuchnia extends ActionBarActivity {
 
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-            sampleDB.execSQL("INSERT INTO Wykonane (Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal) VALUES ('" + data + "','" + czas1 + "','" + Danie[q] + "','" + Ilosc[q] + "','" + zegarek + "','"+"Kucharz"+"') ");
+            sampleDB.execSQL("INSERT INTO Wykonane (Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal) VALUES ('" + data + "','" + czas1 + "','" + Danie[q] + "','" + Ilosc[q] + "','" + zegarek + "','"+u+"') ");
 
             sampleDB.close();
         } catch (Exception e) {
@@ -189,7 +189,7 @@ public class Kuchnia extends ActionBarActivity {
                 ps.setString(3, Danie[q]);
                 ps.setString(4, Ilosc[q]);
                 ps.setString(5, zegarek);
-                ps.setString(6, "Kucharz");
+                ps.setString(6, u);
                 ps.executeUpdate();
                 connection.commit();
 
@@ -457,6 +457,9 @@ public class Kuchnia extends ActionBarActivity {
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
+        if (applesData != null) {
+            u = applesData.getString("uzytkownik");
+        }
 
         readsqlLight();
 
@@ -528,6 +531,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent w = new Intent(Kuchnia.this, Dodawanie.class);
+               w.putExtra("sala_sprzedazy", s);
+                w.putExtra("wszystko", W);
+                w.putExtra("magazyn", m);
+                w.putExtra("kuchnia", k);
                 message = "false";
                 w.putExtra("warunek", message);
                 startActivity(w);
@@ -538,6 +545,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Kuchnia.this, Karta_dodawanie.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 message = "ttrue";
                 i.putExtra("Sala", message);
                 startActivity(i);
@@ -548,6 +559,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Kuchnia.this, Karta_dodawanie.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 message = "true";
                 c.putExtra("Sala", message);
                 startActivity(c);
@@ -558,6 +573,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 message = "Mroznia";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -567,6 +586,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 message = "Lodowka";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -576,6 +599,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 message = "Magazyn";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -585,6 +612,10 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Kuchnia.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 message = "Brak_kategori";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -700,27 +731,5 @@ public class Kuchnia extends ActionBarActivity {
 
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_kuchnia, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

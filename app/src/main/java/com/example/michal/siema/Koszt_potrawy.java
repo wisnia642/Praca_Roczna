@@ -37,7 +37,7 @@ public class Koszt_potrawy extends ActionBarActivity {
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -71,6 +71,9 @@ public class Koszt_potrawy extends ActionBarActivity {
     ResultSet resultSet;
     FileOutputStream fos;
 
+    Bundle applesData;
+    String s,m,k,W;
+
     String cena_d,kat;
     int x,q,y,c,z,w;
 
@@ -78,6 +81,7 @@ public class Koszt_potrawy extends ActionBarActivity {
         Toast.makeText(getApplicationContext(),
                 message,
                 Toast.LENGTH_LONG).show();
+
     }
 
     private void readsqlLigtData()
@@ -98,7 +102,7 @@ public class Koszt_potrawy extends ActionBarActivity {
                 }
                 sampleDB.close();
             } catch (Exception e) {
-                showToast("dupa");
+                showToast("Błąd");
             }
             i++;
         }
@@ -121,7 +125,7 @@ public class Koszt_potrawy extends ActionBarActivity {
             }
             sampleDB.close();
         } catch (Exception e) {
-            showToast("dupa");
+            showToast("Błąd");
         }
         i++;
     }
@@ -275,6 +279,12 @@ public class Koszt_potrawy extends ActionBarActivity {
         dania = (ListView) findViewById(R.id.listView6);
         skladniki = (ListView) findViewById(R.id.listView7);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+
         readsqlLigtData();
         if(Nazwa[0]==null)
        try{
@@ -290,6 +300,10 @@ public class Koszt_potrawy extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Koszt_potrawy.this,Magzyn.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
 
             }
@@ -330,75 +344,51 @@ public class Koszt_potrawy extends ActionBarActivity {
         dania.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                for(int b=0;b<c;b=b+0)
-                {
-                    wyswietlanie[b]="";
-                    b++;
-                }
-                c=0;
-                wynik1=0.0;
-                wynik2=0.0;
-
-                for(int j=0;j<x;j=j+0)
-                {
-                    if(Nazwa[i]==Nazwa[j])
-                    {
-                        Produkt = (Skladniki[j].split("[-,0-99999+]+"));;
-                        String filtered = Skladniki[j].replaceAll("[^0-9,]", "");
-                        miarka = filtered.split(",");
-
-                        for(int a=0;a<Produkt.length;a=a+0)
-                        {
-                            if(Produkt[a]!=null) {
-                                for(w=0;w<Nazwa_produktu.length;w=w+0)
-                                {
-
-                                    if(Nazwa_produktu[w].equals(Produkt[a]))
-                                    {
-
-                                        cena_d = cena_detaliczna[w];
-                                        kat = kategoria[w];
-                                        cena1 = Double.valueOf(cena_detaliczna[w]);
-                                        cena3 = Double.valueOf(miarka[a]);
-                                        wynik1 = cena1*cena3;
-                                    }
-                                    w++;
-                                }
-                                    wyswietlanie[c] = Produkt[a]+" " +miarka[a]+" "+kat+" "+cena_d;
-                                    c++;
-                                    wynik2=wynik1+wynik2;
-                            }
-                            a++;
-                        }
+                try {
+                    for (int b = 0; b < c; b = b + 0) {
+                        wyswietlanie[b] = "";
+                        b++;
                     }
-                    j++;
+                    c = 0;
+                    wynik1 = 0.0;
+                    wynik2 = 0.0;
+
+                    for (int j = 0; j < x; j = j + 0) {
+                        if (Nazwa[i] == Nazwa[j]) {
+                            Produkt = (Skladniki[j].split("[-,0-99999+]+"));
+                            ;
+                            String filtered = Skladniki[j].replaceAll("[^0-9,]", "");
+                            miarka = filtered.split(",");
+
+                            for (int a = 0; a < Produkt.length; a = a + 0) {
+                                if (Produkt[a] != null) {
+                                    for (w = 0; w < Nazwa_produktu.length; w = w + 0) {
+
+                                        if (Nazwa_produktu[w].equals(Produkt[a])) {
+
+                                            cena_d = cena_detaliczna[w];
+                                            kat = kategoria[w];
+                                            cena1 = Double.valueOf(cena_detaliczna[w]);
+                                            cena3 = Double.valueOf(miarka[a]);
+                                            wynik1 = cena1 * cena3;
+                                        }
+                                        w++;
+                                    }
+                                    wyswietlanie[c] = Produkt[a] + " " + miarka[a] + " " + kat + " " + cena_d;
+                                    c++;
+                                    wynik2 = wynik1 + wynik2;
+                                }
+                                a++;
+                            }
+                        }
+                        j++;
+                    }
+                    lista();
+                } catch (Exception e) {
                 }
-                lista();
             }
         });
 
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_koszt_potrawy, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

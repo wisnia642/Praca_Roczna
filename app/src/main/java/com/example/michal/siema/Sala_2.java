@@ -56,7 +56,7 @@ public class Sala_2 extends ActionBarActivity {
     String[] Czas = new String[20];
     double[] Czas1 = new double[20];
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -69,6 +69,9 @@ public class Sala_2 extends ActionBarActivity {
     View popUpView;
     private PopupWindow mpopup;
     TextView text1,text2,text3;
+
+    Bundle applesData;
+    String s,m,k,w;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Sala2";
@@ -380,6 +383,12 @@ public class Sala_2 extends ActionBarActivity {
         img15 = (TextView) findViewById(R.id.textView15);
 
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
+
         //odczyt z bazy danych i z pliku
         try {
             readFromDataBase();
@@ -555,6 +564,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_1";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -576,6 +589,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_1";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -629,6 +646,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_2";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -650,6 +671,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_2";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -704,6 +729,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_3";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -725,6 +754,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_3";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -779,6 +812,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_4";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -800,6 +837,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_4";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -854,6 +895,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_5";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -875,6 +920,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_5";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -928,6 +977,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_6";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -949,6 +1002,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_6";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1003,6 +1060,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_7";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1024,6 +1085,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_7";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1077,6 +1142,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_8";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1098,6 +1167,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_8";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1151,6 +1224,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_9";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1172,6 +1249,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_9";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1225,6 +1306,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_10";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1246,6 +1331,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_10";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1300,6 +1389,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_11";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1321,6 +1414,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_11";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1374,6 +1471,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_12";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1395,6 +1496,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_12";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1448,6 +1553,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_13";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1469,6 +1578,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_13";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1522,6 +1635,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_14";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1543,6 +1660,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_14";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1596,6 +1717,10 @@ public class Sala_2 extends ActionBarActivity {
                                             public void onClick(View view) {
                                                 usuwanie();
                                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
                                                 String userMassage = "Sala_2 / Stolik_15";
                                                 i.putExtra("Sala", userMassage);
                                                 startActivity(i);
@@ -1617,6 +1742,10 @@ public class Sala_2 extends ActionBarActivity {
                             }
                             if (zmienna==false) {
                                 Intent i = new Intent(Sala_2.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_2 / Stolik_15";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
@@ -1894,17 +2023,18 @@ public class Sala_2 extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
-        menu.add(0, PIERWSZY_ELEMENT, 0, "Zrób Zdjęcie");
-        menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjęcie");
-        menu.add(2, TRZECI_ELEMENT, 0, "Zablokuj stoliki");
-        menu.add(3, CZWARTY_ELEMENT, 0, "Odblokuj stoliki");
-        menu.add(5, PIATY_ELEMENT, 0, "Dodaj stolik");
-        menu.add(4, SZUSTY_ELEMENT, 0, "Usuń stolik");
-        menu.add(6, SIUDMY_ELEMENT, 0, "Zapis");
-        menu.add(7, OSMY_ELEMENT, 0, "export");
-        menu.add(8, DZIEWIATY_ELEMENT, 0, "import");
-        menu.add(9, DZIESIATY_ELEMENT, 0, "Reset stolikow");
-
+        if(w.equals("1")) {
+            menu.add(0, PIERWSZY_ELEMENT, 0, "Zrób Zdjęcie");
+            menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjęcie");
+            menu.add(2, TRZECI_ELEMENT, 0, "Zablokuj stoliki");
+            menu.add(3, CZWARTY_ELEMENT, 0, "Odblokuj stoliki");
+            menu.add(5, PIATY_ELEMENT, 0, "Dodaj stolik");
+            menu.add(4, SZUSTY_ELEMENT, 0, "Usuń stolik");
+            menu.add(6, SIUDMY_ELEMENT, 0, "Zapis");
+            menu.add(7, OSMY_ELEMENT, 0, "export");
+            menu.add(8, DZIEWIATY_ELEMENT, 0, "import");
+            menu.add(9, DZIESIATY_ELEMENT, 0, "Reset stolikow");
+        }
         return true;
     }
 
@@ -1997,6 +2127,10 @@ public class Sala_2 extends ActionBarActivity {
                 writeToDataBase();
                 stan=true;
                 Intent i = new Intent(Sala_2.this,MainActivity.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", w);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
 
                 break;
@@ -2005,6 +2139,10 @@ public class Sala_2 extends ActionBarActivity {
                 ResetSqlLigt();
                 stan=false;
                 Intent q = new Intent(Sala_2.this,MainActivity.class);
+                q.putExtra("sala_sprzedazy", s);
+                q.putExtra("wszystko", w);
+                q.putExtra("magazyn", m);
+                q.putExtra("kuchnia", k);
                 startActivity(q);
                 break;
             default:

@@ -74,6 +74,9 @@ public class Lista_zakupow extends ActionBarActivity {
     FileInputStream fis = null;
     Connection connection = null;
 
+    Bundle applesData;
+    String s,m,k,W;
+
     String[] Nazwa_produktu = new String[50];
     String[] Kategoria = new String[50];
     Double[] Stan_krytyczny =new Double[50];
@@ -300,6 +303,12 @@ public class Lista_zakupow extends ActionBarActivity {
         dodaj = (Button) findViewById(R.id.button68);
         sms = (Button) findViewById(R.id.button69);
 
+    applesData = getIntent().getExtras();
+    s = applesData.getString("sala_sprzedazy");
+    m = applesData.getString("magazyn");
+    k = applesData.getString("kuchnia");
+    W = applesData.getString("wszystko");
+
        readsqlLight();
     if(Nazwa_produktu[0]==null) {
         readfromMySql();
@@ -371,6 +380,10 @@ public class Lista_zakupow extends ActionBarActivity {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(Lista_zakupow.this,Magzyn.class);
+            i.putExtra("sala_sprzedazy", s);
+            i.putExtra("wszystko", W);
+            i.putExtra("magazyn", m);
+            i.putExtra("kuchnia", k);
             startActivity(i);
         }
     });
@@ -438,27 +451,6 @@ public class Lista_zakupow extends ActionBarActivity {
 
 }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_lista_zakupow, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     public class MyAdapter1 extends ArrayAdapter<String>
     {
         public MyAdapter1(Context ctx, int txtViewResourceId, String[] objects)

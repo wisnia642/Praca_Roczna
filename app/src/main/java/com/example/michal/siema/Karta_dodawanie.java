@@ -37,6 +37,7 @@ public class Karta_dodawanie extends ActionBarActivity {
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
     Bitmap thumbnail;
+    String s,m,k,W;
 
     public static final int PIERWSZY_ELEMENT = 1;
     public static final int DRUGI_ELEMENT = 2;
@@ -267,6 +268,12 @@ public class Karta_dodawanie extends ActionBarActivity {
         buton15 = (Button) findViewById(R.id.napoje_gorace);
         buton16 = (Button) findViewById(R.id.soki);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+
         //odczyt z bazy danych i z pliku
         try {
             readsqlLight();
@@ -345,6 +352,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Makarony";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -355,6 +366,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Przystawki";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -365,6 +380,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Ryba";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -375,6 +394,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Salatki";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -385,6 +408,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Fast_Food";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -395,6 +422,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Pizza";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -405,6 +436,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Zupy";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -415,6 +450,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Suszi";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -425,6 +464,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Wina";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -435,6 +478,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Piwo";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -445,6 +492,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Desery";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -455,6 +506,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Dodatki";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -465,6 +520,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Napoje_Gazowane";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -475,6 +534,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Napoje_Zimne";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -485,6 +548,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Napoje_Gorace";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -495,6 +562,10 @@ public class Karta_dodawanie extends ActionBarActivity {
                 userMassage = "Soki";
                 i.putExtra("applesMessage", userMassage);
                 i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });

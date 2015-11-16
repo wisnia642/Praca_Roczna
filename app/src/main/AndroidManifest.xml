@@ -117,6 +117,10 @@
             android:name=".Glowne_menu"
             android:label="@string/title_activity_glowne_menu" >
         </activity>
+        <activity
+            android:name=".Dane_do_faktury"
+            android:label="@string/title_activity_dane_do_faktury" >
+        </activity>
     </application>
 
 </manifest>

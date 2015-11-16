@@ -40,7 +40,7 @@ public class Karta extends ActionBarActivity {
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
     Bitmap thumbnail;
-
+    String s,m,k,W;
 
     public static final int PIERWSZY_ELEMENT = 1;
     public static final int DRUGI_ELEMENT = 2;
@@ -252,6 +252,12 @@ public class Karta extends ActionBarActivity {
         buton15 = (Button) findViewById(R.id.napoje_gorace);
         buton16 = (Button) findViewById(R.id.soki);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+
         //odczyt z bazy danych i z pliku
         try{readsqlLight();}catch (Exception e){}
         try{zdjecie1();}catch (Exception e){}
@@ -281,6 +287,10 @@ public class Karta extends ActionBarActivity {
                     stan = 0;
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     startActivity(i);
                 }
             });
@@ -292,6 +302,10 @@ public class Karta extends ActionBarActivity {
                     stan = 1;
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     startActivity(i);
                 }
             });
@@ -303,6 +317,10 @@ public class Karta extends ActionBarActivity {
                     stan=2;
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     startActivity(i);
                 }
             });
@@ -312,6 +330,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Salatki";
                     stan=3;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -323,6 +345,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Fast_Food";
                     stan=4;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -334,6 +360,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Pizza";
                     stan=5;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -345,6 +375,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Zupy";
                     stan=6;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -356,6 +390,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Suszi";
                     stan=7;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -367,6 +405,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Wina";
                     stan=8;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -378,6 +420,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Piwo";
                     stan=9;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -389,6 +435,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Desery";
                     stan=10;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -400,6 +450,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Dodatki";
                     stan=11;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -411,6 +465,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Napoje_Gazowane";
                     stan=12;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -422,6 +480,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Napoje_Zimne";
                     stan=13;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -433,6 +495,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Napoje_Gorace";
                     stan=14;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -444,6 +510,10 @@ public class Karta extends ActionBarActivity {
                     Intent i = new Intent(Karta.this, Lista.class);
                     userMassage = "Soki";
                     stan = 15;
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     i.putExtra("applesMessage", userMassage);
                     i.putExtra("Sala", posilek);
                     startActivity(i);
@@ -1045,11 +1115,14 @@ public class Karta extends ActionBarActivity {
 
             @Override
             public boolean onCreateOptionsMenu (Menu menu){
-                menu.add(0, PIERWSZY_ELEMENT, 0, "Zrob Zdjecie");
-                menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjecie");
-                menu.add(2, TRZECI_ELEMENT, 0, "Brak Zdjecia");
-                menu.add(3, CZWARTY_ELEMENT, 0, "Reset Zdjecia");
-                return true;
+                if(W.equals("1")) {
+                    menu.add(0, PIERWSZY_ELEMENT, 0, "Zrob Zdjecie");
+                    menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjecie");
+                    menu.add(2, TRZECI_ELEMENT, 0, "Brak Zdjecia");
+                    menu.add(3, CZWARTY_ELEMENT, 0, "Reset Zdjecia");
+                }
+                    return true;
+
             }
 
             @Override

@@ -51,7 +51,7 @@ public class Logowanie extends ActionBarActivity {
     String[] wszystko = new String[15];
 
     int x,z,d;
-    String hash1;
+    String hash1,u;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -269,12 +269,14 @@ public class Logowanie extends ActionBarActivity {
                         for (int i = 0; i < uzytkonkik.length; i = i + 0) {
                             if (login.equals(uzytkonkik[i])) {
                                 if (hash1.equals(haslo[i])) {
+                                    u=uzytkonkik[i];
                                     showToast("Logowanie Udane:)");
                                     Intent c = new Intent(Logowanie.this, Glowne_menu.class);
                                     c.putExtra("sala_sprzedazy", sala_sprzedazy[i]);
                                     c.putExtra("wszystko", wszystko[i]);
                                     c.putExtra("magazyn", magazyn[i]);
                                     c.putExtra("kuchnia", kuchnia[i]);
+                                    c.putExtra("uzytkownik", uzytkonkik[i]);
                                     startActivity(c);
                                     d=1;
                                 }
@@ -302,27 +304,5 @@ public class Logowanie extends ActionBarActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_logowanie, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -66,6 +66,9 @@ public class Faktura extends ActionBarActivity {
     EditText Firma,Adres,Miejscowosc;
     Button ok,anuluj;
 
+    Bundle applesData;
+    String s,m,k,W;
+
     List<String> listaStringow = new ArrayList<String>();
     Spinner Stolik;
 
@@ -388,6 +391,12 @@ public class Faktura extends ActionBarActivity {
         anuluj = (Button) findViewById(R.id.button61);
         SqlLight();
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -413,6 +422,10 @@ public class Faktura extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Faktura.this,MainActivity.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -448,27 +461,6 @@ public class Faktura extends ActionBarActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_faktura, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public class MyAdapter extends ArrayAdapter<String>
     {

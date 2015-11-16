@@ -14,7 +14,7 @@ public class Glowne_menu extends ActionBarActivity {
 
     Button kuchnia,magazyn,sala_sprzedaz,wyloguj,faktura,konto;
     Bundle applesData;
-    String Magazyn,Kuchnia,Sala_sprzedazy,Wszystko;
+    String Magazyn,Kuchnia,Sala_sprzedazy,Wszystko,uzytkownik;
 
 
 
@@ -41,6 +41,8 @@ public class Glowne_menu extends ActionBarActivity {
         Magazyn = applesData.getString("magazyn");
         Kuchnia = applesData.getString("kuchnia");
         Wszystko = applesData.getString("wszystko");
+        uzytkownik = applesData.getString("uzytkownik");
+
 
         kuchnia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,7 @@ public class Glowne_menu extends ActionBarActivity {
                     a.putExtra("wszystko", Wszystko);
                     a.putExtra("magazyn", Magazyn);
                     a.putExtra("kuchnia", Kuchnia);
+                    a.putExtra("uzytkownik", uzytkownik);
                     startActivity(a);}
                 else {
                     showToast("Brak uprawnień");
@@ -67,6 +70,7 @@ public class Glowne_menu extends ActionBarActivity {
                     a.putExtra("wszystko", Wszystko);
                     a.putExtra("magazyn", Magazyn);
                     a.putExtra("kuchnia", Kuchnia);
+                    a.putExtra("uzytkownik", uzytkownik);
                     startActivity(a);}
                 else
                 {
@@ -84,6 +88,7 @@ public class Glowne_menu extends ActionBarActivity {
                     a.putExtra("wszystko", Wszystko);
                     a.putExtra("magazyn", Magazyn);
                     a.putExtra("kuchnia", Kuchnia);
+                    a.putExtra("uzytkownik", uzytkownik);
                     startActivity(a);}
                 else
                 {
@@ -95,13 +100,20 @@ public class Glowne_menu extends ActionBarActivity {
         faktura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Wszystko.equals("1"))
-                {}
-                else
+                if (Wszystko.equals("1")) {
+                    Intent a = new Intent(Glowne_menu.this, Dane_do_faktury.class);
+                    a.putExtra("sala_sprzedazy", Sala_sprzedazy);
+                    a.putExtra("wszystko", Wszystko);
+                    a.putExtra("magazyn", Magazyn);
+                    a.putExtra("kuchnia", Kuchnia);
+                    startActivity(a);
+                } else
+
                 {
                     showToast("Brak uprawnień");
                 }
             }
+
         });
 
         konto.setOnClickListener(new View.OnClickListener() {
@@ -128,27 +140,5 @@ public class Glowne_menu extends ActionBarActivity {
                 startActivity(c);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_glowne_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

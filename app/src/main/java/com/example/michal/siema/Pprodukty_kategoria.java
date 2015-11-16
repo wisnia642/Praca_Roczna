@@ -35,9 +35,12 @@ public class Pprodukty_kategoria extends ActionBarActivity {
 
     CustomAdapter6 adapter1;
 
-    private static final String url="jdbc:mysql://192.168.1.102:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
+
+    Bundle applesData;
+    String s,m,k,w;
 
     String[] Brak_kategorii= new String[40];
     String[] Brak_kategorii_ilosc = new String[40];
@@ -235,6 +238,10 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         }
 
         wartosc = applesData.getString("wartosc");
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
 
         readsqlLight();
 
@@ -403,31 +410,15 @@ public class Pprodukty_kategoria extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Pprodukty_kategoria.this, Magzyn.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", w);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 startActivity(c);
             }
         });
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_pprodukty_kategoria, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public class MyAdapter extends ArrayAdapter<String>
     {

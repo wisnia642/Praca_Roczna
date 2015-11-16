@@ -45,6 +45,8 @@ public class Zamowienie extends ActionBarActivity  {
     Double suma=0.0;
     boolean klikniete = false;
 
+    String s,m,k,W;
+
     private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
@@ -220,6 +222,10 @@ public class Zamowienie extends ActionBarActivity  {
         nazwa = applesData.getString("nazwa");
         sposob = applesData.getString("sposob");
         skladniki = applesData.getString("skladniki");
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
 
         try{readFromDataBase();}catch (Exception e){showToast("blad :(");}
 
@@ -332,6 +338,10 @@ public class Zamowienie extends ActionBarActivity  {
                         ZapisSqlLight();
                         ZapisMySql();
                         Intent i = new Intent(Zamowienie.this, MainActivity.class);
+                            i.putExtra("sala_sprzedazy", s);
+                            i.putExtra("wszystko", W);
+                            i.putExtra("magazyn", m);
+                            i.putExtra("kuchnia", k);
                         startActivity(i);
                     }}
                 });
@@ -340,32 +350,13 @@ public class Zamowienie extends ActionBarActivity  {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Zamowienie.this, MainActivity.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_zamowienie, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public class MyAdapter extends ArrayAdapter<String>

@@ -42,6 +42,11 @@ public class Rezerwacja extends ActionBarActivity {
     String[] Sala = {"Sala_1","Sala_2","Sala_3","Sala_4","Sala_5"};
     String[] Stolik = {"Stolik_1","Stolik_2","Stolik_3","Stolik_4","Stolik_5","Stolik_6","Stolik_7","Stolik_8","Stolik_9",
             "Stolik_10","Stolik_11","Stolik_12","Stolik_13","Stolik_14","Stolik_15"};
+
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     int c,d,a,e,wartosc;
     Button ok,anuluj,spr;
     EditText Klient;
@@ -59,6 +64,9 @@ public class Rezerwacja extends ActionBarActivity {
     String Sczas1;
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Rezerwacja";
+
+    Bundle applesData;
+    String s,m,k,w;
 
     static ResultSet rs;
     static Statement st;
@@ -113,7 +121,7 @@ public class Rezerwacja extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("brak polaczenia z internetem");
             return;
@@ -248,6 +256,12 @@ public class Rezerwacja extends ActionBarActivity {
         myCalendar = Calendar.getInstance();
         edt_time=(EditText) findViewById(R.id.time1);
         txtDate = (EditText) findViewById(R.id.data1);
+
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
 
         date = new DatePickerDialog.OnDateSetListener() {
 
@@ -386,33 +400,15 @@ public class Rezerwacja extends ActionBarActivity {
         anuluj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Rezerwacja.this,MainActivity.class);
-                startActivity(i);
+                Intent c = new Intent(Rezerwacja.this,MainActivity.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", w);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
+                startActivity(c);
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_rezerwacja, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public class MyAdapter extends ArrayAdapter<String>

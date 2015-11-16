@@ -41,6 +41,9 @@ public class Lista_dodawanie extends ActionBarActivity {
     private static final String user="michal";
     private static final String pass="kaseta12";
 
+    Bundle applesData;
+    String s,m,k,W;
+
     private static final String SAMPLE_DB_NAME = "Restalracja";
     int i = 0;
     static Statement st;
@@ -225,6 +228,10 @@ public class Lista_dodawanie extends ActionBarActivity {
         }
         posilek = applesData.getString("applesMessage");
         message13 = applesData.getString("Sala");
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
 
         readFromSqlLight();
 
@@ -243,6 +250,10 @@ public class Lista_dodawanie extends ActionBarActivity {
                        if(message13.equals("false"))
                        {
                            Intent w = new Intent(Lista_dodawanie.this,Dodawanie.class);
+                           w.putExtra("sala_sprzedazy", s);
+                           w.putExtra("wszystko", W);
+                           w.putExtra("magazyn", m);
+                           w.putExtra("kuchnia", k);
                            w.putExtra("kategoria", posilek);
                            w.putExtra("warunek", message13);
                            gdzie="true";
@@ -253,6 +264,10 @@ public class Lista_dodawanie extends ActionBarActivity {
                         if (message13.equals("true")) {
                             userSelectedIndex = position;
                             Intent i = new Intent(Lista_dodawanie.this, Dodawanie.class);
+                            i.putExtra("sala_sprzedazy", s);
+                            i.putExtra("wszystko", W);
+                            i.putExtra("magazyn", m);
+                            i.putExtra("kuchnia", k);
                             String Message1 = String.valueOf(zm[userSelectedIndex]);
                             i.putExtra("nazwa", Message1);
                             String Massage2 = zm1[userSelectedIndex];
@@ -274,6 +289,10 @@ public class Lista_dodawanie extends ActionBarActivity {
                         if (message13.equals("ttrue")) {
                             userSelectedIndex = position;
                             Intent i = new Intent(Lista_dodawanie.this, Dodawanie.class);
+                            i.putExtra("sala_sprzedazy", s);
+                            i.putExtra("wszystko", W);
+                            i.putExtra("magazyn", m);
+                            i.putExtra("kuchnia", k);
                             String Message1 = String.valueOf(zm[userSelectedIndex]);
                             i.putExtra("nazwa", Message1);
                             String Massage2 = zm5[userSelectedIndex];

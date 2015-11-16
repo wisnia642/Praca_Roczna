@@ -40,7 +40,7 @@ public class Magzyn extends ActionBarActivity {
     ListView lista;
 
     Bundle applesData;
-    String s,m,k,w;
+    String s,m,k,W,u;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -303,7 +303,10 @@ public class Magzyn extends ActionBarActivity {
         s = applesData.getString("sala_sprzedazy");
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
-        w = applesData.getString("wszystko");
+        W = applesData.getString("wszystko");
+        if (applesData != null) {
+            u = applesData.getString("uzytkownik");
+        }
 
         readsqlLight();
          if(Nazwa[0]==null) {
@@ -382,7 +385,7 @@ public class Magzyn extends ActionBarActivity {
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Glowne_menu.class);
                 c.putExtra("sala_sprzedazy", s);
-                c.putExtra("wszystko", w);
+                c.putExtra("wszystko", W);
                 c.putExtra("magazyn", m);
                 c.putExtra("kuchnia", k);
                 startActivity(c);
@@ -401,6 +404,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                  String message = "Mroznia";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -411,6 +418,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 String message = "Lodowka";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -421,6 +432,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 String message = "Magazyn";
                 c.putExtra("wartosc", message);
                 startActivity(c);
@@ -431,6 +446,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Koszt_potrawy.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 startActivity(c);
             }
         });
@@ -439,6 +458,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Wykonane_potrawy.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 startActivity(c);
             }
         });
@@ -447,6 +470,10 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Lista_zakupow.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 startActivity(c);
             }
         });
@@ -455,30 +482,12 @@ public class Magzyn extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Magzyn.this, Przychod.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 startActivity(c);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_magzyn, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

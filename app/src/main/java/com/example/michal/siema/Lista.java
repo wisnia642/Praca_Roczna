@@ -47,6 +47,9 @@ public class Lista extends ActionBarActivity {
     String pozycja;
     String message13="";
 
+    Bundle applesData;
+    String s,m,k,W;
+
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
@@ -294,6 +297,10 @@ public class Lista extends ActionBarActivity {
             return;
         }
          posilek = applesData.getString("applesMessage");
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
         final String Sala = applesData.getString("Sala");
 
         readFromSqlLight();
@@ -311,6 +318,10 @@ public class Lista extends ActionBarActivity {
                                 userSelectedIndex = position;
                             if (zm[userSelectedIndex] != null) {
                                 Intent i = new Intent(Lista.this, Zamowienie.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", W);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String Message1 = zm[userSelectedIndex];
                                 i.putExtra("nazwa", Message1);
                                 String Massage3 = zm2[userSelectedIndex];
@@ -337,6 +348,10 @@ public class Lista extends ActionBarActivity {
                 if (message13.equals("true")) {
                     userSelectedIndex = position;
                     Intent i = new Intent(Lista.this, Dodawanie.class);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     String Message1 = String.valueOf(zm[userSelectedIndex]);
                     i.putExtra("nazwa", Message1);
                     String Massage2 = zm1[userSelectedIndex];
@@ -356,6 +371,10 @@ public class Lista extends ActionBarActivity {
                 if (message13.equals("ttrue")) {
                     userSelectedIndex = position;
                     Intent i = new Intent(Lista.this, Dodawanie.class);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
                     String Message1 = String.valueOf(zm[userSelectedIndex]);
                     i.putExtra("nazwa", Message1);
                     String Massage2 = zm5[userSelectedIndex];
@@ -380,12 +399,13 @@ public class Lista extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, PIERWSZY_ELEMENT, 0, "Dodaj Przepis");
-        menu.add(1, DRUGI_ELEMENT, 0, "Usun Przepis");
-        menu.add(2, TRZECI_ELEMENT, 0, "Poprawianie Przepisu");
-        menu.add(3, CZWARTY_ELEMENT, 0, "Update Data");
-        menu.add(4, PIATY_ELEMENT, 0, "Import Data");
-
+        if(W.equals("1")) {
+            menu.add(0, PIERWSZY_ELEMENT, 0, "Dodaj Przepis");
+            menu.add(1, DRUGI_ELEMENT, 0, "Usun Przepis");
+            menu.add(2, TRZECI_ELEMENT, 0, "Poprawianie Przepisu");
+            menu.add(3, CZWARTY_ELEMENT, 0, "Update Data");
+            menu.add(4, PIATY_ELEMENT, 0, "Import Data");
+        }
         return true;
 
     }
@@ -396,6 +416,10 @@ public class Lista extends ActionBarActivity {
 
             case PIERWSZY_ELEMENT:
                 Intent w = new Intent(Lista.this,Dodawanie.class);
+                w.putExtra("sala_sprzedazy", s);
+                w.putExtra("wszystko", W);
+                w.putExtra("magazyn", m);
+                w.putExtra("kuchnia", k);
                 w.putExtra("kategoria", posilek);
                 message13 = "false";
                 w.putExtra("warunek", message13);
@@ -403,13 +427,20 @@ public class Lista extends ActionBarActivity {
                 break;
             case DRUGI_ELEMENT:
                 Intent i = new Intent(Lista.this,Dodawanie.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 message13 = "true";
                 i.putExtra("kategoria", posilek);
                 showToast(" przytrzymaj pozycje aby ja usunac");
-
                 break;
             case TRZECI_ELEMENT:
                 Intent c = new Intent(Lista.this,Dodawanie.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
                 message13="ttrue";
                 c.putExtra("kategoria", posilek);
                 showToast(" przytrzymaj pozycje aby ja poprawic");
@@ -418,15 +449,26 @@ public class Lista extends ActionBarActivity {
             case CZWARTY_ELEMENT:
                 wczytywanie();
                 saveDataSqlLight();
-                Intent j = new Intent(Lista.this,MainActivity.class);
-                startActivity(j);
+                Intent d = new Intent(Lista.this,MainActivity.class);
+                d.putExtra("sala_sprzedazy", s);
+                d.putExtra("wszystko", W);
+                d.putExtra("magazyn", m);
+                d.putExtra("kuchnia", k);
+                startActivity(d);
 
                 break;
             case PIATY_ELEMENT:
-                wczytywanie();
-                saveDataSqlLigtUpdate();
-                Intent v = new Intent(Lista.this,MainActivity.class);
-                startActivity(v);
+                try {
+                    wczytywanie();
+                    saveDataSqlLigtUpdate();
+                    Intent e = new Intent(Lista.this, MainActivity.class);
+                    e.putExtra("sala_sprzedazy", s);
+                    e.putExtra("wszystko", W);
+                    e.putExtra("magazyn", m);
+                    e.putExtra("kuchnia", k);
+                    startActivity(e);
+                }
+                catch (Exception e){}
                 break;
 
             default:

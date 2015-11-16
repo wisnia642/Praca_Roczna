@@ -40,6 +40,10 @@ public class Gotowka1 extends ActionBarActivity {
     static ResultSet rs;
     static Statement st;
 
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     String[] Klient = new String[20];
     String[] klient = new String[20];
     Double[] Suma = new Double[20];
@@ -52,6 +56,8 @@ public class Gotowka1 extends ActionBarActivity {
     EditText kasa_otrzymana;
 
     int x, w, c, a, z;
+    Bundle applesData;
+    String s,m,k,W,u;
 
     PreparedStatement ps;
     FileInputStream fis = null;
@@ -80,7 +86,7 @@ public class Gotowka1 extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://85.10.205.173/restalracja1234", "michal3898", "kaseta12");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("brak polaczenia z internetem");
             return;
@@ -91,7 +97,7 @@ public class Gotowka1 extends ActionBarActivity {
     private void ToDataBase() {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Historia (Data VARCHAR,Klient VARCHAR,Suma VARCHAR);");
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Historia (Data VARCHAR,Klient VARCHAR,Suma VARCHAR,Kto_obsluzyl VARCHAR);");
 
         } catch (Exception e) {
         }
@@ -140,12 +146,13 @@ public class Gotowka1 extends ActionBarActivity {
             }
         }
         if (wartosc == 3) {
-            String sql = "INSERT INTO Historia (Data,Klient,Suma) VALUES (?,?,?) ";
+            String sql = "INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES (?,?,?,?) ";
             try {
                 ps = connection.prepareStatement(sql);
                 ps.setString(0, String.valueOf(currentDateandTime));
                 ps.setString(1, String.valueOf(klient[w]));
                 ps.setString(2, String.valueOf(Suma[w]));
+                ps.setString(3, String.valueOf(u));
                 ps.executeUpdate();
                 connection.commit();
 
@@ -191,7 +198,7 @@ public class Gotowka1 extends ActionBarActivity {
              {
                  ToDataBase();
 
-                 sampleDB.execSQL("INSERT INTO Historia (Data,Klient,Suma) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "')");
+                 sampleDB.execSQL("INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')");
              }
     }
 
@@ -203,6 +210,13 @@ public class Gotowka1 extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gotowka1);
+
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        W = applesData.getString("wszystko");
+        u = applesData.getString("uzytkownik");
 
         wartosc=1;
         readsqlLight();
@@ -282,34 +296,14 @@ public class Gotowka1 extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Gotowka1.this,MainActivity.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gotowka1, menu);
-        return true;
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public class MyAdapter extends ArrayAdapter<String>

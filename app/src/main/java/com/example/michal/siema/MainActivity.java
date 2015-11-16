@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
     FileOutputStream fos;
 
     Bundle applesData;
-    String s,m,k,W;
+    String s,m,k,W,u;
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
@@ -555,6 +555,9 @@ public class MainActivity extends ActionBarActivity {
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
+        if (applesData != null) {
+            u = applesData.getString("uzytkownik");
+        }
 
         //odczyt z bazy danych i z pliku
         try{
@@ -672,8 +675,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(i);
+                finish();
+                startActivity(getIntent());
 
             }
         });
@@ -682,8 +685,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 anulacja_sqlLight_SQL();
-                Intent i = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(i);
+                finish();
+                startActivity(getIntent());
             }
 
 
@@ -701,6 +704,11 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Gotowka1.class);
                 i.putExtra("applesMessage", zm2);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("uzytkownik",u);
                 startActivity(i);
 
             }
@@ -711,6 +719,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Faktura.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -719,6 +731,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, Rezerwacja.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -832,6 +848,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_1.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -839,6 +859,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_2.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -846,6 +870,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_3.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -853,6 +881,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_4.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -860,6 +892,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,Sala_5.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 startActivity(i);
             }
         });
@@ -868,6 +904,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Makarony";
                 stan = 0;
                 i.putExtra("applesMessage", userMassage);
@@ -879,6 +919,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Przystawki";
                 stan=3;
                 i.putExtra("applesMessage", userMassage);
@@ -891,6 +935,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Ryba";
                 stan=8;
                 i.putExtra("applesMessage", userMassage);
@@ -903,6 +951,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Salatki";
                 stan=9;
                 i.putExtra("applesMessage", userMassage);
@@ -915,6 +967,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Fast_Food";
                 stan=11;
                 i.putExtra("applesMessage", userMassage);
@@ -927,6 +983,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Pizza";
                 stan=12;
                 i.putExtra("applesMessage", userMassage);
@@ -939,6 +999,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Zupy";
                 stan=13;
                 i.putExtra("applesMessage", userMassage);
@@ -951,6 +1015,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Suszi";
                 stan = 15;
                 i.putExtra("applesMessage", userMassage);
@@ -963,6 +1031,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Wina";
                 stan=2;
                 i.putExtra("applesMessage", userMassage);
@@ -974,6 +1046,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Piwo";
                 stan=10;
                 i.putExtra("applesMessage", userMassage);
@@ -986,6 +1062,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Desery";
                 stan=14;
                 i.putExtra("applesMessage", userMassage);
@@ -998,6 +1078,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Dodatki";
                 stan=4;
                 i.putExtra("applesMessage", userMassage);
@@ -1010,6 +1094,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Napoje_Gazowane";
                 stan=5;
                 i.putExtra("applesMessage", userMassage);
@@ -1022,6 +1110,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Napoje_Zimne";
                 stan=7;
                 i.putExtra("applesMessage", userMassage);
@@ -1034,6 +1126,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Napoje_Gorace";
                 stan=6;
                 i.putExtra("applesMessage", userMassage);
@@ -1046,6 +1142,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Lista.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
                 userMassage = "Soki";
                 stan = 1;
                 i.putExtra("applesMessage", userMassage);
@@ -1054,29 +1154,5 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
 
 }
