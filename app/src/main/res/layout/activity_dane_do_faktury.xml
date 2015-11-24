@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:noHistory="true"
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.example.michal.siema.Dodawanie"
     android:background="@drawable/images1">
@@ -77,7 +78,8 @@
         android:layout_toRightOf="@+id/textView132"
         android:layout_toEndOf="@+id/textView132"
         android:layout_marginLeft="120dp"
-        android:layout_marginStart="158dp" />
+        android:layout_marginStart="158dp"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -99,7 +101,8 @@
         android:id="@+id/editText30"
         android:layout_above="@+id/textView135"
         android:layout_alignLeft="@+id/editText28"
-        android:layout_alignStart="@+id/editText28" />
+        android:layout_alignStart="@+id/editText28"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -119,7 +122,8 @@
         android:id="@+id/editText32"
         android:layout_above="@+id/textView136"
         android:layout_alignLeft="@+id/editText30"
-        android:layout_alignStart="@+id/editText30" />
+        android:layout_alignStart="@+id/editText30"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -139,7 +143,8 @@
         android:id="@+id/editText34"
         android:layout_above="@+id/textView137"
         android:layout_alignLeft="@+id/editText32"
-        android:layout_alignStart="@+id/editText32" />
+        android:layout_alignStart="@+id/editText32"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -159,7 +164,8 @@
         android:id="@+id/editText36"
         android:layout_alignBottom="@+id/textView137"
         android:layout_alignLeft="@+id/editText34"
-        android:layout_alignStart="@+id/editText34" />
+        android:layout_alignStart="@+id/editText34"
+        android:visibility="invisible" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -236,7 +242,8 @@
         android:layout_alignStart="@+id/editText28"
         android:layout_alignRight="@+id/editText28"
         android:layout_alignEnd="@+id/editText28"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="20dp"
+        android:visibility="visible" />
 
     <Spinner
         android:layout_width="wrap_content"

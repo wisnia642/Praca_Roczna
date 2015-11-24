@@ -48,7 +48,7 @@ public class Lista extends ActionBarActivity {
     String message13="";
 
     Bundle applesData;
-    String s,m,k,W;
+    String s,m,k,W,jak;
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
@@ -423,6 +423,8 @@ public class Lista extends ActionBarActivity {
                 w.putExtra("kategoria", posilek);
                 message13 = "false";
                 w.putExtra("warunek", message13);
+                jak="false";
+                w.putExtra("jak",jak);
                 startActivity(w);
                 break;
             case DRUGI_ELEMENT:
@@ -433,6 +435,8 @@ public class Lista extends ActionBarActivity {
                 i.putExtra("kuchnia", k);
                 message13 = "true";
                 i.putExtra("kategoria", posilek);
+                jak="false";
+                i.putExtra("jak",jak);
                 showToast(" przytrzymaj pozycje aby ja usunac");
                 break;
             case TRZECI_ELEMENT:
@@ -443,30 +447,24 @@ public class Lista extends ActionBarActivity {
                 c.putExtra("kuchnia", k);
                 message13="ttrue";
                 c.putExtra("kategoria", posilek);
+                jak="false";
+                c.putExtra("jak",jak);
                 showToast(" przytrzymaj pozycje aby ja poprawic");
 
                 break;
             case CZWARTY_ELEMENT:
                 wczytywanie();
                 saveDataSqlLight();
-                Intent d = new Intent(Lista.this,MainActivity.class);
-                d.putExtra("sala_sprzedazy", s);
-                d.putExtra("wszystko", W);
-                d.putExtra("magazyn", m);
-                d.putExtra("kuchnia", k);
-                startActivity(d);
+                finish();
+                startActivity(getIntent());
 
                 break;
             case PIATY_ELEMENT:
                 try {
                     wczytywanie();
                     saveDataSqlLigtUpdate();
-                    Intent e = new Intent(Lista.this, MainActivity.class);
-                    e.putExtra("sala_sprzedazy", s);
-                    e.putExtra("wszystko", W);
-                    e.putExtra("magazyn", m);
-                    e.putExtra("kuchnia", k);
-                    startActivity(e);
+                    finish();
+                    startActivity(getIntent());
                 }
                 catch (Exception e){}
                 break;

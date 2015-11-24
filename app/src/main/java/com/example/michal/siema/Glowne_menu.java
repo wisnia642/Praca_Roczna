@@ -106,6 +106,7 @@ public class Glowne_menu extends ActionBarActivity {
                     a.putExtra("wszystko", Wszystko);
                     a.putExtra("magazyn", Magazyn);
                     a.putExtra("kuchnia", Kuchnia);
+                    a.putExtra("faktura", "false");
                     startActivity(a);
                 } else
 
@@ -137,7 +138,9 @@ public class Glowne_menu extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Glowne_menu.this, Logowanie.class);
+                c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(c);
+                finish();
             }
         });
     }

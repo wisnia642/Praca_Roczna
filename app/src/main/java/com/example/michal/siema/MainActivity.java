@@ -55,15 +55,24 @@ public class MainActivity extends ActionBarActivity {
     String[] Stan = new String[20];
     String[] stan1 = new String[20];
     Double[] Suma = new Double[20];
+
+    String[] uzytkonkik = new String[15];
+    String[] haslo = new String[15];
+    String[] kuchnia = new String[15];
+    String[] magazyn = new String[15];
+    String[] sala_sprzedazy = new String[15];
+    String[] wszystko = new String[15];
+
     String zm=null;
     Double zm1;
     Double zm2;
     int Numer,Numer1,wartosc;
-    int x,w,c,a,q,z;
+    int x,w,c,a,q,z,spr,has;
     FileOutputStream fos;
 
     Bundle applesData;
     String s,m,k,W,u;
+    String hash1,textboks;
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
@@ -123,12 +132,12 @@ public class MainActivity extends ActionBarActivity {
                 }
                 if(wartosc==3)
                 {
-                    sampleDB.execSQL("INSERT INTO Zamowienie VALUES ('"+zm2+"') WHERE Klient= ('"+klient[w]+"')" );
+                    sampleDB.execSQL("UPDATE Zamowienie SET Suma=('"+zm2+"') WHERE Klient=('"+klient[w]+"')" );
                 }
                 sampleDB.close();
 
             }catch (Exception e)
-            {showToast(e+"");}
+            {}
 
         connect();
         if (connection != null) {
@@ -156,16 +165,13 @@ public class MainActivity extends ActionBarActivity {
             }}
         if(wartosc==3)
         {
-            String sql = "INSERT INTO Zamowienie (Suma) VALUES (?) WHERE Klient= ('"+klient[w]+"')";
-            try{
-                ps = connection.prepareStatement(sql);
-                ps.setString(7, String.valueOf(zm2));
-                ps.executeUpdate();
-                connection.commit();
-
-            } catch (SQLException e) {
-
+            String sql = "UPDATE Zamowienie SET Suma=('"+zm2+"') WHERE Klient=('"+klient[w]+"')";
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
             }
+
         }
         try {
             if (connection != null)
@@ -189,7 +195,7 @@ public class MainActivity extends ActionBarActivity {
                 i++;
             }
 
-            Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
+            Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE", null);
 
            while (c.moveToNext()) {
                zm = String.valueOf(c.getString(1));
@@ -295,7 +301,6 @@ public class MainActivity extends ActionBarActivity {
         try {
             connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
-            showToast("" + e);
             return;
         }
 
@@ -318,7 +323,6 @@ public class MainActivity extends ActionBarActivity {
                 try {
                     rs=st.executeQuery(sql);
                 } catch (SQLException e1) {
-                    //  e1.printStackTrace();
                 }
                 try{
                     PreparedStatement stmt = connection.prepareStatement(sql);
@@ -501,6 +505,94 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private void readsqlLigt()
+    {spr=0;
+
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor c = sampleDB.rawQuery("select * from logowanie", null);
+
+            while (c.moveToNext()) {
+                String  zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    uzytkonkik[spr] = String.valueOf(c.getString(1));
+                    haslo[spr] = String.valueOf(c.getString(2));
+                    sala_sprzedazy[spr] = String.valueOf(c.getString(3));
+                    magazyn[spr] = String.valueOf(c.getString(4));
+                    kuchnia[spr] = String.valueOf(c.getString(5));
+                    wszystko[spr] = String.valueOf(c.getString(6));
+                    spr++;}
+            }
+            sampleDB.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    public void wczytywanie1() {
+        spr=0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql = ("select * from logowanie");
+
+            try {
+                rs=st.executeQuery(sql);
+            } catch (SQLException e1) {
+                //  e1.printStackTrace();
+            }
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                rs = stmt.executeQuery();
+
+                while (rs.next())
+                {
+                    String  zm = rs.getString("Uzytkownik");
+                    if(zm!=null){
+                        uzytkonkik[spr] = rs.getString("Uzytkownik");
+                        haslo[spr] = rs.getString("Haslo");
+                        sala_sprzedazy[spr] = rs.getString("Sala_sprzedazy");
+                        magazyn[spr] = rs.getString("Magazyn");
+                        kuchnia[spr] = rs.getString("Kuchnia");
+                        wszystko[spr] = rs.getString("Wszystko");
+                        spr++;}
+
+                } }catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
+
+    }
+
+    private void Hash()
+    {
+        try {
+            hash1 = "%032x440472108104"+String.valueOf(textboks.hashCode());
+
+        }
+        catch (Exception e){showToast(""+e);}
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -559,12 +651,17 @@ public class MainActivity extends ActionBarActivity {
             u = applesData.getString("uzytkownik");
         }
 
+        readsqlLigt();
+        if(uzytkonkik[0]==null)
+        {
+            wczytywanie1();
+        }
+
         //odczyt z bazy danych i z pliku
-        try{
+
             readsqlLight();
         if(Klient[0]==null){
                 wczytywanie();
-            } }catch (Exception e) {showToast(""+e);
             }
 
         try{zdjecie1();}catch (Exception e){}
@@ -609,6 +706,47 @@ public class MainActivity extends ActionBarActivity {
 
         customAdapter2 adapter2=new customAdapter2(this, klient);
         lista1.setAdapter(adapter2);
+
+        przerwa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View popUpView = getLayoutInflater().inflate(R.layout.blokada, null);
+                // inflating popup layout
+                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                //Creation of popup
+                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                Button btnOk = (Button) popUpView.findViewById(R.id.button60);
+                final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
+
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+
+                            textboks=editT.getText().toString();
+                            Hash();
+                            for (int i = 0; i < uzytkonkik.length; i = i + 0) {
+                                    if (hash1.equals(haslo[i])) {
+                                        mpopup.dismiss();
+                                        has=1;
+                                    }else
+                                    {
+
+                                    }
+                                i++;
+                            }
+                            if(has!=1) {
+                                showToast("błędne hasło");
+                            }
+                        } catch (Exception e) {
+                        }
+
+                    }
+                });
+            }
+        });
 
         wyjdz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -744,11 +882,18 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    z = Integer.parseInt(ilosc[Numer1]);
-                    z++;
-                    ilosc[Numer1] = String.valueOf(z);
-                    wartosc = 1;
-                    showToast("wybierz danie do zwiększenia ilości");
+
+                    if(ilosc[Numer1]!=null) {
+                        z = Integer.parseInt(ilosc[Numer1]);
+                        z++;
+                        ilosc[Numer1] = String.valueOf(z);
+                        wartosc = 1;
+                        funkcjonalnosci();
+                        finish();
+                        startActivity(getIntent());
+                    }else {
+                        showToast("wybierz danie do zwiększenia ilości");
+                    }
                 }catch (Exception e){}
             }
         });
@@ -757,11 +902,18 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    z = Integer.parseInt(ilosc[Numer1]);
-                    z--;
-                    ilosc[Numer1] = String.valueOf(z);
-                    wartosc = 1;
-                    showToast("wybierz danie do zmniejszenia ilości");
+                    if(ilosc[Numer1]!=null) {
+                        z = Integer.parseInt(ilosc[Numer1]);
+                        z--;
+                        ilosc[Numer1] = String.valueOf(z);
+                        wartosc = 1;
+                        funkcjonalnosci();
+                        finish();
+                        startActivity(getIntent());
+                    }
+                    else {
+                        showToast("wybierz danie do zmniejszenia ilości");
+                    }
                 }catch (Exception e) {}
             }
         });
@@ -769,8 +921,14 @@ public class MainActivity extends ActionBarActivity {
         usun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wartosc=2;
-                showToast("Wybierz danie do usunięcia");
+                try {
+                    if(ilosc[Numer1]!=null) {
+                        wartosc = 2;
+                        funkcjonalnosci();
+                    }else {
+                        showToast("Wybierz danie do usunięcia");
+                    }
+                }catch (Exception e){}
             }
         });
 
@@ -821,7 +979,7 @@ public class MainActivity extends ActionBarActivity {
                         try {
                             zm2 = Double.valueOf(editT.getText().toString());
                             zm2 = zm1 + zm2;
-                            Txt1.setText("Suma + napiwek: " + String.valueOf(zm2));
+                            Txt1.setText("Suma "+zm1+"  + napiwek" + String.valueOf(zm2));
 
                         }catch (Exception e){}
                         try {

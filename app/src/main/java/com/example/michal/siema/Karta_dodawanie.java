@@ -28,7 +28,7 @@ public class Karta_dodawanie extends ActionBarActivity {
             buton13, buton14, buton15, buton16;
 
     Bundle applesData;
-    String posilek, userMassage;
+    String posilek, userMassage,jak;
     String[] zdjecie = new String[17];
 
     private static final int CAMERA_PIC_REQUEST = 1111;
@@ -524,6 +524,7 @@ public class Karta_dodawanie extends ActionBarActivity {
                 i.putExtra("wszystko", W);
                 i.putExtra("magazyn", m);
                 i.putExtra("kuchnia", k);
+                i.putExtra("jak",jak);
                 startActivity(i);
             }
         });

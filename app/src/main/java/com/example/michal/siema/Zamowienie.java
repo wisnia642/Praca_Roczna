@@ -47,11 +47,11 @@ public class Zamowienie extends ActionBarActivity  {
 
     String s,m,k,W;
 
-    private static final String url="jdbc:mysql://192.168.1.103:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
-    int x,w,c;
+    int x,w,c,t=1;
     String tab[] = new String[20];
     Connection connection = null;
     int i;
@@ -156,7 +156,7 @@ public class Zamowienie extends ActionBarActivity  {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc VARCHAR,Dodatki VARCHAR," +
-                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE,Sposob_przygotowania VARCHAR,Skladniki VARCHAR,Stan VARCHAR);");
+                   "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE,Sposob_przygotowania VARCHAR,Skladniki VARCHAR,Stan VARCHAR,Faktura VARCHAR);");
 
         }
         catch (Exception e){}
@@ -214,7 +214,7 @@ public class Zamowienie extends ActionBarActivity  {
         Button anulacja = (Button) findViewById(R.id.button);
         TextView Nazwa = (TextView) findViewById(R.id.textView32);
         TextView Kasa = (TextView) findViewById(R.id.textView29);
-        showToast(String.valueOf(i));
+
         applesData = getIntent().getExtras();
         sala = applesData.getString("Sala");
         cena = applesData.getString("cena");
@@ -261,12 +261,13 @@ public class Zamowienie extends ActionBarActivity  {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                klikniete=true;
+
+                    klikniete = true;
+                    t++;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                klikniete=false;
             }
         });
 
@@ -326,14 +327,17 @@ public class Zamowienie extends ActionBarActivity  {
                         catch(Exception e)
                         {}
 
-                            if(klikniete==false & sala==null)
+
+                            sala = String.valueOf(i);
+
+                            if (klikniete==true & t>=3)
                             {
-                                sala = String.valueOf(i);
-                            }
-                            if (klikniete==true & sala==null)
-                            {
+                                showToast("tak");
                                 sala = (tab[w]);
                             }
+
+
+
 
                         ZapisSqlLight();
                         ZapisMySql();
@@ -379,7 +383,6 @@ public class Zamowienie extends ActionBarActivity  {
 
         public View getCustomView(int position, View convertView, ViewGroup parent)
         {
-            klikniete=false;
             w=position;
             LayoutInflater inflater = getLayoutInflater();
             View mySpinner = inflater.inflate(R.layout.custom_spiner, parent, false);

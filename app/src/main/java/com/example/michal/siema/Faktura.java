@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,15 +32,24 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.michal.siema.R.layout.custom_spiner1;
 
 public class Faktura extends ActionBarActivity {
 
@@ -54,13 +65,39 @@ public class Faktura extends ActionBarActivity {
     String[] zdj = new String[20];
     String[] Danie = new String[20];
     String[] Ilosc = new String[20];
+    public static final int PIERWSZY_ELEMENT = 1;
 
-    int x,w,c,q;
+    String[] Nazwa_firmy = new String[15];
+    String[] Ulica = new String[15];
+    String[] Numer_domu = new String[15];
+    String[] Miejcowosc = new String[15];
+    String[] Kod_pocztowy = new String[15];
+    String[] Nazwa_firmy1 = new String[15];
+    String[] Ulica1 = new String[15];
+    String[] Numer_domu1 = new String[15];
+    String[] Miejscowosc1 = new String[15];
+    String[] Kod_pocztowy1 = new String[15];
+
+    List<String> listaStringow1 = new ArrayList<String>();
+    List<String> listaStringow2 = new ArrayList<String>();
+
+
+    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
+    static ResultSet rs;
+    static Statement st;
+    PreparedStatement ps;
+    FileInputStream fis = null;
+    Connection connection = null;
+
+    int x,w,c,q,v,y,d;
     double zm1,zm2,zm3,zm4;
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
     String zm;
-    String data,nr_faktura,firma,adres,miejscowosc,kwota;
+    String data,nr_faktura;
 
     TextView Kwota;
     EditText Firma,Adres,Miejscowosc;
@@ -70,7 +107,7 @@ public class Faktura extends ActionBarActivity {
     String s,m,k,W;
 
     List<String> listaStringow = new ArrayList<String>();
-    Spinner Stolik;
+    Spinner Stolik,klient1,firma1;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -78,32 +115,8 @@ public class Faktura extends ActionBarActivity {
                 Toast.LENGTH_LONG).show();
     }
 
-    private void readsqlLight() {
-
-        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-
-
-            try {
-                Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
-
-                while (c.moveToNext()) {
-                    zm = String.valueOf(c.getString(1));
-                    if(zm!=null){
-                        Klient[x] = String.valueOf(c.getString(0));
-                        Danie[x] = String.valueOf(c.getString(1));
-                        Ilosc[x] = String.valueOf(c.getString(2));
-                        Suma[x] = Double.valueOf(c.getDouble(6));
-                        x++;}
-                }
-                sampleDB.close();
-            } catch (Exception e){
-            }
-
-
-    }
-
     //odczyt zamowienia
-    public void SqlLight() {
+    public void dane_faktura() {
         for (int i = 0; i < q; i = i + 0) {
             danie[i] = null;
             ilosc[i] = null;
@@ -176,7 +189,7 @@ public class Faktura extends ActionBarActivity {
             doc.add(p24);
 
             //Miejscowo\ść i data?
-            Paragraph p25 = new Paragraph("Gorzów Wielkopolski  " + data);
+            Paragraph p25 = new Paragraph(Miejcowosc[c]+ " " + data);
             Font paraFont25= new Font(Font.COURIER,00.1f, Color.GREEN);
             p25.setAlignment(Paragraph.ALIGN_RIGHT);
             p25.setFont(paraFont25);
@@ -240,20 +253,20 @@ public class Faktura extends ActionBarActivity {
             doc.add(p19);
 
             //Dane Firmy
-            Paragraph p1 = new Paragraph("Przykladowa Firma-Restauracja");
+            Paragraph p1 = new Paragraph(Nazwa_firmy1[d]);
             Font paraFont= new Font(Font.COURIER,40.1f, Color.GREEN);
             p1.setAlignment(Paragraph.ALIGN_LEFT);
             p1.setFont(paraFont);
 
             doc.add(p1);
 
-            Paragraph p2 = new Paragraph("ul.Przykladowa 6/4");
+            Paragraph p2 = new Paragraph(Ulica1[d]+" "+Numer_domu1[d]);
             Font paraFont2= new Font(Font.COURIER);
             p2.setAlignment(Paragraph.ALIGN_LEFT);
             p2.setFont(paraFont2);
 
             doc.add(p2);
-            Paragraph p3 = new Paragraph("66-400 Gorzów Wielkopolski");
+            Paragraph p3 = new Paragraph(Kod_pocztowy1[d]+" "+Miejscowosc1[d]);
             Font paraFont3= new Font(Font.COURIER);
             p2.setAlignment(Paragraph.ALIGN_LEFT);
             p2.setFont(paraFont3);
@@ -261,7 +274,7 @@ public class Faktura extends ActionBarActivity {
             doc.add(p3);
 
             //Dane klienta
-            Paragraph p4 = new Paragraph(firma);
+            Paragraph p4 = new Paragraph(Nazwa_firmy[c]);
             Font paraFont4= new Font(Font.COURIER,-23.1f, Color.GREEN);
             p4.setAlignment(Paragraph.ALIGN_RIGHT);
             p4.setFont(paraFont4);
@@ -269,14 +282,14 @@ public class Faktura extends ActionBarActivity {
 
             doc.add(p4);
 
-            Paragraph p5 = new Paragraph(adres);
+            Paragraph p5 = new Paragraph(Ulica[c]+" "+Numer_domu[c]);
             Font paraFont5= new Font(Font.COURIER);
             p5.setAlignment(Paragraph.ALIGN_RIGHT);
             p5.setFont(paraFont5);
 
             doc.add(p5);
 
-            Paragraph p6 = new Paragraph(miejscowosc);
+            Paragraph p6 = new Paragraph(Kod_pocztowy[c]+" "+Miejcowosc[c]);
             Font paraFont6= new Font(Font.COURIER);
             p6.setAlignment(Paragraph.ALIGN_RIGHT);
             p6.setFont(paraFont6);
@@ -294,7 +307,7 @@ public class Faktura extends ActionBarActivity {
 
             for(int i=0;i<q;i=i+0) {
                 //Towar
-                SqlLight();
+                dane_faktura();
                 zm3=(suma[i]*23)/100;
                 zm4=suma[i]-zm3;
                 Paragraph p13 = new Paragraph(""+i+1+". | "+danie[i]+". | SZT. |  "+ilosc[i]+". |   "+zm4+".    |    23%    |  "+zm3+".  |    "+suma[i]+".   ");
@@ -340,7 +353,7 @@ public class Faktura extends ActionBarActivity {
             doc.add(p27);
 
             //Fakturę wystawił kto?
-            Paragraph p28 = new Paragraph("     XYZ      ");
+            Paragraph p28 = new Paragraph(Nazwa_firmy[c]);
             Font paraFont28 = new Font(Font.COURIER);
             p28.setAlignment(Paragraph.ALIGN_LEFT);
             p28.setFont(paraFont28);
@@ -368,28 +381,297 @@ public class Faktura extends ActionBarActivity {
         intent.setDataAndType(path, "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
 
-        Kwota.setText("");
-        Firma.setText("");
-        Adres.setText("");
-        Miejscowosc.setText("");
-        Stolik.setSelection(7);
+    public void connect()
+    {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            return;
+        }
+
+
+        try {
+            connection = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException e) {
+            showToast("brak polaczenia z internetem");
+            return;
+        }
 
     }
 
+    private void sqlLight()
+    {
+        ToDataBase();
+        x=0;
 
+        SQLiteDatabase sampleDB2 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+
+        try {
+            Cursor c  = sampleDB2.rawQuery("SELECT * FROM ZAMOWIENIE WHERE Faktura='false'",null);
+
+            while (c.moveToNext()) {
+                zm = String.valueOf(c.getString(0));
+                if(zm!=null){
+                    Klient[x] = String.valueOf(c.getString(0));
+                    Danie[x] = String.valueOf(c.getString(1));
+                    Ilosc[x] = String.valueOf(c.getString(2));
+                    Suma[x] = Double.valueOf(c.getDouble(6));
+                    x++;}
+            }
+            sampleDB2.close();
+        } catch (Exception e){
+        }
+
+    }
+
+    private void readsqlLigt1()
+    {
+        v=0;
+        y=0;
+
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor c = sampleDB.rawQuery("select * from dane_faktura where Wlasciciel='klient'", null);
+
+            while (c.moveToNext()) {
+                String  zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    Nazwa_firmy1[y] = String.valueOf(c.getString(1));
+                    Ulica1[y] = String.valueOf(c.getString(2));
+                    Numer_domu1[y] = String.valueOf(c.getString(3));
+                    Miejscowosc1[y] = String.valueOf(c.getString(4));
+                    Kod_pocztowy1[y] = String.valueOf(c.getString(5));
+                    y++;
+                }
+            }
+            sampleDB.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor f = sampleDB1.rawQuery("select * from dane_faktura where Wlasciciel='firma'", null);
+
+            while (f.moveToNext()) {
+                String zm1 = String.valueOf(f.getString(1));
+                if (zm1 != null) {
+                    Nazwa_firmy[v] = String.valueOf(f.getString(1));
+                    Ulica[v] = String.valueOf(f.getString(2));
+                    Numer_domu[v] = String.valueOf(f.getString(3));
+                    Miejcowosc[v] = String.valueOf(f.getString(4));
+                    Kod_pocztowy[v] = String.valueOf(f.getString(5));
+                    v++;
+                }
+            }
+
+            sampleDB1.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    private void mysql() {
+        x = 0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql2 = ("SELECT * FROM ZAMOWIENIE WHERE Faktura='false'");
+
+            try {
+                rs = st.executeQuery(sql2);
+            } catch (SQLException e1) {
+                //  e1.printStackTrace();
+            }
+            try {
+                PreparedStatement stmt = connection.prepareStatement(sql2);
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    String zm = rs.getString("Klient");
+                    if (zm != null) {
+                        Klient[x] = rs.getString("Klient");
+                        Danie[x] = rs.getString("Danie");
+                        Ilosc[x] = rs.getString("Ilosc");
+                        Suma[x] = rs.getDouble("Suma");
+                        x++;
+                    }
+
+                }
+            } catch (SQLException e1) {
+            }
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
+    }
+
+    private void ToDataBase()
+    {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Zamowienie (Klient VARCHAR,Danie VARCHAR,Ilosc VARCHAR,Dodatki VARCHAR," +
+                    "Dodatkowe_Zyczenia VARCHAR,Zdjecie VARCHAR,Suma DOUBLE,Sposob_przygotowania VARCHAR,Skladniki VARCHAR,Stan VARCHAR,Faktura VARCHAR);");
+
+        }
+        catch (Exception e){}
+
+    }
+
+   private void wczytywanie() {
+       v = 0;
+       y = 0;
+       connect();
+       if (connection != null) {
+
+           try {
+               st = connection.createStatement();
+           } catch (SQLException e1) {
+               e1.printStackTrace();
+           }
+
+           String sql = ("select * from dane_faktura where Wlasciciel='firma'");
+
+           try {
+               rs = st.executeQuery(sql);
+           } catch (SQLException e1) {
+               //  e1.printStackTrace();
+           }
+           try {
+               PreparedStatement stmt = connection.prepareStatement(sql);
+               rs = stmt.executeQuery();
+
+               while (rs.next()) {
+                   String zm = rs.getString("Dane");
+                   if (zm != null) {
+                       Nazwa_firmy[v] = rs.getString("Dane");
+                       Ulica[v] = rs.getString("Dane1");
+                       Numer_domu[v] = rs.getString("Dane2");
+                       Miejcowosc[v] = rs.getString("Dane3");
+                       Kod_pocztowy[v] = rs.getString("Dane4");
+                       v++;
+                   }
+
+               }
+           } catch (SQLException e1) {
+           }
+
+
+           String sql1 = ("select * from dane_faktura where Wlasciciel='klient'");
+
+           try {
+               rs = st.executeQuery(sql1);
+           } catch (SQLException e1) {
+               //  e1.printStackTrace();
+           }
+           try {
+               PreparedStatement stmt = connection.prepareStatement(sql1);
+               rs = stmt.executeQuery();
+
+               while (rs.next()) {
+                   String zm = rs.getString("Dane");
+                   if (zm != null) {
+                       Nazwa_firmy1[y] = rs.getString("Dane");
+                       Ulica1[y] = rs.getString("Dane1");
+                       Numer_domu1[y] = rs.getString("Dane2");
+                       Miejscowosc1[y] = rs.getString("Dane3");
+                       Kod_pocztowy1[y] = rs.getString("Dane4");
+                       y++;
+                   }
+
+               }
+           } catch (SQLException e1) {
+           }
+
+           try {
+               if (connection != null)
+                   connection.close();
+           } catch (SQLException se) {
+               showToast("brak polaczenia z internetem");
+           }
+
+       }
+
+   }
+
+    public void ZapisSqlLight()
+    {
+        ToDataBase();
+
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("UPDATE ZAMOWIENIE SET Faktura=('true') WHERE Klient=('"+klient[w]+"')");
+            sampleDB.close();
+
+        }catch (Exception e)
+        {showToast(e+"");}
+    }
+
+    public void ZapisMySql()
+    {
+        connect();
+
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+
+
+                String sql = "UPDATE ZAMOWIENIE SET Faktura=('true') WHERE Klient=('"+klient[w]+"')";
+
+                try {
+                    st.executeUpdate(sql);
+                } catch (SQLException e1) {
+                    // e1.printStackTrace();
+                }
+
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faktura);
 
-        Firma = (EditText) findViewById(R.id.editText7);
-        Adres = (EditText) findViewById(R.id.editText8);
-        Miejscowosc = (EditText) findViewById(R.id.editText9);
         Kwota = (TextView) findViewById(R.id.textView45);
         ok = (Button) findViewById(R.id.button60);
         anuluj = (Button) findViewById(R.id.button61);
-        SqlLight();
+
+        klient1 = (Spinner) findViewById(R.id.spinner11);
+        firma1 = (Spinner) findViewById(R.id.spinner2);
 
         applesData = getIntent().getExtras();
         s = applesData.getString("sala_sprzedazy");
@@ -397,43 +679,14 @@ public class Faktura extends ActionBarActivity {
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
 
+        sqlLight();
+        if(Klient[0]==null)
+        {
+            mysql();
+        }
+      //  showToast(Klient[0]);
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firma = Firma.getText().toString();
-                adres = Adres.getText().toString();
-                miejscowosc = Miejscowosc.getText().toString();
-
-                    try {
-                        //pobieranie daty do faktury
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                        data = sdf.format(new Date());
-                        SimpleDateFormat sdf1 = new SimpleDateFormat("mmssyyyyMMdd");
-                        nr_faktura = sdf1.format(new Date());
-                        createPDF();
-                        open();
-
-                    }catch (Exception e){}
-                }
-        });
-
-        anuluj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Faktura.this,MainActivity.class);
-                i.putExtra("sala_sprzedazy", s);
-                i.putExtra("wszystko", W);
-                i.putExtra("magazyn", m);
-                i.putExtra("kuchnia", k);
-                startActivity(i);
-            }
-        });
-
-
-
-        try{readsqlLight();}catch (Exception e){}
-
+        //nie wiem co to robi ?
         for (int i = 0; i < x; i = i + 0) {
             for (int j = 0; j < x; j = j + 0) {
                 if (j == 0) {
@@ -456,9 +709,89 @@ public class Faktura extends ActionBarActivity {
         }
         c = 0;
 
-        Stolik = (Spinner) findViewById(R.id.spinner2);
-        Stolik.setAdapter(new Faktura.MyAdapter(this, R.layout.custom_spiner1, listaStringow));
+        readsqlLigt1();
+        if(Nazwa_firmy[0]==null & Nazwa_firmy1[0]==null)
+        {
+            wczytywanie();
+        }
+        try {
+            for (int j = 0; j < Nazwa_firmy.length; j++) {
+                if (Nazwa_firmy[j] != null) {
+                    listaStringow2.add(Nazwa_firmy[j]);
+                }
+            }
 
+            for (int r = 0; r < Nazwa_firmy1.length; r++) {
+                if (Nazwa_firmy1[r] != null) {
+                    listaStringow1.add(Nazwa_firmy1[r]);
+                }
+            }
+
+        }catch (Exception e){}
+
+        Stolik = (Spinner) findViewById(R.id.spinner10);
+        Stolik.setAdapter(new MyAdapter(this, R.layout.custom_spiner1, listaStringow));
+        klient1.setAdapter(new MyAdapter1(this, R.layout.custom_spiner1, listaStringow2));
+        firma1.setAdapter(new Adapter(this, R.layout.custom_spiner1, listaStringow1));
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    try {
+                        if(Kwota.getText().toString()!=null) {
+                            //pobieranie daty do faktury
+                            ZapisMySql();
+                            ZapisSqlLight();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                            data = sdf.format(new Date());
+                            SimpleDateFormat sdf1 = new SimpleDateFormat("mmssyyyyMMdd");
+                            nr_faktura = sdf1.format(new Date());
+                            createPDF();
+                            open();
+                        }
+                    }catch (Exception e){}
+                }
+        });
+
+        anuluj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Faktura.this, MainActivity.class);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                startActivity(i);
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+            menu.add(0, PIERWSZY_ELEMENT, 0, "Dodaj Klienta");
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case PIERWSZY_ELEMENT:
+                Intent intent = new Intent(Faktura.this,Dane_do_faktury.class);
+                intent.putExtra("sala_sprzedazy", s);
+                intent.putExtra("wszystko", W);
+                intent.putExtra("magazyn", m);
+                intent.putExtra("kuchnia", k);
+                intent.putExtra("faktura", "true");
+                startActivity(intent);
+                break;
+            default:
+        }
+        return true;
     }
 
 
@@ -482,13 +815,70 @@ public class Faktura extends ActionBarActivity {
 
         public View getCustomView(int position, View convertView, ViewGroup parent)
         {
-            SqlLight();
+            dane_faktura();
             Kwota.setText(String.valueOf(zm1));
             w=position;
             LayoutInflater inflater = getLayoutInflater();
             View mySpinner = inflater.inflate(R.layout.custom_spiner1, parent, false);
             TextView main_text = (TextView) mySpinner .findViewById(R.id.text2);
             main_text.setText(klient[position]);
+            return mySpinner;
+        }}
+
+    public class MyAdapter1 extends ArrayAdapter<String>
+    {
+        public MyAdapter1(Context ctx, int txtViewResourceId, List<String> objects)
+        {
+            super(ctx, txtViewResourceId, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent)
+        {
+            d=position;
+            LayoutInflater inflater = getLayoutInflater();
+            View mySpinner = inflater.inflate(custom_spiner1, parent, false);
+            TextView main_text = (TextView) mySpinner .findViewById(R.id.text2);
+            main_text.setText(Nazwa_firmy[position]);
+            return mySpinner;
+        }}
+
+    public class Adapter extends ArrayAdapter<String>
+    {
+        public Adapter(Context ctx, int txtViewResourceId, List<String> objects)
+        {
+            super(ctx, txtViewResourceId, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt)
+        {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent)
+        {
+
+            c=position;
+            LayoutInflater inflater = getLayoutInflater();
+            View mySpinner = inflater.inflate(custom_spiner1, parent, false);
+            TextView main_text = (TextView) mySpinner .findViewById(R.id.text2);
+            main_text.setText(Nazwa_firmy1[position]);
             return mySpinner;
         }}
 }

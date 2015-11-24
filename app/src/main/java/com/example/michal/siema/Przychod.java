@@ -283,10 +283,12 @@ public class Przychod extends ActionBarActivity {
         k = applesData.getString("kuchnia");
         w = applesData.getString("wszystko");
 
-        readsqlLigtData();
-        if(Nazwa[0]==null) {
-            wczytywanie();
-        }
+        try {
+            readsqlLigtData();
+            if (Nazwa[0] == null) {
+                wczytywanie();
+            }
+        }catch (Exception e){}
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -326,37 +328,38 @@ public class Przychod extends ActionBarActivity {
         pokaz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cena1=0;
-                cena2=0;
-                Ilosc1=0;
-                przychody.setText("");
-                wykonywane.setText("");
-                data11 = data1.getText().toString();
-                data22 = data2.getText().toString();
+                try {
+                    cena1 = 0;
+                    cena2 = 0;
+                    Ilosc1 = 0;
+                    przychody.setText("");
+                    wykonywane.setText("");
+                    data11 = data1.getText().toString();
+                    data22 = data2.getText().toString();
 
-                //   readsqlLigt();
-               // if(Nazwa1[0]==null) {
-                wczytywanie2();
-             //   }
-                for(int i=0;i<x;i=i+0)
-                {
-                    Ilosc2=Ilosc1+Integer.parseInt(Ilosc[i]);
-                    Ilosc1 = Ilosc2;
+                       readsqlLigt();
+                     if(Nazwa1[0]==null) {
+                    wczytywanie2();
+                       }
+                    for (int i = 0; i < x; i = i + 0) {
+                        Ilosc2 = Ilosc1 + Integer.parseInt(Ilosc[i]);
+                        Ilosc1 = Ilosc2;
 
-                    for(int j=0;j<z;j=j+0) {
-                        if (Nazwa1[i].equals(Nazwa[j])) {
+                        for (int j = 0; j < z; j = j + 0) {
+                            if (Nazwa1[i].equals(Nazwa[j])) {
                                 cena3 = Integer.parseInt(Cena[j]) * Integer.parseInt(Ilosc[i]);
-                                cena1 = cena2+cena3;
+                                cena1 = cena2 + cena3;
                                 cena2 = cena3;
+                            }
+                            j++;
                         }
-                        j++;
+                        i++;
                     }
-                    i++;
-                }
 
-                przychody.setText(String.valueOf(cena1));
-                wykonywane.setText(String.valueOf(Ilosc2));
+                    przychody.setText(String.valueOf(cena1));
+                    wykonywane.setText(String.valueOf(Ilosc2));
 
+                }catch (Exception e ){}
             }
         });
 

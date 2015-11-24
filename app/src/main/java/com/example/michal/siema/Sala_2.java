@@ -382,7 +382,6 @@ public class Sala_2 extends ActionBarActivity {
         img14 = (TextView) findViewById(R.id.textView14);
         img15 = (TextView) findViewById(R.id.textView15);
 
-
         applesData = getIntent().getExtras();
         s = applesData.getString("sala_sprzedazy");
         m = applesData.getString("magazyn");
@@ -425,80 +424,85 @@ public class Sala_2 extends ActionBarActivity {
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[2], (int) tab[3]);
                 img2.setLayoutParams(lp);
 
-                if(zm1<2){img2.setVisibility(View.INVISIBLE);}}
-
+               }
+            if(zm1<2){img2.setVisibility(View.INVISIBLE);}
             if (tab[4] != 0 & tab[5] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[4], (int) tab[5]);
                 img3.setLayoutParams(lp);
-                if(zm1<3){img3.setVisibility(View.INVISIBLE);}}
-
+                }
+            if(zm1<4){img4.setVisibility(View.INVISIBLE);}
             if (tab[6] != 0 & tab[7] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[6], (int) tab[7]);
                 img4.setLayoutParams(lp);
-                if(zm1<4){img4.setVisibility(View.INVISIBLE);}}
+                }
+            if(zm1<4){img4.setVisibility(View.INVISIBLE);}
             if (tab[8] != 0 || tab[9] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[8], (int) tab[9]);
                 img5.setLayoutParams(lp);
-                if(zm1<5){img5.setVisibility(View.INVISIBLE);}}
-
+                }
+            if(zm1<5){img5.setVisibility(View.INVISIBLE);}
             if (tab[10] != 0 & tab[11] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[10], (int) tab[11]);
                 img6.setLayoutParams(lp);
-                if(zm1<6) {img6.setVisibility(View.INVISIBLE);}}
-
+               }
+            if(zm1<6) {img6.setVisibility(View.INVISIBLE);}
             if (tab[12] != 0 & tab[13] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[12], (int) tab[13]);
                 img7.setLayoutParams(lp);
-                if(zm1<7) {img7.setVisibility(View.INVISIBLE);}}
-
+               }
+            if(zm1<7) {img7.setVisibility(View.INVISIBLE);}
             if (tab[14] != 0 & tab[15] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[14], (int) tab[15]);
                 img8.setLayoutParams(lp);
-                if(zm1<8) {img8.setVisibility(View.INVISIBLE);}}
+               }
+            if(zm1<8) {img8.setVisibility(View.INVISIBLE);}
             if (tab[16] != 0 || tab[17] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[16], (int) tab[17]);
                 img9.setLayoutParams(lp);
-                if(zm1<9) {img9.setVisibility(View.INVISIBLE);}}
-
+                }
+            if(zm1<9) {img9.setVisibility(View.INVISIBLE);}
             if (tab[18] != 0 & tab[19] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[18], (int) tab[19]);
                 img10.setLayoutParams(lp);
-                if(zm1<10) {img10.setVisibility(View.INVISIBLE);}}
-
+                }
+            if(zm1<10) {img10.setVisibility(View.INVISIBLE);}
             if (tab[20] != 0 & tab[21] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[20], (int) tab[21]);
                 img11.setLayoutParams(lp);
-                if(zm1<11) {img11.setVisibility(View.INVISIBLE);}}
-
+                }
+            if(zm1<11) {img11.setVisibility(View.INVISIBLE);}
             if (tab[22] != 0 & tab[23] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[22], (int) tab[23]);
                 img12.setLayoutParams(lp);
-                if(zm1<12) {img12.setVisibility(View.INVISIBLE);}}
+                }
+            if(zm1<12) {img12.setVisibility(View.INVISIBLE);}
             if (tab[24] != 0 & tab[25] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[24], (int) tab[25]);
                 img13.setLayoutParams(lp);
-                if(zm1<13) {img13.setVisibility(View.INVISIBLE);}}
+               }
+            if(zm1<13) {img13.setVisibility(View.INVISIBLE);}
             if (tab[26] != 0 & tab[27] != 0) {
 
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[26], (int) tab[27]);
                 img14.setLayoutParams(lp);
-                if(zm1<14){img14.setVisibility(View.INVISIBLE);}}
+                }
+            if(zm1<14){img14.setVisibility(View.INVISIBLE);}
             if (tab[28] != 0 & tab[29] != 0) {
-
                 AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[28], (int) tab[29]);
-                img15.setLayoutParams(lp);
-                if(zm1<15){img15.setVisibility(View.INVISIBLE);}}
+                img15.setLayoutParams(lp);}
+            if(zm1<15){
+                img15.setVisibility(View.INVISIBLE);}
         }catch (Exception e){}
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
@@ -2126,24 +2130,18 @@ public class Sala_2 extends ActionBarActivity {
                 wczytywanie();
                 writeToDataBase();
                 stan=true;
-                Intent i = new Intent(Sala_2.this,MainActivity.class);
-                i.putExtra("sala_sprzedazy", s);
-                i.putExtra("wszystko", w);
-                i.putExtra("magazyn", m);
-                i.putExtra("kuchnia", k);
-                startActivity(i);
+                finish();
+                startActivity(getIntent());
+
 
                 break;
             case DZIESIATY_ELEMENT:
                 ResetMySql();
                 ResetSqlLigt();
                 stan=false;
-                Intent q = new Intent(Sala_2.this,MainActivity.class);
-                q.putExtra("sala_sprzedazy", s);
-                q.putExtra("wszystko", w);
-                q.putExtra("magazyn", m);
-                q.putExtra("kuchnia", k);
-                startActivity(q);
+                finish();
+                startActivity(getIntent());
+
                 break;
             default:
 

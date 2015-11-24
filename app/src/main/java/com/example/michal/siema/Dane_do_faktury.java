@@ -51,7 +51,7 @@ public class Dane_do_faktury extends ActionBarActivity {
     Spinner klient_s,firma_s;
 
     Bundle applesData;
-    String s,m,k,W;
+    String s,m,k,W,faktura;
     int x,y,d,c;
     int g=0;
     int h=0;
@@ -157,29 +157,29 @@ public class Dane_do_faktury extends ActionBarActivity {
         }
 
     public void connectToDataBase1() {
+        if (W.equals("1")) {
 
-
-        try {
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-
-            sampleDB.execSQL("UPDATE dane_faktura SET Dane=('" + wartosc[0] + "'),Dane1=('" + wartosc[1] + "'),Dane2=('" + wartosc[2] + "')," +
-                    "Dane3=('" + wartosc[3] + "'),Dane4=('" +wartosc[4] + "') WHERE Id='"+d+"' AND Wlasciciel='firma'");
-            sampleDB.close();
-        }
-
-        catch (Exception e){showToast("Blad w update");}
-
-        connect();
-
-        if (connection != null) {
             try {
-                st = connection.createStatement();
-            } catch (SQLException e1) {
-                //e1.printStackTrace();
+                SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+                sampleDB.execSQL("UPDATE dane_faktura SET Dane=('" + wartosc[0] + "'),Dane1=('" + wartosc[1] + "'),Dane2=('" + wartosc[2] + "')," +
+                        "Dane3=('" + wartosc[3] + "'),Dane4=('" + wartosc[4] + "') WHERE Id='" + d + "' AND Wlasciciel='firma'");
+                sampleDB.close();
+            } catch (Exception e) {
+                showToast("Blad w update");
             }
 
+            connect();
+
+            if (connection != null) {
+                try {
+                    st = connection.createStatement();
+                } catch (SQLException e1) {
+                    //e1.printStackTrace();
+                }
+
                 String sql = "UPDATE dane_faktura SET Dane=('" + wartosc[0] + "'),Dane1=('" + wartosc[1] + "'),Dane2=('" + wartosc[2] + "')," +
-                        "Dane3=('" + wartosc[3] + "'),Dane4=('" +wartosc[4] + "') WHERE Id='"+d+"' AND Wlasciciel='firma'";
+                        "Dane3=('" + wartosc[3] + "'),Dane4=('" + wartosc[4] + "') WHERE Id='" + d + "' AND Wlasciciel='firma'";
 
 
                 try {
@@ -195,7 +195,7 @@ public class Dane_do_faktury extends ActionBarActivity {
                 showToast("brak połączenia z internetem");
             }
         }
-
+    }
     public void UpdateSql1()
     {
         ToDataBase();
@@ -248,53 +248,54 @@ public class Dane_do_faktury extends ActionBarActivity {
         }
     }
 
-    public void UpdateSql()
-    {
-        ToDataBase();
+    public void UpdateSql() {
+        if (W.equals("1")) {
+            ToDataBase();
 
-        try {
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            //poprawić ma być insert bo tych składników jeszcze nie ma
-            sampleDB.execSQL("INSERT INTO dane_faktura (Id,Dane,Dane1,Dane2,Dane3,Dane4,Wlasciciel) VALUES ('"+y+"','"+wartosc[0]+"','"+wartosc[1]+"','"+wartosc[2]+"'," +
-                    "'"+wartosc[3]+"','"+wartosc[4]+"','firma')");
-            sampleDB.close();
-        } catch (Exception e) {
-            showToast("Blad w update");
-        }
-
-
-        connect();
-        if (connection != null) {
             try {
-                st = connection.createStatement();
-            } catch (SQLException e1) {
-                //e1.printStackTrace();
+                SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+                //poprawić ma być insert bo tych składników jeszcze nie ma
+                sampleDB.execSQL("INSERT INTO dane_faktura (Id,Dane,Dane1,Dane2,Dane3,Dane4,Wlasciciel) VALUES ('" + y + "','" + wartosc[0] + "','" + wartosc[1] + "','" + wartosc[2] + "'," +
+                        "'" + wartosc[3] + "','" + wartosc[4] + "','firma')");
+                sampleDB.close();
+            } catch (Exception e) {
+                showToast("Blad w update");
             }
 
-            String sql = "INSERT INTO dane_faktura (Id,Dane,Dane1,Dane2,Dane3,Dane4,Wlasciciel) VALUES" +
-                    " (?,?,?,?,?,?,?)";
 
-            try {
-                ps = connection.prepareStatement(sql);
-                ps.setString(1, String.valueOf(y));
-                ps.setString(2, String.valueOf(wartosc[0]));
-                ps.setString(3, String.valueOf(wartosc[1]));
-                ps.setString(4, String.valueOf(wartosc[2]));
-                ps.setString(5, String.valueOf(wartosc[3]));
-                ps.setString(6, String.valueOf(wartosc[4]));
-                ps.setString(7, String.valueOf("firma"));
-                ps.executeUpdate();
-                connection.commit();
+            connect();
+            if (connection != null) {
+                try {
+                    st = connection.createStatement();
+                } catch (SQLException e1) {
+                    //e1.printStackTrace();
+                }
 
-            } catch (SQLException e) {
+                String sql = "INSERT INTO dane_faktura (Id,Dane,Dane1,Dane2,Dane3,Dane4,Wlasciciel) VALUES" +
+                        " (?,?,?,?,?,?,?)";
 
-            }
+                try {
+                    ps = connection.prepareStatement(sql);
+                    ps.setString(1, String.valueOf(y));
+                    ps.setString(2, String.valueOf(wartosc[0]));
+                    ps.setString(3, String.valueOf(wartosc[1]));
+                    ps.setString(4, String.valueOf(wartosc[2]));
+                    ps.setString(5, String.valueOf(wartosc[3]));
+                    ps.setString(6, String.valueOf(wartosc[4]));
+                    ps.setString(7, String.valueOf("firma"));
+                    ps.executeUpdate();
+                    connection.commit();
 
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException se) {
-                showToast("brak połączenia z internetem");
+                } catch (SQLException e) {
+
+                }
+
+                try {
+                    if (connection != null)
+                        connection.close();
+                } catch (SQLException se) {
+                    showToast("brak połączenia z internetem");
+                }
             }
         }
     }
@@ -352,9 +353,6 @@ public class Dane_do_faktury extends ActionBarActivity {
         {
 
         }
-
-
-
 
     }
 
@@ -454,6 +452,15 @@ public class Dane_do_faktury extends ActionBarActivity {
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
+        faktura = applesData.getString("faktura");
+
+        if(W.equals("1")) {
+            nazwa_firmy.setVisibility(View.VISIBLE);
+            ulica.setVisibility(View.VISIBLE);
+            numer_domu.setVisibility(View.VISIBLE);
+            miejscowosc.setVisibility(View.VISIBLE);
+            kod_pocztowy.setVisibility(View.VISIBLE);
+        }
 
         readsqlLigt();
         if(Nazwa_firmy[0]==null & Nazwa_firmy1[0]==null)
@@ -521,12 +528,23 @@ public class Dane_do_faktury extends ActionBarActivity {
         anuluj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(faktura.equals("false")){
                 Intent i = new Intent(Dane_do_faktury.this,Glowne_menu.class);
                 i.putExtra("sala_sprzedazy", s);
                 i.putExtra("wszystko", W);
                 i.putExtra("magazyn", m);
                 i.putExtra("kuchnia", k);
                 startActivity(i);
+                }
+                if(faktura.equals("true"))
+                {
+                    Intent i = new Intent(Dane_do_faktury.this,Faktura.class);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
+                    startActivity(i);
+                }
 
             }
         });
@@ -570,27 +588,6 @@ public class Dane_do_faktury extends ActionBarActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dane_do_faktury, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     public class MyAdapter extends ArrayAdapter<String>
     {
         public MyAdapter(Context ctx, int txtViewResourceId, List<String> objects)

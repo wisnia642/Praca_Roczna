@@ -29,7 +29,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     Spinner kategoria,przynaleznosc;
     ListView produkty;
     Button ok,cancel,usun,utworz,popraw;
-    String wartosc,Danie,Ilosc,Stan_krytyczny,wagi,cena_d,ilosc_d;
+    String wartosc,Danie,Ilosc,Stan_krytyczny,wagi,cena_d,ilosc_d,jak;
     String[] Wagi = {"Szt","Kg","Dag","Gram"};
     String[] listaStringow = {"Lodówka","Mroźnia","Magazyn","Brak Kategorii"};
 
@@ -42,30 +42,30 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     Bundle applesData;
     String s,m,k,w;
 
-    String[] Brak_kategorii= new String[40];
-    String[] Brak_kategorii_ilosc = new String[40];
-    String[] Brak_kategorii_kategoria = new String[40];
-    String[] Brak_kategorii_stankrytyczny = new String[40];
-    String[] Brak_kategorii_cena_detaliczna = new String[40];
-    String[] Brak_kategorii_ilosc_detaliczna = new String[40];
-    String[] Lodowka= new String[40];
-    String[] Lodowka_ilosc = new String[40];
-    String[] Lodowka_kategoria = new String[40];
-    String[] Lodowka_stankrytyczny = new String[40];
-    String[] Lodówka_cena_detaliczna = new String[40];
-    String[] Lodówka_ilosc_detaliczna = new String[40];
-    String[] Mroznia= new String[40];
-    String[] Mroznia_ilosc = new String[40];
-    String[] Mroznia_kategoria = new String[40];
-    String[] Mroznia_stankrytyczny = new String[40];
-    String[] Mroznia_cena_detaliczna = new String[40];
-    String[] Mroznia_ilosc_detaliczna = new String[40];
-    String[] Magazyn= new String[40];
-    String[] Magazyn_ilosc = new String[40];
-    String[] Magazyn_kategoria = new String[40];
-    String[] Magazyn_stankrytyczny = new String[40];
-    String[] Magazyn_cena_detaliczna = new String[40];
-    String[] Magazyn_ilosc_detaliczna = new String[40];
+    String[] Brak_kategorii= new String[20];
+    String[] Brak_kategorii_ilosc = new String[20];
+    String[] Brak_kategorii_kategoria = new String[20];
+    String[] Brak_kategorii_stankrytyczny = new String[20];
+    String[] Brak_kategorii_cena_detaliczna = new String[20];
+    String[] Brak_kategorii_ilosc_detaliczna = new String[20];
+    String[] Lodowka= new String[20];
+    String[] Lodowka_ilosc = new String[20];
+    String[] Lodowka_kategoria = new String[20];
+    String[] Lodowka_stankrytyczny = new String[20];
+    String[] Lodówka_cena_detaliczna = new String[20];
+    String[] Lodówka_ilosc_detaliczna = new String[20];
+    String[] Mroznia= new String[20];
+    String[] Mroznia_ilosc = new String[20];
+    String[] Mroznia_kategoria = new String[20];
+    String[] Mroznia_stankrytyczny = new String[20];
+    String[] Mroznia_cena_detaliczna = new String[20];
+    String[] Mroznia_ilosc_detaliczna = new String[20];
+    String[] Magazyn= new String[20];
+    String[] Magazyn_ilosc = new String[20];
+    String[] Magazyn_kategoria = new String[20];
+    String[] Magazyn_stankrytyczny = new String[20];
+    String[] Magazyn_cena_detaliczna = new String[20];
+    String[] Magazyn_ilosc_detaliczna = new String[20];
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -97,84 +97,85 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR,Komunikat VARCHAR,Cena_detaliczna VARCHAR,Ilosc_detaliczna VARCHAR);");
 
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Brak_kategori (Nazwa VARCHAR,Ilosc VARCHAR,Kategoria VARCHAR," +
-                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR);");
+                    "Stan_krytyczny VARCHAR,Przynaleznosc VARCHAR,Komunikat VARCHAR,Cena_detaliczna VARCHAR,Ilosc_detaliczna VARCHAR);");
 
         }
         catch (Exception e){}
 
     }
 
-    private void readsqlLight() {
-        ToDataBase();
+        private void readsqlLight1() {
+            ToDataBase();
+            try {
+                SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-        try {
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+                A=0;
+                Cursor a  = sampleDB.rawQuery("SELECT * FROM Lodowka",null);
 
-            A=0;
-            Cursor a  = sampleDB.rawQuery("SELECT * FROM Lodowka", null);
+                while (a.moveToNext()) {
+                    String zm = String.valueOf(a.getString(0));
+                    if(zm!=null){
+                        Lodowka[A] = String.valueOf(a.getString(0));
+                        Lodowka_ilosc[A] = String.valueOf(a.getString(1));
+                        Lodowka_kategoria[A] = String.valueOf(a.getString(2));
+                        Lodowka_stankrytyczny[A] = String.valueOf(a.getString(3));
+                        Lodówka_cena_detaliczna[A] = String.valueOf(a.getString(6));
+                        Lodówka_ilosc_detaliczna[A] = String.valueOf(a.getString(7));
+                        A++;}
+                }
 
-            while (a.moveToNext()) {
-                String zm = String.valueOf(a.getString(0));
-                if(zm!=null){
-                    Lodowka[A] = String.valueOf(a.getString(0));
-                    Lodowka_ilosc[A] = String.valueOf(a.getString(1));
-                    Lodowka_kategoria[A] = String.valueOf(a.getString(2));
-                    Lodowka_stankrytyczny[A] = String.valueOf(a.getString(3));
-                    Lodówka_cena_detaliczna[A] = String.valueOf(a.getString(6));
-                    Lodówka_ilosc_detaliczna[A] = String.valueOf(a.getString(7));
-                    A++;}
+                C=0;
+                Cursor b  = sampleDB.rawQuery("SELECT * FROM Magazyn",null);
+
+                while (b.moveToNext()) {
+                    String zm = String.valueOf(b.getString(0));
+                    if(zm!=null){
+                        Magazyn[C] = String.valueOf(b.getString(0));
+                        Magazyn_ilosc[C] = String.valueOf(b.getString(1));
+                        Magazyn_kategoria[C] = String.valueOf(b.getString(2));
+                        Magazyn_stankrytyczny[C] = String.valueOf(b.getString(3));
+                        Magazyn_cena_detaliczna[C] = String.valueOf(b.getString(6));
+                        Magazyn_ilosc_detaliczna[C] = String.valueOf(b.getString(7));
+                        C++;}
+                }
+
+                B=0;
+                Cursor d  = sampleDB.rawQuery("SELECT * FROM Mroznia",null);
+
+                while (d.moveToNext()) {
+                    String zm = String.valueOf(d.getString(0));
+                    if(zm!=null){
+                        Mroznia[B] = String.valueOf(d.getString(0));
+                        Mroznia_ilosc[B] = String.valueOf(d.getString(1));
+                        Mroznia_kategoria[B] = String.valueOf(d.getString(2));
+                        Mroznia_stankrytyczny[B] = String.valueOf(d.getString(3));
+                        Mroznia_cena_detaliczna[B] = String.valueOf(d.getString(6));
+                        Mroznia_ilosc_detaliczna[B] = String.valueOf(d.getString(7));
+                        B++;
+                    }
+                }
+
+                int D=0;
+                Cursor e  = sampleDB.rawQuery("SELECT * FROM Brak_kategori",null);
+
+                while (e.moveToNext()) {
+                    String zm = String.valueOf(e.getString(0));
+                    if(zm!=null){
+                        Brak_kategorii[D] = String.valueOf(e.getString(0));
+                        showToast(Brak_kategorii[D]);
+                        Brak_kategorii_ilosc[D] = String.valueOf(e.getString(1));
+                        Brak_kategorii_kategoria[D] = String.valueOf(e.getString(2));
+                        Brak_kategorii_stankrytyczny[D] = String.valueOf(e.getString(3));
+                        Brak_kategorii_cena_detaliczna[D] = String.valueOf(e.getString(6));
+                        Brak_kategorii_ilosc_detaliczna[D] = String.valueOf(e.getString(7));
+                        D++;}
+                }
+
+                sampleDB.close();
+            } catch (Exception a) {
             }
 
-            D=0;
-            Cursor c  = sampleDB.rawQuery("SELECT * FROM Brak_kategori",null);
-
-            while (c.moveToNext()) {
-                String zm = String.valueOf(c.getString(0));
-                if(zm!=null){
-                    Brak_kategorii[D] = String.valueOf(c.getString(0));
-                    Brak_kategorii_ilosc[D] = String.valueOf(c.getString(1));
-                    Brak_kategorii_kategoria[D] = String.valueOf(c.getString(2));
-                    Brak_kategorii_stankrytyczny[D] = String.valueOf(c.getString(3));
-                    Brak_kategorii_cena_detaliczna[D] = String.valueOf(c.getString(6));
-                    Brak_kategorii_ilosc_detaliczna[D] = String.valueOf(c.getString(7));
-                    D++;}
-            }
-
-            C=0;
-            Cursor b  = sampleDB.rawQuery("SELECT * FROM Magazyn",null);
-
-            while (b.moveToNext()) {
-                String zm = String.valueOf(b.getString(0));
-                if(zm!=null){
-                    Magazyn[C] = String.valueOf(b.getString(0));
-                    Magazyn_ilosc[C] = String.valueOf(b.getString(1));
-                    Magazyn_kategoria[C] = String.valueOf(b.getString(2));
-                    Magazyn_stankrytyczny[C] = String.valueOf(b.getString(3));
-                    Magazyn_cena_detaliczna[C] = String.valueOf(b.getString(6));
-                    Magazyn_ilosc_detaliczna[C] = String.valueOf(b.getString(7));
-                    C++;}
-            }
-
-            B=0;
-            Cursor d  = sampleDB.rawQuery("SELECT * FROM Mroznia",null);
-
-            while (d.moveToNext()) {
-                String zm = String.valueOf(d.getString(0));
-                if(zm!=null){
-                    Mroznia[B] = String.valueOf(d.getString(0));
-                    Mroznia_ilosc[B] = String.valueOf(d.getString(1));
-                    Mroznia_kategoria[B] = String.valueOf(d.getString(2));
-                    Mroznia_stankrytyczny[B] = String.valueOf(d.getString(3));
-                    Mroznia_cena_detaliczna[B] = String.valueOf(c.getString(6));
-                    Mroznia_ilosc_detaliczna[B] = String.valueOf(c.getString(7));
-                    B++;}
-            }
-
-            sampleDB.close();
-        } catch (Exception a) {
         }
-
-    }
 
     public void saveSqlLight()
     {
@@ -242,8 +243,11 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         w = applesData.getString("wszystko");
+        if (applesData != null) {
+            jak = applesData.getString("jak");
+        }
 
-        readsqlLight();
+        readsqlLight1();
 
         kategoria.setAdapter(new MyAdapter(this, R.layout.custom_spiner, Wagi));
         przynaleznosc.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, listaStringow));
@@ -269,7 +273,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
             produkty.setAdapter(adapter1);
         }
         if (wartosc.equals("Brak_kategori")) {
-            nazwa.setText("BRAK KATEGORII");
+            nazwa.setText("BRAK KATEGORI");
             przynaleznosc.setSelection(3);
             adapter1 = new CustomAdapter6(this, Brak_kategorii, Brak_kategorii_ilosc, Brak_kategorii_kategoria, Brak_kategorii_stankrytyczny,
                     Brak_kategorii_cena_detaliczna,Brak_kategorii_ilosc_detaliczna);
@@ -348,10 +352,12 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         popraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deletefromSQLlight();
-                saveSqlLight();
-                finish();
-                startActivity(getIntent());
+                if(danie!=null&ilosc!=null) {
+                    deletefromSQLlight();
+                    saveSqlLight();
+                    finish();
+                    startActivity(getIntent());
+                }
             }
         });
 
@@ -378,9 +384,11 @@ public class Pprodukty_kategoria extends ActionBarActivity {
 
                     }
                 }
-                saveSqlLight();
-                finish();
-                startActivity(getIntent());
+                if(danie!=null&ilosc!=null) {
+                    saveSqlLight();
+                    finish();
+                    startActivity(getIntent());
+                }
 
             }
         });
@@ -389,7 +397,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                if (klikniecie == true) {
+                if (klikniecie == true&danie!=null&ilosc!=null) {
                     deletefromSQLlight();
                     finish();
                     startActivity(getIntent());
@@ -400,21 +408,34 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         utworz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveSqlLight();
-                finish();
-                startActivity(getIntent());
+                if(danie!=null&ilosc!=null) {
+                    saveSqlLight();
+                    finish();
+                    startActivity(getIntent());
+                }
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent c = new Intent(Pprodukty_kategoria.this, Magzyn.class);
-                c.putExtra("sala_sprzedazy", s);
-                c.putExtra("wszystko", w);
-                c.putExtra("magazyn", m);
-                c.putExtra("kuchnia", k);
-                startActivity(c);
+                if(jak.equals("true")) {
+                    Intent c = new Intent(Pprodukty_kategoria.this, Magzyn.class);
+                    c.putExtra("sala_sprzedazy", s);
+                    c.putExtra("wszystko", w);
+                    c.putExtra("magazyn", m);
+                    c.putExtra("kuchnia", k);
+                    startActivity(c);
+                }
+                if(jak.equals("false")) {
+                    Intent c = new Intent(Pprodukty_kategoria.this, Kuchnia.class);
+                    c.putExtra("sala_sprzedazy", s);
+                    c.putExtra("wszystko", w);
+                    c.putExtra("magazyn", m);
+                    c.putExtra("kuchnia", k);
+                    startActivity(c);
+
+                }
             }
         });
     }

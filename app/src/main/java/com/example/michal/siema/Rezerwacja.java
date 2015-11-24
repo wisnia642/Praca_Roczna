@@ -36,6 +36,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class Rezerwacja extends ActionBarActivity {
 
@@ -344,8 +345,8 @@ public class Rezerwacja extends ActionBarActivity {
                lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                    @Override
                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                       e=1;
-                       a=i;
+                       e = 1;
+                       a = i;
                    }
                });
                 Button usun = (Button) popUpView.findViewById(R.id.button44);
@@ -353,13 +354,16 @@ public class Rezerwacja extends ActionBarActivity {
                 usun.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (e == 1) {
-                            wartosc = 3;
-                            funkcjonalnosci();
-                            Intent i = new Intent(Rezerwacja.this,Rezerwacja.class);
-                            startActivity(i);
-                        } else {
-                            showToast("Wybierz rezerwacje do usuniecia");
+                        try {
+                            if (e == 1) {
+                                wartosc = 3;
+                                funkcjonalnosci();
+                                finish();
+                                startActivity(getIntent());
+                            } else {
+                                showToast("Wybierz rezerwacje do usuniecia");
+                            }
+                        } catch (Exception e) {
                         }
                     }
                 });
@@ -382,18 +386,17 @@ public class Rezerwacja extends ActionBarActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                klient = Klient.getText().toString();
-                wartosc=2;
-                if(data!=null&czas!=null) {
-                    funkcjonalnosci();
-                    Intent i = new Intent(Rezerwacja.this, MainActivity.class);
-                    startActivity(i);
-                }
-                else
-                {
-                    showToast("Uzupełnij wszystkie dane");
-                }
+    try {
+    klient = Klient.getText().toString();
+    wartosc = 2;
+    if (data != null & czas != null) {
+        funkcjonalnosci();
+        finish();
+        startActivity(getIntent());
+    } else {
+        showToast("Uzupełnij wszystkie dane");
+    }
+        }catch (Exception e){}
             }
         });
 

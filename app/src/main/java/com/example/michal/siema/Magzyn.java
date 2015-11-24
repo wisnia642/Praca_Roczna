@@ -7,13 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import java.io.File;
@@ -40,7 +43,7 @@ public class Magzyn extends ActionBarActivity {
     ListView lista;
 
     Bundle applesData;
-    String s,m,k,W,u;
+    String s,m,k,W,u,jak;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -62,6 +65,13 @@ public class Magzyn extends ActionBarActivity {
     String[] czas_wykonania1 = new String[40];
     String[] kto_wykonal1 = new String[40];
 
+    String[] uzytkonkik = new String[15];
+    String[] haslo = new String[15];
+    String[] kuchnia = new String[15];
+    String[] magazyn1 = new String[15];
+    String[] sala_sprzedazy = new String[15];
+    String[] wszystko = new String[15];
+
     static ResultSet rs;
     static Statement st;
     PreparedStatement ps;
@@ -74,8 +84,10 @@ public class Magzyn extends ActionBarActivity {
     DatePickerDialog.OnDateSetListener date;
 
     String data,dat2,data11,data22;
-    int x=0,y=0;
+    String hash1,textboks;
+    int x=0,y=0,spr,has;
     boolean wartosc = false;
+    private PopupWindow mpopup;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -277,6 +289,93 @@ public class Magzyn extends ActionBarActivity {
         }
     }
 
+    private void readsqlLigt()
+    {spr=0;
+
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor c = sampleDB.rawQuery("select * from logowanie", null);
+
+            while (c.moveToNext()) {
+                String  zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    uzytkonkik[spr] = String.valueOf(c.getString(1));
+                    haslo[spr] = String.valueOf(c.getString(2));
+                    sala_sprzedazy[spr] = String.valueOf(c.getString(3));
+                    magazyn1[spr] = String.valueOf(c.getString(4));
+                    kuchnia[spr] = String.valueOf(c.getString(5));
+                    wszystko[spr] = String.valueOf(c.getString(6));
+                    spr++;}
+            }
+            sampleDB.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    public void wczytywanie1() {
+        spr=0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql = ("select * from logowanie");
+
+            try {
+                rs=st.executeQuery(sql);
+            } catch (SQLException e1) {
+                //  e1.printStackTrace();
+            }
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                rs = stmt.executeQuery();
+
+                while (rs.next())
+                {
+                    String  zm = rs.getString("Uzytkownik");
+                    if(zm!=null){
+                        uzytkonkik[spr] = rs.getString("Uzytkownik");
+                        haslo[spr] = rs.getString("Haslo");
+                        sala_sprzedazy[spr] = rs.getString("Sala_sprzedazy");
+                        magazyn1[spr] = rs.getString("Magazyn");
+                        kuchnia[spr] = rs.getString("Kuchnia");
+                        wszystko[spr] = rs.getString("Wszystko");
+                        spr++;}
+
+                } }catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
+
+    }
+
+    private void Hash()
+    {
+        try {
+            hash1 = "%032x440472108104"+String.valueOf(textboks.hashCode());
+
+        }
+        catch (Exception e){showToast(""+e);}
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -308,6 +407,12 @@ public class Magzyn extends ActionBarActivity {
             u = applesData.getString("uzytkownik");
         }
 
+        readsqlLigt();
+        if(uzytkonkik[0]==null)
+        {
+            wczytywanie1();
+        }
+
         readsqlLight();
          if(Nazwa[0]==null) {
             wczytywanie();
@@ -316,6 +421,46 @@ public class Magzyn extends ActionBarActivity {
 
         final CustomAdapter7  adapter1 = new CustomAdapter7(this,Data, Czas, Nazwa,Ilosc,Czas_wykonania,Kto_wykonal);
        lista.setAdapter(adapter1);
+
+        przerwa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View popUpView = getLayoutInflater().inflate(R.layout.blokada, null);
+                // inflating popup layout
+                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                //Creation of popup
+                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                Button btnOk = (Button) popUpView.findViewById(R.id.button60);
+                final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
+
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+
+                            textboks = editT.getText().toString();
+                            Hash();
+                            for (int i = 0; i < uzytkonkik.length; i = i + 0) {
+                                if (hash1.equals(haslo[i])) {
+                                    mpopup.dismiss();
+                                    has = 1;
+                                } else {
+
+                                }
+                                i++;
+                            }
+                            if (has != 1) {
+                                showToast("błędne hasło");
+                            }
+                        } catch (Exception e) {
+                        }
+
+                    }
+                });
+            }
+        });
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -410,6 +555,24 @@ public class Magzyn extends ActionBarActivity {
                 c.putExtra("kuchnia", k);
                  String message = "Mroznia";
                 c.putExtra("wartosc", message);
+                jak="true";
+                c.putExtra("jak", jak);
+                startActivity(c);
+            }
+        });
+
+        brak_kategorii.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c = new Intent(Magzyn.this, Pprodukty_kategoria.class);
+                c.putExtra("sala_sprzedazy", s);
+                c.putExtra("wszystko", W);
+                c.putExtra("magazyn", m);
+                c.putExtra("kuchnia", k);
+                String message = "Brak_kategori";
+                c.putExtra("wartosc", message);
+                jak="true";
+                c.putExtra("jak", jak);
                 startActivity(c);
             }
         });
@@ -424,6 +587,8 @@ public class Magzyn extends ActionBarActivity {
                 c.putExtra("kuchnia", k);
                 String message = "Lodowka";
                 c.putExtra("wartosc", message);
+                jak = "true";
+                c.putExtra("jak", jak);
                 startActivity(c);
             }
         });
@@ -438,6 +603,8 @@ public class Magzyn extends ActionBarActivity {
                 c.putExtra("kuchnia", k);
                 String message = "Magazyn";
                 c.putExtra("wartosc", message);
+                jak="true";
+                c.putExtra("jak",jak);
                 startActivity(c);
             }
         });

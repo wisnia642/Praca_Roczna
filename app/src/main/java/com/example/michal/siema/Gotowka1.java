@@ -136,29 +136,19 @@ public class Gotowka1 extends ActionBarActivity {
                 }
             }
             if (wartosc == 2) {
-                String sql = "DELETE FROM Zamowienie WHERE Klient=('" + klient[w] + "')";
-                try {
-                    st.executeUpdate(sql);
-                } catch (SQLException e1) {
-                    // e1.printStackTrace();
-                }
-                wartosc=3;
-            }
-        }
-        if (wartosc == 3) {
-            String sql = "INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES (?,?,?,?) ";
+            String sql1 = "INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')";
             try {
-                ps = connection.prepareStatement(sql);
-                ps.setString(0, String.valueOf(currentDateandTime));
-                ps.setString(1, String.valueOf(klient[w]));
-                ps.setString(2, String.valueOf(Suma[w]));
-                ps.setString(3, String.valueOf(u));
-                ps.executeUpdate();
-                connection.commit();
+                st.executeUpdate(sql1);
 
             } catch (SQLException e) {
 
             }
+                String sql = "DELETE FROM Zamowienie WHERE Klient=('" + klient[w] + "')";
+                try {
+                    st.executeUpdate(sql);
+                } catch (SQLException e1) {
+
+                }
         }
         try {
             if (connection != null)
@@ -167,7 +157,7 @@ public class Gotowka1 extends ActionBarActivity {
             showToast("brak polaczenia z internetem");
         }
 
-    }
+    }}
 
     private void readsqlLight() {
 
@@ -191,14 +181,19 @@ public class Gotowka1 extends ActionBarActivity {
 
             if(wartosc==2)
             {
-                sampleDB.execSQL("DELETE FROM Zamowienie WHERE Klient=('" + klient[w] + "')");
-                wartosc=3;
-            }
-             if(wartosc==3)
-             {
-                 ToDataBase();
-
-                 sampleDB.execSQL("INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')");
+                ToDataBase();
+                try {
+                SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+                 sampleDB1.execSQL("INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')");
+                sampleDB1.close();
+            } catch (Exception e){
+        }
+                try {
+                SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+                sampleDB1.execSQL("DELETE FROM Zamowienie WHERE Klient=('" + klient[w] + "')");
+                    sampleDB1.close();
+                } catch (Exception e){
+                }
              }
     }
 
@@ -269,27 +264,28 @@ public class Gotowka1 extends ActionBarActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (Suma[w] >= 0) {
-                        try {
-                            kasa = Double.parseDouble(kasa_otrzymana.getText().toString());
-                            wydane = Suma[w]-kasa;
-                            wydane=wydane*(-1);
-                            wydane *= 100; // zaokraglanie
-                            wydane = Double.valueOf(Math.round(wydane));
-                            wydane /= 100;
-                            reszta.setText(String.valueOf(wydane));
-                            showToast("Rachunek został zapłacony");
-                            wartosc = 2;
-                            wczytywanie();
-                            readsqlLight();
-                            spinner();
+                try {
+                    kasa = Double.parseDouble(kasa_otrzymana.getText().toString());
+                    if (Suma[w] <= kasa) {
 
-                        }catch (Exception e){}
+                        kasa = Double.parseDouble(kasa_otrzymana.getText().toString());
+                        wydane = Suma[w] - kasa;
+                        wydane = wydane * (-1);
+                        wydane *= 100; // zaokraglanie
+                        wydane = Double.valueOf(Math.round(wydane));
+                        wydane /= 100;
+                        reszta.setText(String.valueOf(wydane));
+                        showToast("Rachunek został zapłacony");
+                        wartosc = 2;
+                        wczytywanie();
+                        readsqlLight();
+                        spinner();
+                    }else{
+                        showToast("Wybierz Klient / Stolik");
                     }
-
-                else {
-                    showToast("Wybierz Klient / Stolik");
-                }}
+                } catch (Exception e) {
+                }
+            }
         });
 
         anuluj.setOnClickListener(new View.OnClickListener() {

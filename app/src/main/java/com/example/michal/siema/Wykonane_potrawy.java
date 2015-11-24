@@ -36,7 +36,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class Wykonane_potrawy extends ActionBarActivity {
@@ -48,6 +50,7 @@ public class Wykonane_potrawy extends ActionBarActivity {
 
     Bundle applesData;
     String s,m,k,W;
+    List<String> listaStringow = new ArrayList<String>();
 
     String[] Data = new String[40];
     String[] Czas = new String[40];
@@ -55,7 +58,7 @@ public class Wykonane_potrawy extends ActionBarActivity {
     String[] Ilosc = new String[40];
     String[] Czas_wykonania = new String[40];
     String[] Kto_wykonal = new String[40];
-    String[] uzytkownik = {"Paweł","Piotr","Agnieszka","Kucharz"};
+    String[] uzytkownik = new String[10];
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
@@ -311,6 +314,73 @@ public class Wykonane_potrawy extends ActionBarActivity {
 
     }
 
+    private void readsqlLigt1()
+    {x=0;
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor c = sampleDB.rawQuery("select * from logowanie", null);
+
+            while (c.moveToNext()) {
+                String  zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    uzytkownik[x] = String.valueOf(c.getString(1));
+                    x++;}
+            }
+            sampleDB.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    public void wczytywanie1() {
+        x=0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql = ("select * from logowanie");
+
+            try {
+                rs=st.executeQuery(sql);
+            } catch (SQLException e1) {
+                //  e1.printStackTrace();
+            }
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                rs = stmt.executeQuery();
+
+                while (rs.next())
+                {
+                    String  zm = rs.getString("Uzytkownik");
+                    if(zm!=null){
+                        uzytkownik[x] = rs.getString("Uzytkownik");
+                        x++;}
+
+                } }catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -328,17 +398,36 @@ public class Wykonane_potrawy extends ActionBarActivity {
         czas_wykonania = (EditText) findViewById(R.id.editText13);
         lista = (ListView) findViewById(R.id.listView4);
 
+        applesData = getIntent().getExtras();
         s = applesData.getString("sala_sprzedazy");
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
 
-        readsqlLight();
-        if(Czas!=null) {
-            wczytywanie();
+        try {
+            readsqlLight();
+            if (Czas[0] == null) {
+                wczytywanie();
+            }
+        }catch (Exception e){}
+
+        try {
+            readsqlLigt1();
+            if (uzytkownik[0] == null) {
+                wczytywanie1();
+            }
+        }catch (Exception e){}
+
+        for(int i=0;i<uzytkownik.length;i=i+0)
+        {
+            if(uzytkownik[i]!=null)
+            {
+                listaStringow.add(uzytkownik[i]);
+            }
+            i++;
         }
 
-       kto_wykonal.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, uzytkownik));
+       kto_wykonal.setAdapter(new MyAdapter1(this, R.layout.custom_spiner, listaStringow));
 
         CustomAdapter7  adapter1 = new CustomAdapter7(this,Data, Czas, Nazwa,Ilosc,Czas_wykonania,Kto_wykonal);
         lista.setAdapter(adapter1);
@@ -469,7 +558,7 @@ public class Wykonane_potrawy extends ActionBarActivity {
 
     public class MyAdapter1 extends ArrayAdapter<String>
     {
-        public MyAdapter1(Context ctx, int txtViewResourceId, String[] objects)
+        public MyAdapter1(Context ctx, int txtViewResourceId, List<String> objects)
         {
             super(ctx, txtViewResourceId, objects);
         }

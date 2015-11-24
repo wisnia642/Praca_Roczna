@@ -269,14 +269,14 @@ public class Logowanie extends ActionBarActivity {
                         for (int i = 0; i < uzytkonkik.length; i = i + 0) {
                             if (login.equals(uzytkonkik[i])) {
                                 if (hash1.equals(haslo[i])) {
-                                    u=uzytkonkik[i];
+                                    u=users.getText().toString();
                                     showToast("Logowanie Udane:)");
                                     Intent c = new Intent(Logowanie.this, Glowne_menu.class);
                                     c.putExtra("sala_sprzedazy", sala_sprzedazy[i]);
                                     c.putExtra("wszystko", wszystko[i]);
                                     c.putExtra("magazyn", magazyn[i]);
                                     c.putExtra("kuchnia", kuchnia[i]);
-                                    c.putExtra("uzytkownik", uzytkonkik[i]);
+                                    c.putExtra("uzytkownik", u);
                                     startActivity(c);
                                     d=1;
                                 }

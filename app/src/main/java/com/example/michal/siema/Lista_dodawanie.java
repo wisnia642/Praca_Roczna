@@ -42,7 +42,7 @@ public class Lista_dodawanie extends ActionBarActivity {
     private static final String pass="kaseta12";
 
     Bundle applesData;
-    String s,m,k,W;
+    String s,m,k,W,jak;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     int i = 0;
@@ -258,6 +258,8 @@ public class Lista_dodawanie extends ActionBarActivity {
                            w.putExtra("warunek", message13);
                            gdzie="true";
                            w.putExtra("gdzie",gdzie);
+                           jak="true";
+                           w.putExtra("jak",jak);
                            startActivity(w);
                        }
                         //usuwanie z menu
@@ -282,6 +284,8 @@ public class Lista_dodawanie extends ActionBarActivity {
                             i.putExtra("kategoria", posilek);
                             gdzie="true";
                             i.putExtra("gdzie",gdzie);
+                            jak="true";
+                            i.putExtra("jak",jak);
                             startActivity(i);
                         }
 
@@ -309,6 +313,8 @@ public class Lista_dodawanie extends ActionBarActivity {
                             i.putExtra("pozycja", pozycja);
                             gdzie="true";
                             i.putExtra("gdzie",gdzie);
+                            jak="true";
+                            i.putExtra("jak",jak);
                             startActivity(i);
                         }
                     }

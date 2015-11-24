@@ -30,16 +30,16 @@ import java.sql.Statement;
 
 public class Koszt_potrawy extends ActionBarActivity {
 
-    Button ok,cancel;
-    EditText narzut,vat,cena_bez,cena_z;
-    ListView dania,skladniki;
+    Button ok, cancel;
+    EditText narzut, vat, cena_bez, cena_z;
+    ListView dania, skladniki;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
-    private static final String user="michal";
-    private static final String pass="kaseta12";
+    private static final String url = "jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String user = "michal";
+    private static final String pass = "kaseta12";
 
     static ResultSet rs;
     static Statement st;
@@ -50,33 +50,34 @@ public class Koszt_potrawy extends ActionBarActivity {
     CustomAdapter5 adapter2;
     customAdapter1 adapter1;
 
-    Double wynik1,wynik2,wynik3,wynik4,cena1,cena2,cena3;
-    Integer procent1,procent2;
+    Double wynik1, wynik2, wynik3, wynik4, cena1, cena2, cena3;
+    Integer procent1, procent2;
 
-    String[] produkty = {"Magazyn","Lodowka","Brak_kategori","Mroznia"};
-    String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza","Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazownane","Napoje_Zimne","Napoje_Gorace","Soki"};
-    String[] ilosc = new String[30];
-    String[] stan1 = new String[30];
-    String[] Nazwa= new String[30];
-    String[] Skladniki = new String[30];
-    String[] Zdjęcie = new String[30];
-    String[] Produkt = new String[30];
-    String[] miarka = new String[30];
-    String[] Nazwa_produktu = new String[30];
-    String[] kategoria = new String[30];
-    String[] cena_detaliczna = new String[30];
-    String[] ilosc_detaliczna =new String[30];
-    String[] wyswietlanie = new String[30];
+    String[] produkty = {"Magazyn", "Lodowka", "Brak_kategori", "Mroznia"};
+    String[] Kategorie = {"Zupy", "Makarony", "Przystawki", "Ryba", "Salatki", "Fast_Food", "Pizza", "Suszi", "Wina", "Piwo", "Desery", "Dodatki", "Napoje_Gazowane", "Napoje_Zimne", "Napoje_Gorace", "Soki"};
+    private static  String[] ilosc = new String[30];
+    private static  String[] stan1 = new String[30];
+    private static  String[] Nazwa = new String[30];
+    private static  String[] Skladniki = new String[30];
+    private static  String[] Zdjęcie = new String[30];
+    private static  String[] Produkt = new String[30];
+    private static  String[] miarka = new String[30];
+    private static  String[] Nazwa_produktu = new String[30];
+    private static  String[] kategoria = new String[30];
+    private static  String[] cena_detaliczna = new String[30];
+    private static   String[] ilosc_detaliczna = new String[30];
+    private static  String[] wyswietlanie = new String[30];
+    private static  String[] zm = new String[20];
+    private static  String[] zm1 = new String[20];
 
     ResultSet resultSet;
     FileOutputStream fos;
 
     Bundle applesData;
-    String s,m,k,W;
+    String s, m, k, W;
 
-    String cena_d,kat;
-    int x,q,y,c,z,w;
-
+    String cena_d, kat;
+    int x, q, y, c, z,p,n;
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
                 message,
@@ -84,12 +85,14 @@ public class Koszt_potrawy extends ActionBarActivity {
 
     }
 
-    private void readsqlLigtData()
-    {
-        for (int i=0;i<16;i=i+0) {
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            try {
-                Cursor c = sampleDB.rawQuery("SELECT * FROM "+Kategorie[i]+"", null);
+    private void readsqlLigtData() {
+        x = 0;
+        y = 0;
+
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+        try {
+            for (int i = 0; i < 16; i = i + 0) {
+                Cursor c = sampleDB.rawQuery("SELECT * FROM '" + Kategorie[i] + "'", null);
 
                 while (c.moveToNext()) {
                     String zm = String.valueOf(c.getString(0));
@@ -100,35 +103,36 @@ public class Koszt_potrawy extends ActionBarActivity {
                         x++;
                     }
                 }
-                sampleDB.close();
-            } catch (Exception e) {
-                showToast("Błąd");
-            }
-            i++;
-        }
-       // Lodowka.Nazwa , Lodowka.Kategoria , Lodowka.Cena_detaliczna ,Lodowka.ilosc_detaliczna , Magazyn.Nazwa , Magazyn.Kategoria , Magazyn.Cena_detaliczna Magazyn.ilosc_detaliczna FROM Lodowka INNER JOIN Magazyn ON Lodowka.commonfield=Magazyn.commonfield
-
-        for (int i=0;i<4;i=i+0) {
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-        try {
-            Cursor c = sampleDB.rawQuery("SELECT * FROM "+produkty[i]+"", null);
-
-            while (c.moveToNext()) {
-                String zm = String.valueOf(c.getString(0));
-                if (zm != null) {
-                    Nazwa_produktu[y] = String.valueOf(c.getString(0));
-                    kategoria[y] = String.valueOf(c.getString(2));
-                    cena_detaliczna[y] = String.valueOf(c.getString(6));
-                    ilosc_detaliczna[y] = String.valueOf(c.getString(7));
-                    y++;
-                }
+                i++;
             }
             sampleDB.close();
         } catch (Exception e) {
-            showToast("Błąd");
+            showToast(""+e);
         }
-        i++;
-    }
+
+
+        SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try {
+            for (int i = 0; i < 4; i = i + 0) {
+                Cursor d = sampleDB1.rawQuery("SELECT * FROM '" + produkty[i] + "'", null);
+
+                while (d.moveToNext()) {
+                    String zm = String.valueOf(d.getString(0));
+                    if (zm != null) {
+                        Nazwa_produktu[y] = String.valueOf(d.getString(0));
+                        kategoria[y] = String.valueOf(d.getString(2));
+                        cena_detaliczna[y] = String.valueOf(d.getString(6));
+                        ilosc_detaliczna[y] = String.valueOf(d.getString(7));
+                        y++;
+                    }
+                }
+                i++;
+            }
+            sampleDB.close();
+            sampleDB1.close();
+        } catch (Exception e) {showToast("Błąd1");}
+
     }
 
     //tworzenie polaczenia z baza danych
@@ -163,16 +167,9 @@ public class Koszt_potrawy extends ActionBarActivity {
             try {
                 st = connection.createStatement();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+               // e1.printStackTrace();
             }
-/*
-            String sql = "SELECT Zupy.Nazwa,Zupy.Skladniki,Zupy.Zdjecie,Makarony.Nazwa,Makarony.Skladniki,Makarony.Zdjecie,Przystawki.Nazwa,Przystwaki.Skladniki,Przystawki.Zdjecie,"+
-                    "Ryba.Nazwa,Ryba.Skladniki,Ryba.Zdjecie,Fast_Food.Nazwa,Fast_Food.Skladniki,Fast_Food.Zdjecie,Pizza.Nazwa,Pizza.Skladniki,Pizza.Zdjecie," +
-                    "Suszi.Nazwa,Suszi.Skladniki,Suszi.Zdjecie,Wina.Nazwa,Wina.Skladniki,Wina.Zdjecie,Piwo.Nazwa,Piwo.Skladniki,Piwo.Zdjecie,Desery.Nazwa,Desery.Skladniki,Desery.Zdjecie," +
-                    "Dodatki.Nazwa,Dodatki.Skladniki,Dodatki.Zdjecie,Napoje_Gazownane.Nazwa,Napoje_Gazownane.Skladniki,Napoje_Gazownane.Zdjecie,Napoje_Zimne.Nazwa,Napoje_Zimne.Skladniki,Napoje_Zimne.Zdjecie," +
-                    "Napoje_Gorace.Nazwa,Napoje_Gorace.Skladniki,Napoje_Gorace.Zdjecie,Soki.Nazwa,Soki.Skladniki,Soki.Zdjecie FROM Zupy inner join Makarony inner join Przystawki inner join Ryba inner join Fast_Food inner join " +
-                    "Pizza inner join Suszi inner join Wina inner join Piwo inner join Desery inner join Dodatki inner join Napoje_Gazownane inner join Napoje_Zimne inner join Napoje_Gorace inner join Soki";
-*/
+
             for (int i = 0; i < 16; i = i + 0) {
                 String sql = "SELECT * FROM " + Kategorie[i] + "";
 
@@ -188,81 +185,78 @@ public class Koszt_potrawy extends ActionBarActivity {
                     while (rs.next()) {
                         String zm = rs.getString("Nazwa");
                         if (zm != null) {
-                        Nazwa[x] = rs.getString("Nazwa");
-                        Skladniki[x] = rs.getString("Skladniki");
-                        File image = new File("/mnt/sdcard/" + Nazwa[x] + ".jpg");
-                        Zdjęcie[x] = "/mnt/sdcard/" + Nazwa[x] + ".jpg";
-                        try {
-                            fos = new FileOutputStream(image);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        byte[] buffer = new byte[1];
-                        InputStream is = rs.getBinaryStream("Zdjecie");
-                        try {
-                            while (is.read(buffer) > 0) {
-                                try {
-                                    fos.write(buffer);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            Nazwa[x] = rs.getString("Nazwa");
+                            Skladniki[x] = rs.getString("Skladniki");
+                            File image = new File("/mnt/sdcard/" + Nazwa[x] + ".jpg");
+                            Zdjęcie[x] = "/mnt/sdcard/" + Nazwa[x] + ".jpg";
                             try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                fos = new FileOutputStream(image);
+                            } catch (FileNotFoundException e) {
+                               // e.printStackTrace();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            byte[] buffer = new byte[1];
+                            InputStream is = rs.getBinaryStream("Zdjecie");
+                            try {
+                                while (is.read(buffer) > 0) {
+                                    try {
+                                        fos.write(buffer);
+                                    } catch (IOException e) {
+                                       // e.printStackTrace();
+                                    }
+                                }
+                                try {
+                                    fos.close();
+                                } catch (IOException e) {
+                                   // e.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                               // e.printStackTrace();
+                            }
+
+                            x++;
+
                         }
-
-                        x++;
-
-                    }}
+                    }
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }i++;
-            }
-        }
-
-        for (int i=0;i<4;i=i+0) {
-            String sql = "SELECT * FROM " + produkty[i] + "";
-
-            try {
-                rs = st.executeQuery(sql);
-            } catch (SQLException e1) {
-                //  e1.printStackTrace();
-            }
-            try {
-                PreparedStatement stmt = connection.prepareStatement(sql);
-                rs = stmt.executeQuery();
-
-                while (rs.next()) {
-                    Nazwa_produktu[y] = rs.getString("Nazwa");
-                    kategoria[y] = rs.getString("Kategoria");
-                    cena_detaliczna[y] = rs.getString("Cena_detaliczna");
-                    ilosc_detaliczna[y] = rs.getString("Ilosc_detaliczna");
-                    y++;
-
-                }
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-
-
-                try {
-                    if (connection != null)
-                        connection.close();
-                } catch (SQLException se) {
-                    showToast("brak połączenia z internetem");
+                  //  e1.printStackTrace();
                 }
                 i++;
             }
-        }}
 
-    public void lista()
-    {
-         adapter2 = new CustomAdapter5(this, wyswietlanie);
-         skladniki.setAdapter(adapter2);
+
+            for (int i = 0; i < 4; i = i + 0) {
+                String sql = "SELECT * FROM " + produkty[i] + "";
+
+                try {
+                    rs = st.executeQuery(sql);
+                } catch (SQLException e1) {
+                    //  e1.printStackTrace();
+                }
+                try {
+                    PreparedStatement stmt = connection.prepareStatement(sql);
+                    rs = stmt.executeQuery();
+
+                    while (rs.next()) {
+                        Nazwa_produktu[y] = rs.getString("Nazwa");
+                        kategoria[y] = rs.getString("Kategoria");
+                        cena_detaliczna[y] = rs.getString("Cena_detaliczna");
+                        ilosc_detaliczna[y] = rs.getString("Ilosc_detaliczna");
+                        y++;
+
+                    }
+                } catch (SQLException e1) {
+                }
+                i++;
+            }
+
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+
+        }
     }
 
     @Override
@@ -345,46 +339,62 @@ public class Koszt_potrawy extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
+                    //czyszczenie listy
                     for (int b = 0; b < c; b = b + 0) {
                         wyswietlanie[b] = "";
                         b++;
                     }
+                  //  wyswietlanie[0]="Nazwa produktu/Ilość/Kategoria/Cena";
                     c = 0;
                     wynik1 = 0.0;
                     wynik2 = 0.0;
 
                     for (int j = 0; j < x; j = j + 0) {
                         if (Nazwa[i] == Nazwa[j]) {
-                            Produkt = (Skladniki[j].split("[-,0-99999+]+"));
-                            ;
-                            String filtered = Skladniki[j].replaceAll("[^0-9,]", "");
+                            Produkt = (Skladniki[i].split("[-,0-99999+]+"));
+                            String filtered = Skladniki[i].replaceAll("[^0-9,]", "");
                             miarka = filtered.split(",");
-
-                            for (int a = 0; a < Produkt.length; a = a + 0) {
-                                if (Produkt[a] != null) {
-                                    for (w = 0; w < Nazwa_produktu.length; w = w + 0) {
-
-                                        if (Nazwa_produktu[w].equals(Produkt[a])) {
-
-                                            cena_d = cena_detaliczna[w];
-                                            kat = kategoria[w];
-                                            cena1 = Double.valueOf(cena_detaliczna[w]);
-                                            cena3 = Double.valueOf(miarka[a]);
-                                            wynik1 = cena1 * cena3;
-                                        }
-                                        w++;
-                                    }
-                                    wyswietlanie[c] = Produkt[a] + " " + miarka[a] + " " + kat + " " + cena_d;
-                                    c++;
-                                    wynik2 = wynik1 + wynik2;
-                                }
-                                a++;
-                            }
                         }
-                        j++;
+                            j++;
+                        }
+                    p=0;
+                    n=0;
+                   for(int w=0;w<Produkt.length;w++)
+                   {
+                       if(Produkt[w]!=null){
+                       zm[p]=Produkt[w];
+                           p++;
+                       }
+                   }
+
+                    for(int w=0;w<Nazwa_produktu.length;w++)
+                    {
+                        if(Nazwa_produktu[w]!=null){
+                            zm1[n]=Nazwa_produktu[w];
+                            n++;
+                        }
                     }
-                    lista();
-                } catch (Exception e) {
+
+                    for(int a=0;a<p;a++) {
+                        for(int w=0;w<n;w++) {
+                             if (zm1[w].equals(zm[a])) {
+                                 cena_d = cena_detaliczna[w];
+                                 kat = kategoria[w];
+                                 cena1 = Double.valueOf(cena_detaliczna[w]);
+                                 cena3 = Double.valueOf(miarka[a]);
+                                 wynik1 = cena1 * cena3;
+                                 wyswietlanie[c] = zm[a] + " " + miarka[a] + " " + kat + " " + cena_d;
+                                 c++;
+                                 wynik2 = wynik1 + wynik2;
+                                 adapter2 = new CustomAdapter5(Koszt_potrawy.this, wyswietlanie);
+                                 skladniki.setAdapter(adapter2);
+                             }
+
+                        }
+
+                    }
+
+                } catch (Exception e) {showToast(""+e);
                 }
             }
         });
