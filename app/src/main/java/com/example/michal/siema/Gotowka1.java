@@ -47,7 +47,7 @@ public class Gotowka1 extends ActionBarActivity {
     String[] Klient = new String[20];
     String[] klient = new String[20];
     Double[] Suma = new Double[20];
-    String zm,currentDateandTime;
+    String zm,data,data1;
     int wartosc = 0;
     double kasa, wydane;
 
@@ -97,7 +97,7 @@ public class Gotowka1 extends ActionBarActivity {
     private void ToDataBase() {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Historia (Data VARCHAR,Klient VARCHAR,Suma VARCHAR,Kto_obsluzyl VARCHAR);");
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Historia (Data VARCHAR,Czas VARCHAR,Klient VARCHAR,Suma VARCHAR,Kto_wykonal VARCHAR);");
 
         } catch (Exception e) {
         }
@@ -136,7 +136,7 @@ public class Gotowka1 extends ActionBarActivity {
                 }
             }
             if (wartosc == 2) {
-            String sql1 = "INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')";
+            String sql1 = "INSERT INTO Historia (Data,Czas,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')";
             try {
                 st.executeUpdate(sql1);
 
@@ -184,7 +184,7 @@ public class Gotowka1 extends ActionBarActivity {
                 ToDataBase();
                 try {
                 SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-                 sampleDB1.execSQL("INSERT INTO Historia (Data,Klient,Suma,Kto_obsluzyl) VALUES ('" + currentDateandTime + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')");
+                 sampleDB1.execSQL("INSERT INTO Historia (Data,Casz,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')");
                 sampleDB1.close();
             } catch (Exception e){
         }
@@ -215,8 +215,10 @@ public class Gotowka1 extends ActionBarActivity {
 
         wartosc=1;
         readsqlLight();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
-         currentDateandTime = sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        data = sdf.format(new Date());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("kk:mm:ss");
+        data1 = sdf1.format(new Date());
 
         for (int i = 0; i < x; i = i + 0) {
             for (int j = 0; j < x; j = j + 0) {

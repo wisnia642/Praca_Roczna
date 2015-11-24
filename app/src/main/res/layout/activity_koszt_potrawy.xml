@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Produkty"
+        android:text="Nazwa produktu, Ilość, Kategoria, Cena"
         android:id="@+id/textView113"
         android:textSize="25dp"
         android:layout_alignTop="@+id/textView112"

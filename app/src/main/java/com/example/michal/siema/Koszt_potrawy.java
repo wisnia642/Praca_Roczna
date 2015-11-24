@@ -99,7 +99,7 @@ public class Koszt_potrawy extends ActionBarActivity {
                     if (zm != null) {
                         Nazwa[x] = String.valueOf(c.getString(0));
                         Skladniki[x] = String.valueOf(c.getString(1));
-                        Zdjęcie[x] = String.valueOf(c.getString(2));
+                        Zdjęcie[x] = String.valueOf(c.getString(4));
                         x++;
                     }
                 }
@@ -383,7 +383,7 @@ public class Koszt_potrawy extends ActionBarActivity {
                                  cena1 = Double.valueOf(cena_detaliczna[w]);
                                  cena3 = Double.valueOf(miarka[a]);
                                  wynik1 = cena1 * cena3;
-                                 wyswietlanie[c] = zm[a] + " " + miarka[a] + " " + kat + " " + cena_d;
+                                 wyswietlanie[c] = zm[a] + ", " + miarka[a] + ", " + kat + ", " + cena_d;
                                  c++;
                                  wynik2 = wynik1 + wynik2;
                                  adapter2 = new CustomAdapter5(Koszt_potrawy.this, wyswietlanie);

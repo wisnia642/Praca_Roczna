@@ -60,7 +60,7 @@ public class Przychod extends ActionBarActivity {
     String s,m,k,w;
 
     String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza",
-            "Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazownane","Napoje_Zimne","Napoje_Gorace","Soki"};
+            "Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazowane","Napoje_Zimne","Napoje_Gorace","Soki"};
 
 
     Calendar myCalendar;
@@ -68,7 +68,8 @@ public class Przychod extends ActionBarActivity {
     DatePickerDialog.OnDateSetListener date;
 
     String data,dat2,data11,data22,koszty2,procenty2;
-    int x=0,y=0,z=0,Ilosc1=0,Ilosc2=0,cena1=0,cena2=0,cena3=0;
+    int x=0,y=0,z=0;
+    Double Ilosc1=0.0,Ilosc2=0.0,cena1=0.0,cena2=0.0,cena3=0.0;
     Double koszty1=0.0;
     Double procenty1=0.0;
     Double cena4=0.0,wynik;
@@ -123,6 +124,7 @@ public class Przychod extends ActionBarActivity {
 
     private void readsqlLigt()
     {
+        x=0;
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
         try
@@ -146,7 +148,7 @@ public class Przychod extends ActionBarActivity {
     }
 
     public void wczytywanie2() {
-
+        x=0;
         connect();
         if (connection != null) {
 
@@ -192,7 +194,7 @@ public class Przychod extends ActionBarActivity {
 
     //wczytywanie danych z tablicy do bazy danych
     public void wczytywanie() {
-
+z=0;
         connect();
         if (connection != null) {
 
@@ -238,22 +240,23 @@ public class Przychod extends ActionBarActivity {
             }
 
     private void readsqlLigtData() {
+        z=0;
         for (int i = 0; i < 16; i = i + 0) {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             try {
-                Cursor c = sampleDB.rawQuery("SELECT * FROM " + Kategorie[i] + "", null);
+                Cursor c = sampleDB.rawQuery("SELECT * FROM '" + Kategorie[i] + "'", null);
 
                 while (c.moveToNext()) {
                     String zm = String.valueOf(c.getString(0));
                     if (zm != null) {
                         Nazwa[z] = String.valueOf(c.getString(0));
-                        Cena[z] = String.valueOf(c.getString(4));
+                        Cena[z] = String.valueOf(c.getString(5));
                         z++;
                     }
                 }
                 sampleDB.close();
             } catch (Exception e) {
-                showToast("dupa");
+                showToast(""+e);
             }
             i++;
         }
@@ -329,9 +332,9 @@ public class Przychod extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    cena1 = 0;
-                    cena2 = 0;
-                    Ilosc1 = 0;
+                    cena1 = 0.0;
+                    cena2 = 0.0;
+                    Ilosc1 = 0.0;
                     przychody.setText("");
                     wykonywane.setText("");
                     data11 = data1.getText().toString();
@@ -345,21 +348,21 @@ public class Przychod extends ActionBarActivity {
                         Ilosc2 = Ilosc1 + Integer.parseInt(Ilosc[i]);
                         Ilosc1 = Ilosc2;
 
-                        for (int j = 0; j < z; j = j + 0) {
+                        for (int j = 0; j < x; j = j + 0) {
                             if (Nazwa1[i].equals(Nazwa[j])) {
-                                cena3 = Integer.parseInt(Cena[j]) * Integer.parseInt(Ilosc[i]);
+                                cena3 = Double.parseDouble(Cena[j]) * Integer.parseInt(Ilosc[i]);
                                 cena1 = cena2 + cena3;
-                                cena2 = cena3;
+                                cena2 = cena1;
                             }
                             j++;
                         }
                         i++;
                     }
 
-                    przychody.setText(String.valueOf(cena1));
+                    przychody.setText(String.valueOf(cena2));
                     wykonywane.setText(String.valueOf(Ilosc2));
 
-                }catch (Exception e ){}
+                }catch (Exception e ){showToast(""+e);}
             }
         });
 

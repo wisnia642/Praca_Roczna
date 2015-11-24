@@ -56,15 +56,12 @@ public class Magzyn extends ActionBarActivity {
     String[] Czas = new String[40];
     String[] Nazwa = new String[40];
     String[] Ilosc = new String[40];
-    String[] Czas_wykonania = new String[40];
     String[] Kto_wykonal = new String[40];
     String[] Data1 = new String[40];
     String[] czas1 = new String[40];
     String[] nazwa1 = new String[40];
     String[] ilosc1 = new String[40];
-    String[] czas_wykonania1 = new String[40];
     String[] kto_wykonal1 = new String[40];
-
     String[] uzytkonkik = new String[15];
     String[] haslo = new String[15];
     String[] kuchnia = new String[15];
@@ -95,6 +92,16 @@ public class Magzyn extends ActionBarActivity {
                 Toast.LENGTH_LONG).show();
     }
 
+    private void ToDataBase() {
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS Historia (Data VARCHAR,Czas VARCHAR,Klient VARCHAR,Suma VARCHAR,Kto_wykonal VARCHAR);");
+
+        } catch (Exception e) {
+        }
+
+    }
+
     private void updateLabel() {
 
         String myFormat = "dd/MM/yyyy"; //In which you need put here
@@ -113,11 +120,13 @@ public class Magzyn extends ActionBarActivity {
 
     private void readsqlLigtData()
     {
+        ToDataBase();
+        x=0;
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
         try
         {
-            Cursor c = sampleDB.rawQuery("select  Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal from Wykonane where Data BETWEEN '" + data11 + "' AND '" + data22 + "'", null);
+            Cursor c = sampleDB.rawQuery("select Data,Czas,Klient,Suma,Kto_wykonal from Historia where Data BETWEEN '" + data11 + "' AND '" + data22 + "'", null);
 
             while (c.moveToNext()) {
                 String  zm = String.valueOf(c.getString(2));
@@ -126,8 +135,7 @@ public class Magzyn extends ActionBarActivity {
                     czas1[x] = String.valueOf(c.getString(1));
                     nazwa1[x] = String.valueOf(c.getString(2));
                     ilosc1[x] = String.valueOf(c.getString(3));
-                    czas_wykonania1[x] = String.valueOf(c.getString(4));
-                    kto_wykonal1[x] = String.valueOf(c.getString(5));
+                    kto_wykonal1[x] = String.valueOf(c.getString(4));
                     x++;}
             }
             sampleDB.close();
@@ -136,7 +144,7 @@ public class Magzyn extends ActionBarActivity {
         {
 
         }
-        CustomAdapter7 adapter1 = new CustomAdapter7(this,Data1,czas1,nazwa1,ilosc1,czas_wykonania1,kto_wykonal1);
+        CustomAdapter9 adapter1 = new CustomAdapter9(this,Data1,czas1,nazwa1,ilosc1,kto_wykonal1);
         lista.setAdapter(adapter1);
 
     }
@@ -166,7 +174,7 @@ public class Magzyn extends ActionBarActivity {
 
     //wczytywanie danych z tablicy do bazy danych
     public void wczytywanie() {
-
+x=0;
         connect();
         if (connection != null) {
 
@@ -176,7 +184,7 @@ public class Magzyn extends ActionBarActivity {
                 e1.printStackTrace();
             }
 
-            String sql = "SELECT * FROM Wykonane";
+            String sql = "SELECT * FROM Historia";
 
             try {
                 rs=st.executeQuery(sql);
@@ -193,9 +201,8 @@ public class Magzyn extends ActionBarActivity {
                     if (zm != null) {
                         Data[x] = rs.getString("Data");
                         Czas[x] = rs.getString("Czas");
-                        Nazwa[x] = rs.getString("Nazwa");
-                        Ilosc[x] = rs.getString("Ilosc");
-                        Czas_wykonania[x] = rs.getString("Czas_wykonania");
+                        Nazwa[x] = rs.getString("Klient");
+                        Ilosc[x] = rs.getString("Suma");
                         Kto_wykonal[x] = rs.getString("Kto_wykonal");
                         x++;
                     }
@@ -215,7 +222,7 @@ public class Magzyn extends ActionBarActivity {
 
     //wczytywanie danych z tablicy do bazy danych
     public void wczytywanie2() {
-
+        x=0;
         connect();
         if (connection != null) {
 
@@ -225,7 +232,7 @@ public class Magzyn extends ActionBarActivity {
                 e1.printStackTrace();
             }
 
-            String sql = ("select  Data,Czas,Nazwa,Ilosc,Czas_wykonania,Kto_wykonal from Wykonane where Data BETWEEN '" + data11 + "' AND '" + data22 + "'");
+            String sql = ("select Data,Czas,Klient,Suma,Kto_wykonal from Historia where Data BETWEEN '" + data11 + "' AND '" + data22 + "'");
 
             try {
                 rs=st.executeQuery(sql);
@@ -242,9 +249,8 @@ public class Magzyn extends ActionBarActivity {
                     if(zm!=null){
                     Data1[x] = rs.getString("Data");
                     czas1[x] = rs.getString("Czas");
-                    nazwa1[x] = rs.getString("Nazwa");
-                    ilosc1[x] = rs.getString("Ilosc");
-                    czas_wykonania1[x] = rs.getString("Czas_wykonania");
+                    nazwa1[x] = rs.getString("Klient");
+                    ilosc1[x] = rs.getString("Suma");
                     kto_wykonal1[x] = rs.getString("Kto_wykonal");
                     x++;}
 
@@ -260,17 +266,18 @@ public class Magzyn extends ActionBarActivity {
                 showToast("brak polaczenia z internetem");}
 
         }
-        CustomAdapter7 adapter1 = new CustomAdapter7(this,Data1,czas1,nazwa1,ilosc1,czas_wykonania1,kto_wykonal1);
+        CustomAdapter9 adapter1 = new CustomAdapter9(this,Data1,czas1,nazwa1,ilosc1,kto_wykonal1);
         lista.setAdapter(adapter1);
 
     }
 
     private void readsqlLight() {
-
+        x=0;
+        ToDataBase();
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
         try {
-            Cursor c  = sampleDB.rawQuery("SELECT * FROM Wykonane",null);
+            Cursor c  = sampleDB.rawQuery("SELECT * FROM Historia",null);
 
             while (c.moveToNext()) {
               String  zm = String.valueOf(c.getString(0));
@@ -279,8 +286,7 @@ public class Magzyn extends ActionBarActivity {
                     Czas[x] = String.valueOf(c.getString(1));
                     Nazwa[x] = String.valueOf(c.getString(2));
                     Ilosc[x] = String.valueOf(c.getString(3));
-                    Czas_wykonania[x] = String.valueOf(c.getString(4));
-                    Kto_wykonal[x] = String.valueOf(c.getString(5));
+                    Kto_wykonal[x] = String.valueOf(c.getString(4));
                     x++;}
             }
             sampleDB.close();
@@ -419,7 +425,7 @@ public class Magzyn extends ActionBarActivity {
             wartosc = true;
         }
 
-        final CustomAdapter7  adapter1 = new CustomAdapter7(this,Data, Czas, Nazwa,Ilosc,Czas_wykonania,Kto_wykonal);
+        final CustomAdapter9  adapter1 = new CustomAdapter9(this,Data, Czas, Nazwa,Ilosc,Kto_wykonal);
        lista.setAdapter(adapter1);
 
         przerwa.setOnClickListener(new View.OnClickListener() {
@@ -507,7 +513,6 @@ public class Magzyn extends ActionBarActivity {
                     czas1[i]=null;
                     nazwa1[i]=null;
                     ilosc1[i]=null;
-                    czas_wykonania1[i]=null;
                     kto_wykonal1[i]=null;
                     i++;
                 }
