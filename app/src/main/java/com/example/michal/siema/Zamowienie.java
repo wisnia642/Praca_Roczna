@@ -26,10 +26,13 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -59,6 +62,7 @@ public class Zamowienie extends ActionBarActivity  {
     List<String> listaStringow = new ArrayList<String>();
 
     Statement st;
+    static ResultSet rs;
     PreparedStatement ps;
     FileInputStream fis = null;
 
@@ -164,12 +168,12 @@ public class Zamowienie extends ActionBarActivity  {
     }
 
     private void readFromDataBase()
-    {
+    {x=0;
         try{
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
                 x=0;
-                Cursor c=sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
+                Cursor c=sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE", null);
                   while (c.moveToNext())
                 {
                     if(tab[x]!="") {
@@ -182,6 +186,45 @@ public class Zamowienie extends ActionBarActivity  {
             sampleDB.close();
 
         }catch (Exception a){}
+    }
+
+    public void wczytywanie() {
+        x=0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql = "SELECT * FROM Zamowienie";
+
+            try {
+                rs=st.executeQuery(sql);
+            } catch (SQLException e1) {
+            }
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                rs = stmt.executeQuery();
+
+                while (rs.next())
+                {
+                    tab[x]= rs.getString("Klient");
+
+                    x++;
+
+                } }catch (SQLException e1)
+            {
+            }
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
     }
 
     public void ZapisSqlLight()
@@ -204,7 +247,6 @@ public class Zamowienie extends ActionBarActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zamowienie);
 
-        TextView Klient =(TextView) findViewById(R.id.textView27);
         final EditText Ilosc =(EditText) findViewById(R.id.editText3);
         final EditText Dodatki =(EditText) findViewById(R.id.editText2);
         final EditText Dodatkowe_Zyczenia = (EditText) findViewById(R.id.editText);
@@ -227,7 +269,12 @@ public class Zamowienie extends ActionBarActivity  {
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
 
-        try{readFromDataBase();}catch (Exception e){showToast("blad :(");}
+        readFromDataBase();
+        if(tab[0]==null)
+        {
+            wczytywanie();
+        }
+
 
         for (int i=0; i < x; i = i+ 0) {
             for (int j = 0; j < x; j = j+ 0) {
@@ -243,7 +290,7 @@ public class Zamowienie extends ActionBarActivity  {
             if (w == 1) {
                 tab[c]=tab[i];
                 listaStringow.add(tab[i]);
-                //showToast(String.valueOf(tab[i]));
+              //  showToast(String.valueOf(tab[i]));
                 c=c+1;
             }
             w = 0;
@@ -327,17 +374,16 @@ public class Zamowienie extends ActionBarActivity  {
                         catch(Exception e)
                         {}
 
-
-                            sala = String.valueOf(i);
-
                             if (klikniete==true & t>=3)
                             {
-                                showToast("tak");
                                 sala = (tab[w]);
+
                             }
-
-
-
+                            if(sala==null)
+                            {
+                                sala = String.valueOf(i);
+                            }
+                               // showToast(sala);
 
                         ZapisSqlLight();
                         ZapisMySql();

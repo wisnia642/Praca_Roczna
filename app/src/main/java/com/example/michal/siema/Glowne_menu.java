@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class Glowne_menu extends ActionBarActivity {
 
-    Button kuchnia,magazyn,sala_sprzedaz,wyloguj,faktura,konto;
+    Button kuchnia,magazyn,sala_sprzedaz,wyloguj,konto;
     Bundle applesData;
     String Magazyn,Kuchnia,Sala_sprzedazy,Wszystko,uzytkownik;
 
@@ -31,7 +31,6 @@ public class Glowne_menu extends ActionBarActivity {
 
         kuchnia = (Button) findViewById(R.id.button56);
         magazyn = (Button) findViewById(R.id.button57);
-        faktura = (Button) findViewById(R.id.button58);
         sala_sprzedaz = (Button) findViewById(R.id.button55);
         wyloguj = (Button) findViewById(R.id.button78);
         konto = (Button) findViewById(R.id.button77);
@@ -97,36 +96,18 @@ public class Glowne_menu extends ActionBarActivity {
             }
         });
 
-        faktura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Wszystko.equals("1")) {
-                    Intent a = new Intent(Glowne_menu.this, Dane_do_faktury.class);
-                    a.putExtra("sala_sprzedazy", Sala_sprzedazy);
-                    a.putExtra("wszystko", Wszystko);
-                    a.putExtra("magazyn", Magazyn);
-                    a.putExtra("kuchnia", Kuchnia);
-                    a.putExtra("faktura", "false");
-                    startActivity(a);
-                } else
-
-                {
-                    showToast("Brak uprawnień");
-                }
-            }
-
-        });
 
         konto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                   if(Wszystko.equals("1")){
-                Intent a = new Intent(Glowne_menu.this, Nowe_konto.class);
-                a.putExtra("sala_sprzedazy", Sala_sprzedazy);
-                a.putExtra("wszystko", Wszystko);
-                a.putExtra("magazyn", Magazyn);
-                a.putExtra("kuchnia", Kuchnia);
-                startActivity(a);}
+                Intent a = new Intent(Glowne_menu.this, Ustawienia.class);
+                      a.putExtra("sala_sprzedazy", Sala_sprzedazy);
+                      a.putExtra("wszystko", Wszystko);
+                      a.putExtra("magazyn", Magazyn);
+                      a.putExtra("kuchnia", Kuchnia);
+                startActivity(a);
+                  }
               else
               {
                  showToast("Brak uprawnień");

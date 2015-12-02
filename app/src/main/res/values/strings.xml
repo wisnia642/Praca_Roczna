@@ -40,5 +40,6 @@
     <string name="title_activity_glowne_men">Glowne_men</string>
     <string name="title_activity_gmenu">GMenu</string>
     <string name="title_activity_dane_do_faktury">Dane_do_faktury</string>
+    <string name="title_activity_ustawienia">Ustawienia</string>
 
 </resources>

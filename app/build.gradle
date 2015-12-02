@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileOptions.encoding = 'UTF-8' // write your encoding here
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "21.0.1"
     defaultConfig {
         applicationId "com.example.michal.siema"
         minSdkVersion 16

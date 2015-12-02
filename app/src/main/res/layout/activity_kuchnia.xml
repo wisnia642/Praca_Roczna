@@ -54,7 +54,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/listView"
         android:layout_alignStart="@+id/listView"
-        android:background="@drawable/exit"
+        android:background="@drawable/powrot"
         android:layout_marginLeft="20dp" />
 
     <Button

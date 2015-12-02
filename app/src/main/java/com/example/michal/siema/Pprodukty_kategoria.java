@@ -162,7 +162,6 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     String zm = String.valueOf(e.getString(0));
                     if(zm!=null){
                         Brak_kategorii[D] = String.valueOf(e.getString(0));
-                        showToast(Brak_kategorii[D]);
                         Brak_kategorii_ilosc[D] = String.valueOf(e.getString(1));
                         Brak_kategorii_kategoria[D] = String.valueOf(e.getString(2));
                         Brak_kategorii_stankrytyczny[D] = String.valueOf(e.getString(3));

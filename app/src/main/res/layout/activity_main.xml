@@ -183,7 +183,7 @@
             android:layout_height="80dp"
             android:id="@+id/button11"
             android:layout_marginRight="25dp"
-            android:background="@drawable/exit" />
+            android:background="@drawable/powrot" />
 
         <Button
             android:layout_width="90dp"

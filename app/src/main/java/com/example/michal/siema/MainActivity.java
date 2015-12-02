@@ -45,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
     int stan = 0;
     String[] zdjecie = new String[17];
     String[] Klient = new String[20];
+    String[] Nazwa = new String[20];
+    String[] Cena = new String[20];
     String[] klient = new String[20];
     String[] danie = new String[20];
     String[] ilosc = new String[20];
@@ -55,6 +57,7 @@ public class MainActivity extends ActionBarActivity {
     String[] Stan = new String[20];
     String[] stan1 = new String[20];
     Double[] Suma = new Double[20];
+    Double[] suma = new Double[20];
 
     String[] uzytkonkik = new String[15];
     String[] haslo = new String[15];
@@ -67,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
     Double zm1;
     Double zm2;
     int Numer,Numer1,wartosc;
-    int x,w,c,a,q,z,spr,has;
+    int x,w,c,a,q,z,spr,has,p;
     FileOutputStream fos;
 
     Bundle applesData;
@@ -101,6 +104,9 @@ public class MainActivity extends ActionBarActivity {
     Button sala1,sala2,sala3,sala4,sala5;
     Button dodaj,odejmnij,usun;
 
+    String[] Kategorie = {"Zupy","Makarony","Przystawki","Ryba","Salatki","Fast_Food","Pizza",
+            "Suszi","Wina","Piwo","Desery","Dodatki","Napoje_Gazowane","Napoje_Zimne","Napoje_Gorace","Soki"};
+
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -125,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
             try {
                 SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
                 if(wartosc==1) {
-                    sampleDB.execSQL("UPDATE Zamowienie SET Ilosc=('" + ilosc[Numer1] + "') WHERE Danie=('" + danie[Numer1] + "') AND Klient=('" + klient[Numer] + "') ");
+                    sampleDB.execSQL("UPDATE Zamowienie SET Ilosc=('" + ilosc[Numer1] + "'),Suma=('"+Suma[Numer1]+"') WHERE Danie=('" + danie[Numer1] + "') AND Klient=('" + klient[Numer] + "') ");
                 }
                 if(wartosc==2) {
                     sampleDB.execSQL("DELETE FROM Zamowienie WHERE Danie=('" + danie[Numer1] + "') AND Klient=('" + klient[Numer] + "')");
@@ -156,7 +162,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if(wartosc==1){
-            String sql = "UPDATE Zamowienie SET Ilosc=('" + ilosc[Numer1] + "') WHERE Danie=('" + danie[Numer1] + "') AND Klient=('" + klient[Numer] + "') ";
+            String sql = "UPDATE Zamowienie SET Ilosc=('" + ilosc[Numer1] + "'),Suma=('"+Suma[Numer1]+"') WHERE Danie=('" + danie[Numer1] + "') AND Klient=('" + klient[Numer] + "') ";
 
             try {
                 st.executeUpdate(sql);
@@ -258,20 +264,18 @@ public class MainActivity extends ActionBarActivity {
             ilosc[i]=null;
             zdj[i]=null;
             stan1[i]=null;
+            suma[i]=null;
             i++;
         }
        // a=q;
         q=0;
-        zm1=0.0;
-        zm2=0.0;
         for(int i = 0; i < x; i=i+0){
             if(klient[Numer].equals(Klient[i])){
                 danie[q]=Danie[i];
                 ilosc[q]=Ilosc[i];
                 zdj[q]=Zdjecie[i];
                 stan1[q]=Stan[i];
-                zm1=zm2+Suma[i];
-                zm2=zm1;
+                suma[q]=Suma[i];
                 q=q+1;
             }
             i++;
@@ -280,7 +284,7 @@ public class MainActivity extends ActionBarActivity {
         adapter1=new customAdapter1(this, danie,ilosc,zdj,q,stan1);
         lista.setAdapter(adapter1);
         Txt.setText("Nazwa: " + klient[Numer]);
-        Txt1.setText("Suma: " + String.valueOf(zm1));
+        Txt1.setText("Suma: " + String.valueOf(suma[Numer1]));
 
     }
 
@@ -583,6 +587,78 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private void readsqlLigtData3() {
+        p=0;
+        for (int i = 0; i < 16; i = i + 0) {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            try {
+                Cursor c = sampleDB.rawQuery("SELECT * FROM '" + Kategorie[i] + "'", null);
+
+                while (c.moveToNext()) {
+                    String zm = String.valueOf(c.getString(0));
+                    if (zm != null) {
+                        Nazwa[p] = String.valueOf(c.getString(0));
+                        Cena[p] = String.valueOf(c.getString(5));
+                        p++;
+                    }
+                }
+                sampleDB.close();
+            } catch (Exception e) {
+                //showToast(""+e);
+            }
+            i++;
+        }
+    }
+
+    //wczytywanie danych z tablicy do bazy danych
+    public void wczytywanie2() {
+        p=0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
+            }
+
+            for (int i = 0; i < 16; i = i + 0) {
+                String sql = "SELECT * FROM " + Kategorie[i] + "";
+
+                try {
+                    rs = st.executeQuery(sql);
+                } catch (SQLException e1) {
+                    //  e1.printStackTrace();
+                }
+                try {
+                    PreparedStatement stmt = connection.prepareStatement(sql);
+                    rs = stmt.executeQuery();
+
+                    while (rs.next()) {
+                        String zm = rs.getString("Nazwa");
+                        if (zm != null) {
+                            Nazwa[p] = rs.getString("Nazwa");
+                            Cena[p] = rs.getString("Cena");
+                            p++;
+                        }
+
+                    }
+                } catch (SQLException e1) {
+                    //  e1.printStackTrace();
+                }
+                i++;
+            }
+
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+
+        }
+    }
+
     private void Hash()
     {
         try {
@@ -882,18 +958,32 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    if(Stan[Numer1]!=null) {
+                        if (ilosc[Numer1] != null & !ilosc[Numer1].equals("0")) {
+                            z = Integer.parseInt(ilosc[Numer1]);
+                            z++;
+                            ilosc[Numer1] = String.valueOf(z);
 
-                    if(ilosc[Numer1]!=null) {
-                        z = Integer.parseInt(ilosc[Numer1]);
-                        z++;
-                        ilosc[Numer1] = String.valueOf(z);
-                        wartosc = 1;
-                        funkcjonalnosci();
-                        finish();
-                        startActivity(getIntent());
-                    }else {
-                        showToast("wybierz danie do zwiększenia ilości");
-                    }
+                            readsqlLigtData3();
+                            if(Nazwa[0]==null)
+                            {
+                                wczytywanie2();
+                            }
+                            for (int i = 0; i < p; i = i + 0) {
+                                if (danie[Numer1].equals(Nazwa[i])) {
+                                    Double zm = suma[Numer1] + Double.valueOf(Cena[i]);
+                                    Suma[Numer1] = zm;
+                                }
+                                i++;
+                            }
+                            wartosc = 1;
+                            funkcjonalnosci();
+                            finish();
+                            startActivity(getIntent());
+                        } else {
+                            showToast("wybierz danie do zwiększenia ilości");
+                        }
+                    }else {showToast("Danie zostało wykonane");}
                 }catch (Exception e){}
             }
         });
@@ -902,10 +992,23 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    if(ilosc[Numer1]!=null) {
+                    if(Stan[Numer1]!=null) {
+                    if(ilosc[Numer1]!=null & !ilosc[Numer1].equals("0")) {
                         z = Integer.parseInt(ilosc[Numer1]);
                         z--;
                         ilosc[Numer1] = String.valueOf(z);
+                        readsqlLigtData3();
+                        if(Nazwa[0]==null)
+                        {
+                            wczytywanie2();
+                        }
+                        for (int i = 0; i < p; i = i + 0) {
+                            if (danie[Numer1].equals(Nazwa[i])) {
+                                Double zm = suma[Numer1] - Double.valueOf(Cena[i]);
+                                Suma[Numer1] = zm;
+                            }
+                            i++;
+                        }
                         wartosc = 1;
                         funkcjonalnosci();
                         finish();
@@ -914,6 +1017,7 @@ public class MainActivity extends ActionBarActivity {
                     else {
                         showToast("wybierz danie do zmniejszenia ilości");
                     }
+                    }else {showToast("Danie zostało wykonane");}
                 }catch (Exception e) {}
             }
         });
@@ -925,6 +1029,8 @@ public class MainActivity extends ActionBarActivity {
                     if(ilosc[Numer1]!=null) {
                         wartosc = 2;
                         funkcjonalnosci();
+                        finish();
+                        startActivity(getIntent());
                     }else {
                         showToast("Wybierz danie do usunięcia");
                     }
@@ -950,10 +1056,10 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                    Numer1=position;
-
-                if(wartosc==1||wartosc==2) {
-                    funkcjonalnosci();
-                }
+                Txt1.setText("Suma: " + String.valueOf(suma[Numer1]));
+              //  if(wartosc==1||wartosc==2) {
+                //    funkcjonalnosci();
+             //   }
             }
 
         });
