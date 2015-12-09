@@ -79,13 +79,6 @@ public class Kuchnia extends ActionBarActivity {
     String[] Wykonane = new String[20];
     String[] Brak_kategori = new String[20];
 
-    String[] uzytkonkik = new String[15];
-    String[] haslo = new String[15];
-    String[] kuchnia = new String[15];
-    String[] magazyn1 = new String[15];
-    String[] sala_sprzedazy = new String[15];
-    String[] wszystko = new String[15];
-
     long[] startTime = {0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L};
     private Handler customHandler = new Handler();
     long[] timeInMilliseconds = {0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L};
@@ -98,20 +91,19 @@ public class Kuchnia extends ActionBarActivity {
     Boolean stan2=false;
     Boolean stan3=false;
     Boolean stan4=false;
-    Boolean komunikat=false;
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
-    int x,q,poz,A,B,C,w,p,spr,has;
+    int x,q,poz,A,B,C,w,p;
     FileOutputStream fos;
     customAdapter4 adapter;
     Double zm;
 
     Bundle applesData;
-    String s,m,k,W,u;
-    String hash1,textboks;
+    String s,m,k,W,login;
+    String hash1,textboks,haslo;
     private PopupWindow mpopup;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
@@ -172,7 +164,7 @@ public class Kuchnia extends ActionBarActivity {
 
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-            sampleDB.execSQL("INSERT INTO Wykonane ('Data','Czas','Nazwa','Ilosc','Czas_wykonania','Kto_wykonal') VALUES ('" + data + "','" + czas1 + "','" + Danie1[poz] + "','" + Ilosc1[poz] + "','" + zegarek + "','"+u+"') ");
+            sampleDB.execSQL("INSERT INTO Wykonane ('Data','Czas','Nazwa','Ilosc','Czas_wykonania','Kto_wykonal') VALUES ('" + data + "','" + czas1 + "','" + Danie1[poz] + "','" + Ilosc1[poz] + "','" + zegarek + "','"+login+"') ");
 
             sampleDB.close();
         } catch (Exception e) {
@@ -210,7 +202,7 @@ public class Kuchnia extends ActionBarActivity {
                 ps.setString(3, Danie1[poz]);
                 ps.setString(4, Ilosc1[poz]);
                 ps.setString(5, zegarek);
-                ps.setString(6, u);
+                ps.setString(6, login);
                 ps.executeUpdate();
                 connection.commit();
 
@@ -494,25 +486,30 @@ public class Kuchnia extends ActionBarActivity {
     }
     }
 
-    private void readsqlLigt1()
-    {spr=0;
+    private void Hash()
+    {
+        try {
+            hash1 = "%032x440472108104"+String.valueOf(textboks.hashCode());
+
+        }
+        catch (Exception e){showToast(""+e);}
+    }
+
+    private void readsqlLigt2()
+    {
 
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
         try
         {
-            Cursor c = sampleDB.rawQuery("select * from logowanie", null);
+            Cursor c = sampleDB.rawQuery("select * from logowanie WHERE Stan=('true')", null);
 
             while (c.moveToNext()) {
                 String  zm = String.valueOf(c.getString(1));
                 if(zm!=null){
-                    uzytkonkik[spr] = String.valueOf(c.getString(1));
-                    haslo[spr] = String.valueOf(c.getString(2));
-                    sala_sprzedazy[spr] = String.valueOf(c.getString(3));
-                    magazyn1[spr] = String.valueOf(c.getString(4));
-                    kuchnia[spr] = String.valueOf(c.getString(5));
-                    wszystko[spr] = String.valueOf(c.getString(6));
-                    spr++;}
+                    login = String.valueOf(c.getString(1));
+                    haslo = String.valueOf(c.getString(2));
+                }
             }
             sampleDB.close();
         }
@@ -523,8 +520,7 @@ public class Kuchnia extends ActionBarActivity {
 
     }
 
-    public void wczytywanie1() {
-        spr=0;
+    public void wczytywanie2() {
         connect();
         if (connection != null) {
 
@@ -534,7 +530,7 @@ public class Kuchnia extends ActionBarActivity {
                 e1.printStackTrace();
             }
 
-            String sql = ("select * from logowanie");
+            String sql = ("select * from logowanie WHERE Stan=('true')");
 
             try {
                 rs=st.executeQuery(sql);
@@ -549,13 +545,9 @@ public class Kuchnia extends ActionBarActivity {
                 {
                     String  zm = rs.getString("Uzytkownik");
                     if(zm!=null){
-                        uzytkonkik[spr] = rs.getString("Uzytkownik");
-                        haslo[spr] = rs.getString("Haslo");
-                        sala_sprzedazy[spr] = rs.getString("Sala_sprzedazy");
-                        magazyn1[spr] = rs.getString("Magazyn");
-                        kuchnia[spr] = rs.getString("Kuchnia");
-                        wszystko[spr] = rs.getString("Wszystko");
-                        spr++;}
+                        login = rs.getString("Uzytkownik");
+                        haslo = rs.getString("Haslo");
+                    }
 
                 } }catch (SQLException e1)
             {
@@ -570,15 +562,6 @@ public class Kuchnia extends ActionBarActivity {
 
         }
 
-    }
-
-    private void Hash()
-    {
-        try {
-            hash1 = "%032x440472108104"+String.valueOf(textboks.hashCode());
-
-        }
-        catch (Exception e){showToast(""+e);}
     }
 
 
@@ -613,22 +596,17 @@ public class Kuchnia extends ActionBarActivity {
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
-        u = applesData.getString("uzytkownik");
 
-
-        //blokada
-        try {
-        readsqlLigt1();
-        if(uzytkonkik[0]==null)
+        readsqlLigt2();
+        if(login==null)
         {
-            wczytywanie1();
+            wczytywanie2();
         }
 
         readsqlLight();
-        if(Klient[0]==null){
-               readsqlLight();
-               wczytywanie();
-           } }catch (Exception e) {}
+        if(Klient[0]==null) {
+            wczytywanie();
+        }
 
         int j=0;
         for(int i=0;i<Klient.length;i=i+0) {
@@ -668,18 +646,9 @@ public class Kuchnia extends ActionBarActivity {
 
                             textboks = editT.getText().toString();
                             Hash();
-                            for (int i = 0; i < uzytkonkik.length; i = i + 0) {
-                                if (hash1.equals(haslo[i])) {
+                                if (hash1.equals(haslo)) {
                                     mpopup.dismiss();
-                                    has = 1;
-                                } else {
-
-                                }
-                                i++;
-                            }
-                            if (has != 1) {
-                                showToast("błędne hasło");
-                            }
+                                } else { showToast("błędne hasło");}
                         } catch (Exception e) {
                         }
 
@@ -877,7 +846,7 @@ public class Kuchnia extends ActionBarActivity {
                                 stan1 = true;
                                 zm1 = Double.valueOf(Lodówka_stan_krytyczny[j]);
                                 if (zm1 < zm) {
-                                    komunikat = true;
+                                    showToast("Stan krytyczny "+Skladniki_produkty[p]);
                                 }
                                 UpdateSql();
                             }
@@ -892,7 +861,7 @@ public class Kuchnia extends ActionBarActivity {
                                 stan2 = true;
                                 zm1 = Double.valueOf(Magazyn_stan_krytyczny[j]);
                                 if (zm1 < zm) {
-                                    komunikat = true;
+                                    showToast("Stan krytyczny "+Skladniki_produkty[p]);
                                 }
                                 UpdateSql();
 
@@ -908,7 +877,7 @@ public class Kuchnia extends ActionBarActivity {
                                 gdzie_idzie = "Mroznia";
                                 zm1 = Double.valueOf(Mroznia_stan_krytyczny[j]);
                                 if (zm1 < zm) {
-                                    komunikat = true;
+                                  showToast("Stan krytyczny "+Skladniki_produkty[p]);
                                 }
                                 UpdateSql();
                             }

@@ -59,22 +59,15 @@ public class MainActivity extends ActionBarActivity {
     Double[] Suma = new Double[20];
     Double[] suma = new Double[20];
 
-    String[] uzytkonkik = new String[15];
-    String[] haslo = new String[15];
-    String[] kuchnia = new String[15];
-    String[] magazyn = new String[15];
-    String[] sala_sprzedazy = new String[15];
-    String[] wszystko = new String[15];
-
     String zm=null;
     Double zm1;
     Double zm2;
     int Numer,Numer1,wartosc;
-    int x,w,c,a,q,z,spr,has,p;
+    int x,w,c,a,q,z,p;
     FileOutputStream fos;
 
     Bundle applesData;
-    String s,m,k,W,u;
+    String s,m,k,W,login,haslo;
     String hash1,textboks;
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
@@ -206,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
            while (c.moveToNext()) {
                zm = String.valueOf(c.getString(1));
                if(zm!=null){
-                Klient[x] = String.valueOf(c.getString(0));
+                   Klient[x] = String.valueOf(c.getString(0));
                    Danie[x] = String.valueOf(c.getString(1));
                    Ilosc[x] = String.valueOf(c.getString(2));
                    Zdjecie[x] = String.valueOf(c.getString(5));
@@ -509,84 +502,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private void readsqlLigt()
-    {spr=0;
-
-        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-
-        try
-        {
-            Cursor c = sampleDB.rawQuery("select * from logowanie", null);
-
-            while (c.moveToNext()) {
-                String  zm = String.valueOf(c.getString(1));
-                if(zm!=null){
-                    uzytkonkik[spr] = String.valueOf(c.getString(1));
-                    haslo[spr] = String.valueOf(c.getString(2));
-                    sala_sprzedazy[spr] = String.valueOf(c.getString(3));
-                    magazyn[spr] = String.valueOf(c.getString(4));
-                    kuchnia[spr] = String.valueOf(c.getString(5));
-                    wszystko[spr] = String.valueOf(c.getString(6));
-                    spr++;}
-            }
-            sampleDB.close();
-        }
-        catch (Exception e)
-        {
-
-        }
-
-    }
-
-    public void wczytywanie1() {
-        spr=0;
-        connect();
-        if (connection != null) {
-
-            try {
-                st = connection.createStatement();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-
-            String sql = ("select * from logowanie");
-
-            try {
-                rs=st.executeQuery(sql);
-            } catch (SQLException e1) {
-                //  e1.printStackTrace();
-            }
-            try{
-                PreparedStatement stmt = connection.prepareStatement(sql);
-                rs = stmt.executeQuery();
-
-                while (rs.next())
-                {
-                    String  zm = rs.getString("Uzytkownik");
-                    if(zm!=null){
-                        uzytkonkik[spr] = rs.getString("Uzytkownik");
-                        haslo[spr] = rs.getString("Haslo");
-                        sala_sprzedazy[spr] = rs.getString("Sala_sprzedazy");
-                        magazyn[spr] = rs.getString("Magazyn");
-                        kuchnia[spr] = rs.getString("Kuchnia");
-                        wszystko[spr] = rs.getString("Wszystko");
-                        spr++;}
-
-                } }catch (SQLException e1)
-            {
-                e1.printStackTrace();
-            }
-
-            try{
-                if(connection!=null)
-                    connection.close();
-            }catch(SQLException se){
-                showToast("brak polaczenia z internetem");}
-
-        }
-
-    }
-
     private void readsqlLigtData3() {
         p=0;
         for (int i = 0; i < 16; i = i + 0) {
@@ -668,6 +583,75 @@ public class MainActivity extends ActionBarActivity {
         catch (Exception e){showToast(""+e);}
     }
 
+    private void readsqlLigt1()
+    {
+
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor c = sampleDB.rawQuery("select * from logowanie WHERE Stan=('true')", null);
+
+            while (c.moveToNext()) {
+                String  zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    login = String.valueOf(c.getString(1));
+                    haslo = String.valueOf(c.getString(2));
+                }
+            }
+            sampleDB.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    public void wczytywanie1() {
+
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql = ("select * from logowanie WHERE Stan=('true')");
+
+            try {
+                rs=st.executeQuery(sql);
+            } catch (SQLException e1) {
+                //  e1.printStackTrace();
+            }
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                rs = stmt.executeQuery();
+
+                while (rs.next())
+                {
+                    String  zm = rs.getString("Uzytkownik");
+                    if(zm!=null){
+                        login = rs.getString("Uzytkownik");
+                        haslo = rs.getString("Haslo");
+                    }
+
+                } }catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -718,23 +702,20 @@ public class MainActivity extends ActionBarActivity {
         usun = (Button) findViewById(R.id.button3);
         odejmnij = (Button) findViewById(R.id.button4);
 
+        //pobieranie danych na temat użytkownika
         applesData = getIntent().getExtras();
         s = applesData.getString("sala_sprzedazy");
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
-        if (applesData != null) {
-            u = applesData.getString("uzytkownik");
-        }
 
-        readsqlLigt();
-        if(uzytkonkik[0]==null)
+        readsqlLigt1();
+        if(login==null)
         {
             wczytywanie1();
         }
 
         //odczyt z bazy danych i z pliku
-
             readsqlLight();
         if(Klient[0]==null){
                 wczytywanie();
@@ -803,19 +784,10 @@ public class MainActivity extends ActionBarActivity {
 
                             textboks=editT.getText().toString();
                             Hash();
-                            for (int i = 0; i < uzytkonkik.length; i = i + 0) {
-                                    if (hash1.equals(haslo[i])) {
+                                    if (hash1.equals(haslo)) {
                                         mpopup.dismiss();
-                                        has=1;
                                     }else
-                                    {
-
-                                    }
-                                i++;
-                            }
-                            if(has!=1) {
-                                showToast("błędne hasło");
-                            }
+                                    {showToast("błędne hasło");}
                         } catch (Exception e) {
                         }
 
@@ -922,7 +894,6 @@ public class MainActivity extends ActionBarActivity {
                 i.putExtra("wszystko", W);
                 i.putExtra("magazyn", m);
                 i.putExtra("kuchnia", k);
-                i.putExtra("uzytkownik",u);
                 startActivity(i);
 
             }
@@ -1092,6 +1063,8 @@ public class MainActivity extends ActionBarActivity {
                             wartosc = 3;
                             funkcjonalnosci();
                         }catch (Exception e){}
+
+                        //odowołanie alerta
                         mpopup.dismiss();
                     }
                 });

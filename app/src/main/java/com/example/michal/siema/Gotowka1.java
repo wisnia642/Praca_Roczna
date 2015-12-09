@@ -57,7 +57,7 @@ public class Gotowka1 extends ActionBarActivity {
 
     int x, w, c, a, z;
     Bundle applesData;
-    String s,m,k,W,u;
+    String s,m,k,W,login;
 
     PreparedStatement ps;
     FileInputStream fis = null;
@@ -136,7 +136,7 @@ public class Gotowka1 extends ActionBarActivity {
                 }
             }
             if (wartosc == 2) {
-            String sql1 = "INSERT INTO Historia (Data,Czas,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')";
+            String sql1 = "INSERT INTO Historia (Data,Czas,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+login+"')";
             try {
                 st.executeUpdate(sql1);
 
@@ -184,7 +184,7 @@ public class Gotowka1 extends ActionBarActivity {
                 ToDataBase();
                 try {
                 SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-                 sampleDB1.execSQL("INSERT INTO Historia (Data,Casz,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+u+"')");
+                 sampleDB1.execSQL("INSERT INTO historia (Data,Casz,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+login+"')");
                 sampleDB1.close();
             } catch (Exception e){
         }
@@ -201,6 +201,75 @@ public class Gotowka1 extends ActionBarActivity {
     {
         Stolik.setAdapter(new Gotowka1.MyAdapter(this, R.layout.custom_spiner1, listaStringow));
     }
+
+    private void readsqlLigt1()
+    {
+
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+        try
+        {
+            Cursor c = sampleDB.rawQuery("select * from logowanie WHERE Stan=('true')", null);
+
+            while (c.moveToNext()) {
+                String  zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    login = String.valueOf(c.getString(1));
+                }
+            }
+            sampleDB.close();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+    }
+
+    public void wczytywanie1() {
+        x=0;
+        connect();
+        if (connection != null) {
+
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            String sql = ("select * from logowanie WHERE Stan=('true')");
+
+            try {
+                rs=st.executeQuery(sql);
+            } catch (SQLException e1) {
+                //  e1.printStackTrace();
+            }
+            try{
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                rs = stmt.executeQuery();
+
+                while (rs.next())
+                {
+                    String  zm = rs.getString("Uzytkownik");
+                    if(zm!=null){
+                        login = rs.getString("Uzytkownik");
+                    }
+
+                } }catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                showToast("brak polaczenia z internetem");}
+
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,10 +280,17 @@ public class Gotowka1 extends ActionBarActivity {
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
-        u = applesData.getString("uzytkownik");
-
         wartosc=1;
         readsqlLight();
+        if(Klient[0]==null)
+        {
+            wczytywanie();
+        }
+        readsqlLigt1();
+        if(login==null)
+        {
+            wczytywanie1();
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         data = sdf.format(new Date());
         SimpleDateFormat sdf1 = new SimpleDateFormat("kk:mm:ss");

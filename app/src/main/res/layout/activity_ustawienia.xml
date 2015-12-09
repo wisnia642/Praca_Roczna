@@ -11,25 +11,36 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/button58"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="99dp"
         android:textSize="30dp"
+        android:background="@drawable/faktura_dane"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="63dp"
-        android:layout_marginStart="63dp"
-        android:background="@drawable/faktura_dane" />
+        android:layout_toRightOf="@+id/button82"
+        android:layout_toEndOf="@+id/button82"
+        android:layout_marginLeft="128dp"
+        android:layout_marginStart="128dp" />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:id="@+id/button81"
-        android:layout_marginLeft="113dp"
-        android:layout_marginStart="113dp"
         android:textSize="30dp"
+        android:background="@drawable/konto"
+        android:layout_marginLeft="143dp"
+        android:layout_marginStart="143dp"
         android:layout_alignTop="@+id/button58"
         android:layout_toRightOf="@+id/button58"
-        android:layout_toEndOf="@+id/button58"
-        android:background="@drawable/konto" />
+        android:layout_toEndOf="@+id/button58" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/button82"
+        android:background="@drawable/powrot"
+        android:layout_alignTop="@+id/button58"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="81dp"
+        android:layout_marginStart="81dp" />
 
 </RelativeLayout>

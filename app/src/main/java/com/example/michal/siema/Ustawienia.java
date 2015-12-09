@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class Ustawienia extends ActionBarActivity {
 
-    Button faktura,konto;
+    Button faktura,konto,powrut;
     Bundle applesData;
     String Magazyn,Kuchnia,Sala_sprzedazy,Wszystko,uzytkownik;
 
@@ -21,6 +21,7 @@ public class Ustawienia extends ActionBarActivity {
 
         faktura = (Button) findViewById(R.id.button58);
         konto = (Button) findViewById(R.id.button81);
+        powrut = (Button) findViewById(R.id.button82);
 
         applesData = getIntent().getExtras();
         Sala_sprzedazy = applesData.getString("sala_sprzedazy");
@@ -44,6 +45,18 @@ public class Ustawienia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(Ustawienia.this, Nowe_konto.class);
+                a.putExtra("sala_sprzedazy", Sala_sprzedazy);
+                a.putExtra("wszystko", Wszystko);
+                a.putExtra("magazyn", Magazyn);
+                a.putExtra("kuchnia", Kuchnia);
+                startActivity(a);
+            }
+        });
+
+        powrut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(Ustawienia.this, Glowne_menu.class);
                 a.putExtra("sala_sprzedazy", Sala_sprzedazy);
                 a.putExtra("wszystko", Wszystko);
                 a.putExtra("magazyn", Magazyn);

@@ -43,7 +43,7 @@ public class Magzyn extends ActionBarActivity {
     ListView lista;
 
     Bundle applesData;
-    String s,m,k,W,u,jak;
+    String s,m,k,W,jak;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -62,12 +62,6 @@ public class Magzyn extends ActionBarActivity {
     String[] nazwa1 = new String[40];
     String[] ilosc1 = new String[40];
     String[] kto_wykonal1 = new String[40];
-    String[] uzytkonkik = new String[15];
-    String[] haslo = new String[15];
-    String[] kuchnia = new String[15];
-    String[] magazyn1 = new String[15];
-    String[] sala_sprzedazy = new String[15];
-    String[] wszystko = new String[15];
 
     static ResultSet rs;
     static Statement st;
@@ -80,9 +74,9 @@ public class Magzyn extends ActionBarActivity {
     private SimpleDateFormat sdf;
     DatePickerDialog.OnDateSetListener date;
 
-    String data,dat2,data11,data22;
-    String hash1,textboks;
-    int x=0,y=0,spr,has;
+    String data,data11,data22;
+    String hash1,textboks,login,haslo;
+    int x=0,y=0;
     boolean wartosc = false;
     private PopupWindow mpopup;
 
@@ -295,25 +289,30 @@ x=0;
         }
     }
 
-    private void readsqlLigt()
-    {spr=0;
+    private void Hash()
+    {
+        try {
+            hash1 = "%032x440472108104"+String.valueOf(textboks.hashCode());
+
+        }
+        catch (Exception e){}
+    }
+
+    private void readsqlLigt1()
+    {
 
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
         try
         {
-            Cursor c = sampleDB.rawQuery("select * from logowanie", null);
+            Cursor c = sampleDB.rawQuery("select * from logowanie WHERE Stan=('true')", null);
 
             while (c.moveToNext()) {
                 String  zm = String.valueOf(c.getString(1));
                 if(zm!=null){
-                    uzytkonkik[spr] = String.valueOf(c.getString(1));
-                    haslo[spr] = String.valueOf(c.getString(2));
-                    sala_sprzedazy[spr] = String.valueOf(c.getString(3));
-                    magazyn1[spr] = String.valueOf(c.getString(4));
-                    kuchnia[spr] = String.valueOf(c.getString(5));
-                    wszystko[spr] = String.valueOf(c.getString(6));
-                    spr++;}
+                    login = String.valueOf(c.getString(1));
+                    haslo = String.valueOf(c.getString(2));
+                }
             }
             sampleDB.close();
         }
@@ -325,7 +324,7 @@ x=0;
     }
 
     public void wczytywanie1() {
-        spr=0;
+
         connect();
         if (connection != null) {
 
@@ -335,7 +334,7 @@ x=0;
                 e1.printStackTrace();
             }
 
-            String sql = ("select * from logowanie");
+            String sql = ("select * from logowanie WHERE Stan=('true')");
 
             try {
                 rs=st.executeQuery(sql);
@@ -350,13 +349,9 @@ x=0;
                 {
                     String  zm = rs.getString("Uzytkownik");
                     if(zm!=null){
-                        uzytkonkik[spr] = rs.getString("Uzytkownik");
-                        haslo[spr] = rs.getString("Haslo");
-                        sala_sprzedazy[spr] = rs.getString("Sala_sprzedazy");
-                        magazyn1[spr] = rs.getString("Magazyn");
-                        kuchnia[spr] = rs.getString("Kuchnia");
-                        wszystko[spr] = rs.getString("Wszystko");
-                        spr++;}
+                        login = rs.getString("Uzytkownik");
+                        haslo = rs.getString("Haslo");
+                    }
 
                 } }catch (SQLException e1)
             {
@@ -371,15 +366,6 @@ x=0;
 
         }
 
-    }
-
-    private void Hash()
-    {
-        try {
-            hash1 = "%032x440472108104"+String.valueOf(textboks.hashCode());
-
-        }
-        catch (Exception e){showToast(""+e);}
     }
 
     @Override
@@ -409,12 +395,9 @@ x=0;
         m = applesData.getString("magazyn");
         k = applesData.getString("kuchnia");
         W = applesData.getString("wszystko");
-        if (applesData != null) {
-            u = applesData.getString("uzytkownik");
-        }
 
-        readsqlLigt();
-        if(uzytkonkik[0]==null)
+        readsqlLigt1();
+        if(login==null)
         {
             wczytywanie1();
         }
@@ -448,18 +431,9 @@ x=0;
 
                             textboks = editT.getText().toString();
                             Hash();
-                            for (int i = 0; i < uzytkonkik.length; i = i + 0) {
-                                if (hash1.equals(haslo[i])) {
+                                if (hash1.equals(haslo)) {
                                     mpopup.dismiss();
-                                    has = 1;
-                                } else {
-
-                                }
-                                i++;
-                            }
-                            if (has != 1) {
-                                showToast("błędne hasło");
-                            }
+                                } else {showToast("błędne hasło");}
                         } catch (Exception e) {
                         }
 

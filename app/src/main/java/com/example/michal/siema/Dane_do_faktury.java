@@ -529,7 +529,7 @@ public class Dane_do_faktury extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if(faktura.equals("false")){
-                Intent i = new Intent(Dane_do_faktury.this,Glowne_menu.class);
+                Intent i = new Intent(Dane_do_faktury.this,Ustawienia.class);
                 i.putExtra("sala_sprzedazy", s);
                 i.putExtra("wszystko", W);
                 i.putExtra("magazyn", m);

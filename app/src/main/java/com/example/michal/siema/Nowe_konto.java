@@ -360,7 +360,7 @@ public class Nowe_konto extends ActionBarActivity {
         annuluj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent c = new Intent(Nowe_konto.this,Glowne_menu.class);
+                Intent c = new Intent(Nowe_konto.this,Ustawienia.class);
                 c.putExtra("sala_sprzedazy", s);
                 c.putExtra("wszystko", w);
                 c.putExtra("magazyn", m);

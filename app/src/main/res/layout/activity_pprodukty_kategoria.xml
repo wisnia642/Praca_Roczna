@@ -162,7 +162,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CANCEL"
+        android:text="POWRÓT"
         android:id="@+id/button52"
         android:layout_marginTop="47dp"
         android:layout_below="@+id/editText17"

@@ -51,7 +51,7 @@ public class Logowanie extends ActionBarActivity {
     String[] wszystko = new String[15];
 
     int x,z,d;
-    String hash1,u;
+    String hash1,u,stan,login;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -90,7 +90,7 @@ public class Logowanie extends ActionBarActivity {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS logowanie (Id VARCHAR,Uzytkownik VARCHAR,Haslo VARCHAR,Sala_sprzedazy VARCHAR," +
-                    "Magazyn VARCHAR,Kuchnia VARCHAR,Wszystko VARCHAR);");
+                    "Magazyn VARCHAR,Kuchnia VARCHAR,Wszystko VARCHAR,Stan VARCHAR);");
         }
         catch (Exception e){}
 
@@ -147,6 +147,44 @@ public class Logowanie extends ActionBarActivity {
 
             } catch (SQLException e) {
 
+            }
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+        }
+    }
+
+    public void UpdateSql1()
+    {
+        ToDataBase();
+
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("UPDATE logowanie SET Stan=('true') WHERE Uzytkownik='"+login+"'");
+            sampleDB.close();
+        } catch (Exception e) {
+            showToast("Blad w update");
+        }
+
+
+        connect();
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+
+
+            String sql1 = "UPDATE logowanie SET Stan=('true') WHERE Uzytkownik='"+login+"'";
+
+            try {
+                st.executeUpdate(sql1);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
             }
             try {
                 if (connection != null)
@@ -265,12 +303,11 @@ public class Logowanie extends ActionBarActivity {
                     try {
                         d=0;
                         Hash();
-                        String login = users.getText().toString();
+                        login = users.getText().toString();
                         for (int i = 0; i < uzytkonkik.length; i = i + 0) {
                             if (login.equals(uzytkonkik[i])) {
                                 if (hash1.equals(haslo[i])) {
-                                    u=users.getText().toString();
-                                    showToast("Logowanie Udane:)");
+                                    UpdateSql1();
                                     Intent c = new Intent(Logowanie.this, Glowne_menu.class);
                                     c.putExtra("sala_sprzedazy", sala_sprzedazy[i]);
                                     c.putExtra("wszystko", wszystko[i]);
