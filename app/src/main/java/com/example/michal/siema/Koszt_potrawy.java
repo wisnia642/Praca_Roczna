@@ -394,7 +394,8 @@ public class Koszt_potrawy extends ActionBarActivity {
 
                     }
 
-                } catch (Exception e) {showToast(""+e);
+                } catch (Exception e) {
+                    showToast("Brak zdeklarowanych wszystkich składników w magazynach");
                 }
             }
         });

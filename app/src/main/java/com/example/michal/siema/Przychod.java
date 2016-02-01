@@ -256,7 +256,7 @@ z=0;
                 }
                 sampleDB.close();
             } catch (Exception e) {
-                showToast(""+e);
+
             }
             i++;
         }
@@ -362,7 +362,7 @@ z=0;
                     przychody.setText(String.valueOf(cena2));
                     wykonywane.setText(String.valueOf(Ilosc2));
 
-                }catch (Exception e ){showToast(""+e);}
+                }catch (Exception e ){}
             }
         });
 

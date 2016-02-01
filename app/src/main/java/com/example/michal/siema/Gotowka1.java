@@ -359,7 +359,7 @@ public class Gotowka1 extends ActionBarActivity {
                         readsqlLight();
                         spinner();
                     }else{
-                        showToast("Wybierz Klient / Stolik");
+                        showToast("Wpisana kwota jest za mała");
                     }
                 } catch (Exception e) {
                 }
