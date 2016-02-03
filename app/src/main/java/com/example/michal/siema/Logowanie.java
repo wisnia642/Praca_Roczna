@@ -103,7 +103,7 @@ public class Logowanie extends ActionBarActivity {
             hash1 = "%032x440472108104"+String.valueOf(input.hashCode());
 
         }
-        catch (Exception e){showToast(""+e);}
+        catch (Exception e){}
     }
 
 
@@ -117,7 +117,7 @@ public class Logowanie extends ActionBarActivity {
             sampleDB.execSQL("INSERT INTO logowanie (Id,Uzytkownik,Haslo,Sala_sprzedazy,Magazyn,Kuchnia,Wszystko) VALUES ('0','admin','%032x44047210810492668751','1','1','1','1') ");
             sampleDB.close();
         } catch (Exception e) {
-            showToast("Blad w update");
+
         }
 
 
@@ -166,7 +166,7 @@ public class Logowanie extends ActionBarActivity {
             sampleDB.execSQL("UPDATE logowanie SET Stan=('true') WHERE Uzytkownik='"+login+"'");
             sampleDB.close();
         } catch (Exception e) {
-            showToast("Blad w update");
+
         }
 
 

@@ -29,8 +29,8 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     Spinner kategoria,przynaleznosc;
     ListView produkty;
     Button ok,cancel,usun,utworz,popraw;
-    String wartosc,Danie,Ilosc,Stan_krytyczny,wagi,cena_d,ilosc_d,jak;
-    String[] Wagi = {"Szt","Kg","Dag","Gram"};
+    String wartosc,Danie,Ilosc,Stan_krytyczny,wagi,cena_d,ilosc_d,jak,naz,ilo;
+    String[] Wagi = {"Szt","Kg","Dag","Gram","Litry","Mililitry"};
     String[] listaStringow = {"Lodówka","Mroźnia","Magazyn","Brak Kategorii"};
 
     CustomAdapter6 adapter1;
@@ -71,7 +71,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
     int A,B,C,D,p,o;
-    boolean klikniecie=false;
+    boolean klikniecie=false,klikniecie1=false;
     String Nazwa_dania;
 
     private void showToast(String message) {
@@ -343,6 +343,12 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                     if (wagi.equals("Kg")) {
                         kategoria.setSelection(1);
                     }
+                    if (wagi.equals("Litry")) {
+                        kategoria.setSelection(4);
+                    }
+                    if (wagi.equals("Mililitry")) {
+                        kategoria.setSelection(5);
+                    }
                 }catch (Exception e){}
 
             }
@@ -351,19 +357,22 @@ public class Pprodukty_kategoria extends ActionBarActivity {
         popraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(danie!=null&ilosc!=null) {
+                if (klikniecie == true & danie.getText().toString() != null & ilosc.getText().toString() != null) {
                     deletefromSQLlight();
                     saveSqlLight();
                     finish();
                     startActivity(getIntent());
+                } else {
+                    showToast("wybierz składanik do poprawy");
                 }
+                klikniecie = false;
             }
         });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(klikniecie == true&danie.getText().toString()!=null&ilosc.getText().toString()!=null) {
                 if (klikniecie == true) {
                     deletefromSQLlight();
                     if (p == 0) {
@@ -383,12 +392,13 @@ public class Pprodukty_kategoria extends ActionBarActivity {
 
                     }
                 }
-                if(danie!=null&ilosc!=null) {
+
                     saveSqlLight();
                     finish();
                     startActivity(getIntent());
                 }
-
+                else{showToast("wybierz danie do przeniesienia");}
+                klikniecie = false;
             }
         });
 
@@ -396,22 +406,33 @@ public class Pprodukty_kategoria extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                if (klikniecie == true&danie!=null&ilosc!=null) {
+                if (klikniecie == true&danie.getText().toString()!=""&ilosc.getText().toString()!="") {
                     deletefromSQLlight();
                     finish();
                     startActivity(getIntent());
                 }
+                else{showToast("wybierz danie do usunięcia");}
+                klikniecie = false;
+            }
+        });
+        danie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                klikniecie1=true;
             }
         });
 
         utworz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(danie!=null&ilosc!=null) {
+                naz =danie.getText().toString();
+                ilo =ilosc.getText().toString();
+                if(klikniecie1==true & naz!=null & ilo!=null) {
                     saveSqlLight();
                     finish();
                     startActivity(getIntent());
                 }
+                else{showToast("uspełnij nazwę dania i jego składniki");}
             }
         });
 

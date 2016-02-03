@@ -65,6 +65,9 @@ public class Nowe_konto extends ActionBarActivity {
     int x,z,q,i,p;
     boolean stan=false;
     boolean stan1 =false;
+    boolean stan2 =false;
+    boolean stan3 =false;
+    boolean stan4 =false;
     String hash1,login1,haslo1,powtorz_haslo1;
 
 
@@ -320,9 +323,9 @@ public class Nowe_konto extends ActionBarActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (stan==true) {
-                    stan=false;
-                    stan1=true;
+                if (stan == true) {
+                    stan = false;
+                    stan1 = true;
                     Login.setText(uzytkonkik[position]);
                     Haslo.setText(haslo[position]);
                     Powtorz_haslo.setText(haslo[position]);
@@ -348,7 +351,7 @@ public class Nowe_konto extends ActionBarActivity {
                     }
 
                 }
-                stan=true;
+                stan = true;
             }
 
             @Override
@@ -360,12 +363,31 @@ public class Nowe_konto extends ActionBarActivity {
         annuluj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent c = new Intent(Nowe_konto.this,Ustawienia.class);
+                Intent c = new Intent(Nowe_konto.this, Ustawienia.class);
                 c.putExtra("sala_sprzedazy", s);
                 c.putExtra("wszystko", w);
                 c.putExtra("magazyn", m);
                 c.putExtra("kuchnia", k);
                 startActivity(c);
+            }
+        });
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stan2=true;
+            }
+        });
+
+        Haslo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stan3=true;
+            }
+        });
+        Powtorz_haslo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stan4=true;
             }
         });
 
@@ -376,7 +398,7 @@ public class Nowe_konto extends ActionBarActivity {
                 haslo1 = Haslo.getText().toString();
                 powtorz_haslo1 = Powtorz_haslo.getText().toString();
                 try {
-                    if (login1 != null & haslo1 != null & powtorz_haslo1 != null) {
+                    if (stan2==true&stan3==true&stan4==true) {
                         if (haslo1.equals(powtorz_haslo1)) {
                             if (stan1 == true) {
                                 if (haslo[q].equals(hash1)) {
@@ -440,7 +462,8 @@ public class Nowe_konto extends ActionBarActivity {
                     } else {
                         showToast("Uzupełnij wszystkie pola");
                     }
-                }catch (Exception e){showToast(""+ e);}
+                }catch (Exception e){}
+
             }
         });
 

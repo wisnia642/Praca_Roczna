@@ -528,23 +528,23 @@ public class Dane_do_faktury extends ActionBarActivity {
         anuluj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(faktura.equals("false")){
-                Intent i = new Intent(Dane_do_faktury.this,Ustawienia.class);
-                i.putExtra("sala_sprzedazy", s);
-                i.putExtra("wszystko", W);
-                i.putExtra("magazyn", m);
-                i.putExtra("kuchnia", k);
-                startActivity(i);
-                }
-                if(faktura.equals("true"))
-                {
-                    Intent i = new Intent(Dane_do_faktury.this,Faktura.class);
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    startActivity(i);
-                }
+
+                    if (faktura.equals("false")) {
+                        Intent i = new Intent(Dane_do_faktury.this, Ustawienia.class);
+                        i.putExtra("sala_sprzedazy", s);
+                        i.putExtra("wszystko", W);
+                        i.putExtra("magazyn", m);
+                        i.putExtra("kuchnia", k);
+                        startActivity(i);
+                    }
+                    if (faktura.equals("true")) {
+                        Intent w = new Intent(Dane_do_faktury.this, Faktura.class);
+                        w.putExtra("sala_sprzedazy", s);
+                        w.putExtra("wszystko", W);
+                        w.putExtra("magazyn", m);
+                        w.putExtra("kuchnia", k);
+                        startActivity(w);
+                    }
 
             }
         });

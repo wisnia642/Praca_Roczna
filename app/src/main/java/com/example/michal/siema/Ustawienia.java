@@ -37,6 +37,8 @@ public class Ustawienia extends ActionBarActivity {
                 a.putExtra("wszystko", Wszystko);
                 a.putExtra("magazyn", Magazyn);
                 a.putExtra("kuchnia", Kuchnia);
+                String fakt="false";
+                a.putExtra("faktura",fakt);
                 startActivity(a);
             }
         });

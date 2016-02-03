@@ -119,6 +119,28 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    //tworzenie polaczenia z baza danych
+    public void connect()
+    {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            return;
+        }
+
+
+        try {
+            connection = DriverManager.getConnection(url,user,pass);
+        } catch (SQLException e) {
+            return;
+        }
+
+    }
+
     private void funkcjonalnosci()
     {
             try {
@@ -221,7 +243,7 @@ public class MainActivity extends ActionBarActivity {
 
             sampleDB.close();
 
-        }catch (Exception a){}
+        }catch (Exception e){}
 
         connect();
 
@@ -281,27 +303,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    //tworzenie polaczenia z baza danych
-    public void connect()
-    {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-        StrictMode.setThreadPolicy(policy);
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            return;
-        }
-
-
-        try {
-            connection = DriverManager.getConnection(url,user,pass);
-        } catch (SQLException e) {
-            return;
-        }
-
-    }
 
     //wczytywanie danych z tablicy do bazy danych
     public void wczytywanie() {

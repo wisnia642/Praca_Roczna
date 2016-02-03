@@ -91,6 +91,8 @@ public class Kuchnia extends ActionBarActivity {
     Boolean stan2=false;
     Boolean stan3=false;
     Boolean stan4=false;
+    Boolean stan5=false;
+    Boolean stan6=false;
 
     private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
     private static final String user="michal";
@@ -673,6 +675,7 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (Danie1[i] != null) {
+                    stan6 = true;
                     poz = i;
                     q = i;
                     if (Klik[poz] == 2) {
@@ -809,90 +812,97 @@ public class Kuchnia extends ActionBarActivity {
         przyjete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Klik[poz] = 2;
-                czas.setVisibility(view.VISIBLE);
-                startTime[q] = SystemClock.uptimeMillis();
-                customHandler.postDelayed(updateTimerThread, 0);
-                Wykonane[q] = "false";
+                if(stan6==true) {
+                    Klik[poz] = 2;
+                    czas.setVisibility(view.VISIBLE);
+                    startTime[q] = SystemClock.uptimeMillis();
+                    customHandler.postDelayed(updateTimerThread, 0);
+                    Wykonane[q] = "false";
+                    stan5 = true;
+                    stan6 = false;
+                }
             }
         });
-
 
 
         koniec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zegarek = ("" + mins + ":"
+                if (stan5==true) {
+                    zegarek = ("" + mins + ":"
 
-                        + String.format("%02d", secs) + ":"
+                            + String.format("%02d", secs) + ":"
 
-                        + String.format("%03d", milliseconds));
+                            + String.format("%03d", milliseconds));
 
-                Wykonane[q] = "true";
-                Skladniki_produkty = (Skladniki1[q].split("[-,0-99999+]+"));
-                String filtered = Skladniki1[q].replaceAll("[^0-9,]", "");
-                Skladniki_porcje = filtered.split(",");
+                    Wykonane[q] = "true";
+                    Skladniki_produkty = (Skladniki1[q].split("[-,0-99999+]+"));
+                    String filtered = Skladniki1[q].replaceAll("[^0-9,]", "");
+                    Skladniki_porcje = filtered.split(",");
 
-                for (p = 0; p < Skladniki_produkty.length; p = p + 0) {
-                    if (Skladniki_produkty[p] != null) {
-                        for (int j = 0; j < Lodowka.length; j = j + 0) {
-                            if (Skladniki_produkty[p].equals(Lodowka[j])) {
-                                Double zm1;
-                                Double zm2;
-                                zm1 = Double.parseDouble(Skladniki_porcje[p]);
-                                zm2 = Double.parseDouble(Lodówka_ilosc[j]);
-                                zm = zm2 - zm1;
-                                gdzie_idzie = "Lodowka";
-                                stan1 = true;
-                                zm1 = Double.valueOf(Lodówka_stan_krytyczny[j]);
-                                if (zm1 < zm) {
-                                    showToast("Stan krytyczny "+Skladniki_produkty[p]);
+                    for (p = 0; p < Skladniki_produkty.length; p = p + 0) {
+                        if (Skladniki_produkty[p] != null) {
+                            for (int j = 0; j < Lodowka.length; j = j + 0) {
+                                if (Skladniki_produkty[p].equals(Lodowka[j])) {
+                                    Double zm1;
+                                    Double zm2;
+                                    zm1 = Double.parseDouble(Skladniki_porcje[p]);
+                                    zm2 = Double.parseDouble(Lodówka_ilosc[j]);
+                                    zm = zm2 - zm1;
+                                    gdzie_idzie = "Lodowka";
+                                    stan1 = true;
+                                    zm1 = Double.valueOf(Lodówka_stan_krytyczny[j]);
+                                    if (zm1 < zm) {
+                                        showToast("Stan krytyczny " + Skladniki_produkty[p]);
+                                    }
+                                    UpdateSql();
                                 }
-                                UpdateSql();
-                            }
 
-                            if (Skladniki_produkty[p].equals(Magazyn[j])) {
-                                Double zm1;
-                                Double zm2;
-                                zm1 = Double.parseDouble(Skladniki_porcje[p]);
-                                zm2 = Double.parseDouble(Magazyn_ilosc[j]);
-                                zm = zm2 - zm1;
-                                gdzie_idzie = "Magazyn";
-                                stan2 = true;
-                                zm1 = Double.valueOf(Magazyn_stan_krytyczny[j]);
-                                if (zm1 < zm) {
-                                    showToast("Stan krytyczny "+Skladniki_produkty[p]);
+                                if (Skladniki_produkty[p].equals(Magazyn[j])) {
+                                    Double zm1;
+                                    Double zm2;
+                                    zm1 = Double.parseDouble(Skladniki_porcje[p]);
+                                    zm2 = Double.parseDouble(Magazyn_ilosc[j]);
+                                    zm = zm2 - zm1;
+                                    gdzie_idzie = "Magazyn";
+                                    stan2 = true;
+                                    zm1 = Double.valueOf(Magazyn_stan_krytyczny[j]);
+                                    if (zm1 < zm) {
+                                        showToast("Stan krytyczny " + Skladniki_produkty[p]);
+                                    }
+                                    UpdateSql();
+
                                 }
-                                UpdateSql();
 
-                            }
-
-                            if (Skladniki_produkty[p].equals(Mroznia[j])) {
-                                Double zm1;
-                                Double zm2;
-                                zm1 = Double.parseDouble(Skladniki_porcje[p]);
-                                zm2 = Double.parseDouble(Mroznia_ilosc[j]);
-                                zm = zm2 - zm1;
-                                stan3 = true;
-                                gdzie_idzie = "Mroznia";
-                                zm1 = Double.valueOf(Mroznia_stan_krytyczny[j]);
-                                if (zm1 < zm) {
-                                  showToast("Stan krytyczny "+Skladniki_produkty[p]);
+                                if (Skladniki_produkty[p].equals(Mroznia[j])) {
+                                    Double zm1;
+                                    Double zm2;
+                                    zm1 = Double.parseDouble(Skladniki_porcje[p]);
+                                    zm2 = Double.parseDouble(Mroznia_ilosc[j]);
+                                    zm = zm2 - zm1;
+                                    stan3 = true;
+                                    gdzie_idzie = "Mroznia";
+                                    zm1 = Double.valueOf(Mroznia_stan_krytyczny[j]);
+                                    if (zm1 < zm) {
+                                        showToast("Stan krytyczny " + Skladniki_produkty[p]);
+                                    }
+                                    UpdateSql();
                                 }
-                                UpdateSql();
-                            }
 
-                            j++;
+                                j++;
+                            }
+                            if (stan1 == false & stan2 == false & stan3 == false & stan4 == false) {
+                                UpdateSql1();
+                            }
                         }
-                        if (stan1 == false & stan2 == false & stan3 == false & stan4==false) {
-                            UpdateSql1();
-                        }
+                        p++;
                     }
-                    p++;
+                    stan5=false;
+                    SqlLigtKoniec();
+                    finish();
+                    startActivity(getIntent());
+
                 }
-                SqlLigtKoniec();
-                finish();
-                startActivity(getIntent());
 
             }
 

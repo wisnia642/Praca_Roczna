@@ -107,7 +107,6 @@ public class Zamowienie extends ActionBarActivity  {
             }
                 sql = "INSERT INTO Zamowienie (Klient,Danie,Ilosc,Dodatki,Dodatkowe_Zyczenia,Zdjecie,Suma,Sposob_przygotowania,Skladniki) VALUES (?,?,?,?,?,?,?,?,?) ";
 
-
                 try {
                     connection.setAutoCommit(false);
                     File file =new File(zdjecie);
@@ -354,45 +353,42 @@ public class Zamowienie extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         ilosc = Ilosc.getText().toString();
-                        if(ilosc==null){
+                        if(ilosc!=null){
                             showToast("UZUPELNIJ ILOSC");
                         }
-                        else
-                        {
-                        dodatki = Dodatki.getText().toString();
-                        dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
-                        try {
+                        else {
+                            dodatki = Dodatki.getText().toString();
+                            dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
+                            try {
 
-                            suma = Double.parseDouble(ilosc);
-                            wartosc = Double.parseDouble(cena);
-                            suma = suma * wartosc;
-                            cena1 = String.valueOf(suma);
-                            Suma.setText(String.valueOf(cena1));
+                                suma = Double.parseDouble(ilosc);
+                                wartosc = Double.parseDouble(cena);
+                                suma = suma * wartosc;
+                                cena1 = String.valueOf(suma);
+                                Suma.setText(String.valueOf(cena1));
 
 
-                        }
-                        catch(Exception e)
-                        {}
+                            } catch (Exception e) {
+                            }
 
-                            if (klikniete==true & t>=3)
-                            {
+                            if (klikniete == true & t >= 3) {
                                 sala = (tab[w]);
 
                             }
-                            if(sala==null)
-                            {
+                            if (sala == null) {
                                 sala = String.valueOf(i);
                             }
-                               // showToast(sala);
+                            // showToast(sala);
 
-                        ZapisSqlLight();
-                        ZapisMySql();
-                        Intent i = new Intent(Zamowienie.this, MainActivity.class);
+                            ZapisSqlLight();
+                            ZapisMySql();
+                            Intent i = new Intent(Zamowienie.this, MainActivity.class);
                             i.putExtra("sala_sprzedazy", s);
                             i.putExtra("wszystko", W);
                             i.putExtra("magazyn", m);
                             i.putExtra("kuchnia", k);
-                        startActivity(i);
+                            startActivity(i);
+
                     }}
                 });
 
