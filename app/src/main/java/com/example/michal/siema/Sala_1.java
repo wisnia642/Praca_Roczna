@@ -13,11 +13,16 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +35,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.example.michal.siema.R.layout;
+import static java.util.Arrays.sort;
 
 
 public class Sala_1 extends ActionBarActivity {
@@ -39,10 +49,32 @@ public class Sala_1 extends ActionBarActivity {
 //menu zablokuj ustawienie , odblokuj ustawienie
 
     String[] tablica = new String[32];
+    String[] Sklient = new String[20];
+    String[] Ssala = new String[20];
+    String[] Sczas = new String[20];
+    double[] Sczas1 = new double[20];
+    String[] Sdata = new String[20];
+    String[] Klient = new String[20];
+    String[] Sala = new String[20];
+    String[] Czas = new String[20];
+    double[] Czas1 = new double[20];
+
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
+    private static final String user="michal";
+    private static final String pass="kaseta12";
+
     double[] tab = new double[32];
     int[] licz = new int[31];
-    int zm;
+    String data;
+    Double teraz;
+    int zm,x,q,c,j;
     int zm1=15;
+    View popUpView;
+    private PopupWindow mpopup;
+    TextView text1,text2,text3;
+
+    Bundle applesData;
+    String s,m,k,w;
 
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Sala1";
@@ -57,6 +89,7 @@ public class Sala_1 extends ActionBarActivity {
     TextView img10 = null,img11 = null,img12 = null,img13 = null,img14 = null,img15 = null;
     AbsoluteLayout aLayout;
     boolean stan=false;
+    boolean zmienna = false;
 
     public static final int PIERWSZY_ELEMENT = 1;
     public static final int DRUGI_ELEMENT = 2;
@@ -81,7 +114,7 @@ public class Sala_1 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB.execSQL("CREATE TABLE IF NOT EXISTS " +
                     SAMPLE_TABLE_NAME +
-                    " (Id INT ,Sala1 DOUBLE,Zdjecie VARCHAR);");
+                    " (Id INT ,Sala1 DOUBLE,Zdjecie VARCHAR,Stan INT);");
 
         }
         catch (Exception e){}
@@ -150,7 +183,7 @@ public class Sala_1 extends ActionBarActivity {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
             for (int i = 0; i <= 29; i = i + 0) {
-                sampleDB.execSQL("UPDATE Sala1 SET Sala1=('" + tab[i] + "'),Zdjecie=('" + tablica[30] + "') WHERE Id=('" + i + "') ");
+                sampleDB.execSQL("UPDATE Sala1 SET Sala1=('" + tab[i] + "'),Zdjecie=('" + tablica[30] + "'),Stan=('" + zm1 + "') WHERE Id=('" + i + "') ");
                //sampleDB.execSQL("INSERT INTO Stol ('Id') VALUES ('"+i+"')");
 
                 i++;
@@ -170,6 +203,7 @@ public class Sala_1 extends ActionBarActivity {
             {
                 tab[i]= Double.parseDouble(c.getString(1));
                 tablica[30] = String.valueOf(c.getString(2));
+                zm1 = Integer.parseInt(c.getString(3));
 
             }
             i++;
@@ -177,7 +211,59 @@ public class Sala_1 extends ActionBarActivity {
         sampleDB.close();
             stan = true;
     }catch (Exception a){}
+
+
+            try {
+                SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+
+                x=0;
+                Cursor c=sampleDB.rawQuery("SELECT * FROM Rezerwacja",null);
+                while (c.moveToNext())
+                {
+                    Ssala[x] = String.valueOf(c.getString(0));
+                    Sklient[x] = String.valueOf(c.getString(1));
+                    Sczas[x] = String.valueOf(c.getString(2));
+                    Sczas1[x] = Double.parseDouble(c.getString(3));
+                    Sdata[x]= String.valueOf(c.getString(4));
+                    x++;
+
+                }
+                sampleDB.close();
+            }catch (Exception e){}
+        }
+
+    public void usuwanie() {
+
+        try {
+            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+            sampleDB.execSQL("DELETE FROM Rezerwacja WHERE Klient=('" + text1.getText().toString() + "') AND Czas=('" + text3.getText().toString() + "')");
+            sampleDB.close();
+        } catch (Exception e) {
+        }
+
+        connect();
+        if (connection != null) {
+            try {
+                st = connection.createStatement();
+            } catch (SQLException e1) {
+                //e1.printStackTrace();
+            }
+            String sql = "DELETE FROM Rezerwacja WHERE Klient=('" + text1.getText().toString() + "') AND Czas=('" + text3.getText().toString() + "')";
+
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException e1) {
+                // e1.printStackTrace();
+            }
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
+        }
     }
+
 /*
     private void writeToFile() {
         try {
@@ -270,7 +356,7 @@ public class Sala_1 extends ActionBarActivity {
 
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://54.217.215.74/sql481900", "sql481900", "qF9!gX2*");
+            connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
             showToast("brak połączenia z internetem");
             return;
@@ -345,6 +431,11 @@ public class Sala_1 extends ActionBarActivity {
          img14 = (TextView) findViewById(R.id.textView14);
          img15 = (TextView) findViewById(R.id.textView15);
 
+        applesData = getIntent().getExtras();
+        s = applesData.getString("sala_sprzedazy");
+        m = applesData.getString("magazyn");
+        k = applesData.getString("kuchnia");
+        w = applesData.getString("wszystko");
 
         //odczyt z bazy danych i z pliku
         try {
@@ -371,93 +462,126 @@ public class Sala_1 extends ActionBarActivity {
             }
 
 
-        if (tab[0] != 0 || tab[1] != 0) {
+            if (tab[0] != 0 || tab[1] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[0], (int) tab[1]);
-            img1.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[0], (int) tab[1]);
+                img1.setLayoutParams(lp);
+            }
 
-        if (tab[2] != 0 & tab[3] != 0) {
+            if (tab[2] != 0 & tab[3] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[2], (int) tab[3]);
-            img2.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[2], (int) tab[3]);
+                img2.setLayoutParams(lp);
 
-        if (tab[4] != 0 & tab[5] != 0) {
+            }
+            if(zm1<2){img2.setVisibility(View.INVISIBLE);}
+            if (tab[4] != 0 & tab[5] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[4], (int) tab[5]);
-            img3.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[4], (int) tab[5]);
+                img3.setLayoutParams(lp);
+            }
+            if(zm1<4){img4.setVisibility(View.INVISIBLE);}
+            if (tab[6] != 0 & tab[7] != 0) {
 
-        if (tab[6] != 0 & tab[7] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[6], (int) tab[7]);
+                img4.setLayoutParams(lp);
+            }
+            if(zm1<4){img4.setVisibility(View.INVISIBLE);}
+            if (tab[8] != 0 || tab[9] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[6], (int) tab[7]);
-            img4.setLayoutParams(lp);
-        }
-        if (tab[8] != 0 || tab[9] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[8], (int) tab[9]);
+                img5.setLayoutParams(lp);
+            }
+            if(zm1<5){img5.setVisibility(View.INVISIBLE);}
+            if (tab[10] != 0 & tab[11] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[8], (int) tab[9]);
-            img5.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[10], (int) tab[11]);
+                img6.setLayoutParams(lp);
+            }
+            if(zm1<6) {img6.setVisibility(View.INVISIBLE);}
+            if (tab[12] != 0 & tab[13] != 0) {
 
-        if (tab[10] != 0 & tab[11] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[12], (int) tab[13]);
+                img7.setLayoutParams(lp);
+            }
+            if(zm1<7) {img7.setVisibility(View.INVISIBLE);}
+            if (tab[14] != 0 & tab[15] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[10], (int) tab[11]);
-            img6.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[14], (int) tab[15]);
+                img8.setLayoutParams(lp);
+            }
+            if(zm1<8) {img8.setVisibility(View.INVISIBLE);}
+            if (tab[16] != 0 || tab[17] != 0) {
 
-        if (tab[12] != 0 & tab[13] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[16], (int) tab[17]);
+                img9.setLayoutParams(lp);
+            }
+            if(zm1<9) {img9.setVisibility(View.INVISIBLE);}
+            if (tab[18] != 0 & tab[19] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[12], (int) tab[13]);
-            img7.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[18], (int) tab[19]);
+                img10.setLayoutParams(lp);
+            }
+            if(zm1<10) {img10.setVisibility(View.INVISIBLE);}
+            if (tab[20] != 0 & tab[21] != 0) {
 
-        if (tab[14] != 0 & tab[15] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[20], (int) tab[21]);
+                img11.setLayoutParams(lp);
+            }
+            if(zm1<11) {img11.setVisibility(View.INVISIBLE);}
+            if (tab[22] != 0 & tab[23] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[14], (int) tab[15]);
-            img8.setLayoutParams(lp);
-        }
-        if (tab[16] != 0 || tab[17] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[22], (int) tab[23]);
+                img12.setLayoutParams(lp);
+            }
+            if(zm1<12) {img12.setVisibility(View.INVISIBLE);}
+            if (tab[24] != 0 & tab[25] != 0) {
 
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[16], (int) tab[17]);
-            img9.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[24], (int) tab[25]);
+                img13.setLayoutParams(lp);
+            }
+            if(zm1<13) {img13.setVisibility(View.INVISIBLE);}
+            if (tab[26] != 0 & tab[27] != 0) {
 
-        if (tab[18] != 0 & tab[19] != 0) {
-
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[18], (int) tab[19]);
-            img10.setLayoutParams(lp);
-        }
-
-        if (tab[20] != 0 & tab[21] != 0) {
-
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[20], (int) tab[21]);
-            img11.setLayoutParams(lp);
-        }
-
-        if (tab[22] != 0 & tab[23] != 0) {
-
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[22], (int) tab[23]);
-            img12.setLayoutParams(lp);
-        }
-        if (tab[24] != 0 & tab[25] != 0) {
-
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[24], (int) tab[25]);
-            img13.setLayoutParams(lp);
-        }
-        if (tab[26] != 0 & tab[27] != 0) {
-
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[26], (int) tab[27]);
-            img14.setLayoutParams(lp);
-        }
-        if (tab[28] != 0 & tab[29] != 0) {
-
-            AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[28], (int) tab[29]);
-            img15.setLayoutParams(lp);
-        }
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[26], (int) tab[27]);
+                img14.setLayoutParams(lp);
+            }
+            if(zm1<14){img14.setVisibility(View.INVISIBLE);}
+            if (tab[28] != 0 & tab[29] != 0) {
+                AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.WRAP_CONTENT, AbsoluteLayout.LayoutParams.WRAP_CONTENT, (int) tab[28], (int) tab[29]);
+                img15.setLayoutParams(lp);}
+            if(zm1<15){
+                img15.setVisibility(View.INVISIBLE);}
         }catch (Exception e){}
 
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        data = sdf.format(new Date());
+        q=0;
+        for(int i=0;i<x;i=i+0) {
+
+            if (data.equals(Sdata[i])) {
+                Czas[q]=Sczas[i];
+                Klient[q]=Sklient[i];
+                Sala[q]=Ssala[i];
+                Czas1[q]=Sczas1[i];
+                q++;
+            }
+            i++;
+        }
+        double robocza;
+        for (int i=0; i <20; i++)
+        {
+            for (int j=0; j<19; j++)
+            {
+                if (Czas1[j] <Czas1[j+1])
+                {
+                    robocza = Czas1[j+1];
+                    Czas1[j+1] = Czas1[j];
+                    Czas1[j] = robocza;
+                }
+            }
+        }
 
         img1.setOnTouchListener(new View.OnTouchListener() {
 
@@ -466,27 +590,81 @@ public class Sala_1 extends ActionBarActivity {
 
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                             teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_1")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-                            if (stan==true) {
+                                         text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                         text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                         text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_1";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
-                                String userMassage = "Sala_1 / Stolik_1";
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
+                               String userMassage = "Sala_1 / Stolik_1";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
                                 licz[0] = 0;
                                 return false;
-                        }
-                        if (stan==false) {
-                            zm = 1;
-                            licz[0]++;
-                            return false;
-                        }
+                              }
+                            }
+                            if (stan == false) {
+                                licz[0]++;
+                                zm = 1;
+                                return false;
+                            }
 
+                        }
+                        default:
+                            return false;
                     }
-                    default:
-                        return false;
                 }
-            }
-        });
+            });
         img2.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -494,17 +672,71 @@ public class Sala_1 extends ActionBarActivity {
 
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        if (stan==true) {
-                            Intent i = new Intent(Sala_1.this, Karta.class);
-                            String userMassage = "Sala_1 / Stolik_2";
-                            i.putExtra("Sala", userMassage);
-                            startActivity(i);
-                            licz[1] = 0;
-                            return false;
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_2")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_2";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
+                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
+                                String userMassage = "Sala_1 / Stolik_2";
+                                i.putExtra("Sala", userMassage);
+                                startActivity(i);
+                                return false;
+                            }
                         }
                         if (stan==false) {
-                            zm=2;
                             licz[1]++;
+                            zm=2;
                             return false;
                         }
 
@@ -522,14 +754,68 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_3")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_3";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_3";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[2] = 0;
                                 return false;
                             }
+                        }
                         if (stan==false) {
                             licz[2]++;
                             zm = 3;
@@ -550,14 +836,68 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_4")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_4";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_4";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[3] = 0;
                                 return false;
                             }
+                        }
                         if (stan==false) {
                             licz[3]++;
                             zm = 4;
@@ -578,14 +918,68 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_5")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_5";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_5";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[4] = 0;
                                 return false;
                             }
+                        }
                         if (stan==false) {
                             licz[4]++;
                             zm = 5;
@@ -607,13 +1001,67 @@ public class Sala_1 extends ActionBarActivity {
                     case MotionEvent.ACTION_DOWN: {
 
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_6")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_6";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_6";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[5] = 0;
                                 return false;
+                            }
                         }
                         if (stan==false) {
                             licz[5]++;
@@ -635,14 +1083,68 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_7")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_7";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_7";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[6] = 0;
                                 return false;
                             }
+                        }
                         if (stan==false) {
                             licz[6]++;
                             zm = 7;
@@ -663,14 +1165,67 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_8")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_8";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_8";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[7] = 0;
                                 return false;
-
+                            }
                         }
                         if (stan==false) {
                             licz[7]++;
@@ -692,14 +1247,67 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_9")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_9";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_9";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[8] = 0;
                                 return false;
-
+                            }
                         }
                         if (stan==false) {
                             licz[8]++;
@@ -721,13 +1329,67 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_10")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_10";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_10";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[9] = 0;
                                 return false;
+                            }
                         }
                         if (stan==false) {
                             licz[9]++;
@@ -749,14 +1411,67 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_11")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_11";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_11";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[10] = 0;
                                 return false;
-
+                            }
                         }
                         if (stan==false) {
                             licz[10]++;
@@ -777,16 +1492,69 @@ public class Sala_1 extends ActionBarActivity {
 
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_12")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-                            if (stan==true) {
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_12";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_12";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[11] = 0;
                                 return false;
-
-                        } if (stan==false) {
+                            }
+                        }
+                           if (stan==false) {
                             licz[11]++;
                             zm = 12;
                             return false;
@@ -806,13 +1574,67 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_13")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_13";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_13";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[12] = 0;
                                 return false;
+                            }
                         }
                         if (stan==false) {
                             licz[12]++;
@@ -834,16 +1656,70 @@ public class Sala_1 extends ActionBarActivity {
                 switch (evt.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_14")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_14";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_14";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[13] = 0;
                                 return false;
+                            }
                         }
                         if (stan==false) {
-                            licz[0]++;
+                            licz[13]++;
                             zm = 14;
                             return false;
                         }
@@ -863,14 +1739,68 @@ public class Sala_1 extends ActionBarActivity {
                     case MotionEvent.ACTION_DOWN: {
 
 
-                            if (stan==true) {
+                        if (stan == true) {
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("kkmm");
+                            teraz = Double.parseDouble(sdf.format(cal.getTime()));
+                            teraz = teraz / 100;
+                            for ( j = 0; j < q; j++) {
+                                if (Sala[j].equals("Sala_1 / Stolik_15")) {
+                                    if (Czas1[j] < teraz) {
+                                        popUpView = getLayoutInflater().inflate(layout.wykonanie_rezerwacji, null);
+                                        // inflating popup layout
+                                        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                                        //Creation of popup
+                                        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                                        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+                                        text1 = (TextView) popUpView.findViewById(R.id.textView64);
+                                        text2 = (TextView) popUpView.findViewById(R.id.textView65);
+                                        text3 = (TextView) popUpView.findViewById(R.id.textView66);
+                                        Button usun = (Button) popUpView.findViewById(R.id.button45);
+                                        text1.setText(Klient[j]);
+                                        text2.setText(data);
+                                        text3.setText(String.valueOf(Czas[j]));
+                                        usun.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                usuwanie();
+                                                Intent i = new Intent(Sala_1.this, Karta.class);
+                                                i.putExtra("sala_sprzedazy", s);
+                                                i.putExtra("wszystko", w);
+                                                i.putExtra("magazyn", m);
+                                                i.putExtra("kuchnia", k);
+                                                String userMassage = "Sala_1 / Stolik_15";
+                                                i.putExtra("Sala", userMassage);
+                                                startActivity(i);
+                                            }
+                                        });
+
+
+                                        Button btnCancel = (Button) popUpView.findViewById(R.id.button46);
+                                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                mpopup.dismiss();
+                                            }
+                                        });
+                                        zmienna=true;
+                                    }
+                                }
+
+                            }
+                            if (zmienna==false) {
                                 Intent i = new Intent(Sala_1.this, Karta.class);
+                                i.putExtra("sala_sprzedazy", s);
+                                i.putExtra("wszystko", w);
+                                i.putExtra("magazyn", m);
+                                i.putExtra("kuchnia", k);
                                 String userMassage = "Sala_1 / Stolik_15";
                                 i.putExtra("Sala", userMassage);
                                 startActivity(i);
-                                licz[14] = 0;
                                 return false;
                             }
+                        }
                         if (stan==false) {
                             licz[14]++;
                             zm = 15;
@@ -916,6 +1846,7 @@ public class Sala_1 extends ActionBarActivity {
                             tab[2] = (double) (event.getX() - img2.getWidth() / 2);
                             tab[3] = (double) (event.getY() - img2.getHeight() / 2);
 
+
                         }
                         break;
                         case 3: {
@@ -942,7 +1873,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[8] = (double) (event.getX() - img5.getWidth() / 2);
                             tab[9] = (double) (event.getY() - img5.getHeight() / 2);
-
                         }
                         break;
                         case 6: {
@@ -960,7 +1890,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[12] = (double) (event.getX() - img7.getWidth() / 2);
                             tab[13] = (double) (event.getY() - img7.getHeight() / 2);
-
                         }
                         break;
                         case 8: {
@@ -969,7 +1898,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[14] = (double) (event.getX() - img8.getWidth() / 2);
                             tab[15] = (double) (event.getY() - img8.getHeight() / 2);
-
                         }
                         break;
                         case 9: {
@@ -978,7 +1906,7 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[16] = (double) (event.getX() - img9.getWidth() / 2);
                             tab[17] = (double) (event.getY() - img9.getHeight() / 2);
-
+                            img10.setVisibility(View.VISIBLE);
                         }
                         break;
                         case 10: {
@@ -987,7 +1915,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[18] = (double) (event.getX() - img10.getWidth() / 2);
                             tab[19] = (double) (event.getY() - img10.getHeight() / 2);
-
                         }
                         break;
                         case 11: {
@@ -997,7 +1924,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[20] = (double) (event.getX() - img11.getWidth() / 2);
                             tab[21] = (double) (event.getY() - img11.getHeight() / 2);
-
                         }
                         break;
                         case 12: {
@@ -1007,8 +1933,6 @@ public class Sala_1 extends ActionBarActivity {
                             tab[22] = (double) (event.getX() - img12.getWidth() / 2);
                             tab[23] = (double) (event.getY() - img12.getHeight() / 2);
 
-
-
                         }
                         break;
                         case 13: {
@@ -1017,7 +1941,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[24] = (double) (event.getX() - img13.getWidth() / 2);
                             tab[25] = (double) (event.getY() - img13.getHeight() / 2);
-
                         }
                         break;
                         case 14: {
@@ -1026,7 +1949,6 @@ public class Sala_1 extends ActionBarActivity {
 
                             tab[26] = (double) (event.getX() - img14.getWidth() / 2);
                             tab[27] = (double) (event.getY() - img14.getHeight() / 2);
-
                         }
                         break;
                         case 15: {
@@ -1122,6 +2044,8 @@ public class Sala_1 extends ActionBarActivity {
 
     @Override
         public boolean onCreateOptionsMenu (Menu menu){
+
+        if(w.equals("1")) {
             menu.add(0, PIERWSZY_ELEMENT, 0, "Zrób Zdjęcie");
             menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjęcie");
             menu.add(2, TRZECI_ELEMENT, 0, "Zablokuj stoliki");
@@ -1132,8 +2056,9 @@ public class Sala_1 extends ActionBarActivity {
             menu.add(7, OSMY_ELEMENT, 0, "export");
             menu.add(8, DZIEWIATY_ELEMENT, 0, "import");
             menu.add(9, DZIESIATY_ELEMENT, 0, "Reset stolikow");
-
+        }
             return true;
+
         }
 
         @Override
@@ -1209,6 +2134,7 @@ public class Sala_1 extends ActionBarActivity {
                 case SIUDMY_ELEMENT:
 
                        writeToDataBase();
+                       connectToDataBase();
                         stan=true;
 
                     break;
@@ -1218,16 +2144,20 @@ public class Sala_1 extends ActionBarActivity {
 
                     break;
                 case DZIEWIATY_ELEMENT:
-                          wczytywanie();
+                    wczytywanie();
                           writeToDataBase();
-                    Intent i = new Intent(Sala_1.this,MainActivity.class);
-                    startActivity(i);
+                    stan=true;
+                    finish();
+                startActivity(getIntent());
+
 
                     break;
                 case DZIESIATY_ELEMENT:
                         ResetMySql();
                         ResetSqlLigt();
                         stan=false;
+                    finish();
+                    startActivity(getIntent());
                     break;
                 default:
 

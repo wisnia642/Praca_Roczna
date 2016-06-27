@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    compileOptions.encoding = 'UTF-8' // write your encoding here
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "21.0.1"
     defaultConfig {
         applicationId "com.example.michal.siema"
         minSdkVersion 16
@@ -19,7 +20,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile files('libs/mysql-connector-java-3.0.17-ga-bin.jar')
+    compile files('libs/droidText.0.2.jar')
+    compile files('libs/twilio-java-sdk-3.3.12-jar-with-dependencies.jar')
+    compile files('libs/commons-codec-1.4.jar')
+    compile files('libs/javaee.jar')
+    compile files('libs/itextpdf-5.5.7.jar')
+    compile files('libs/spring-security-crypto-3.1.0.RELEASE.jar')
 }

@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.michal.siema.Ustawienia"
+    android:background="@drawable/images1">
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/button58"
+        android:layout_marginTop="99dp"
+        android:textSize="30dp"
+        android:background="@drawable/faktura_dane"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/button82"
+        android:layout_toEndOf="@+id/button82"
+        android:layout_marginLeft="128dp"
+        android:layout_marginStart="128dp" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/button81"
+        android:textSize="30dp"
+        android:background="@drawable/konto"
+        android:layout_marginLeft="143dp"
+        android:layout_marginStart="143dp"
+        android:layout_alignTop="@+id/button58"
+        android:layout_toRightOf="@+id/button58"
+        android:layout_toEndOf="@+id/button58" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/button82"
+        android:background="@drawable/powrot"
+        android:layout_alignTop="@+id/button58"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="81dp"
+        android:layout_marginStart="81dp" />
+
+</RelativeLayout>

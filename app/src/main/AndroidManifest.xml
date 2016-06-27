@@ -5,15 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Logowanie"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".Logowanie"
+            android:label="Gastromania restaurant" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,39 +23,107 @@
         </activity>
         <activity
             android:name=".Sala_1"
-            android:label="@string/title_activity_sala_1" >
+            android:label="Sala numer 1" >
         </activity>
         <activity
             android:name=".Karta"
-            android:label="@string/title_activity_karta" >
+            android:label="" >
         </activity>
         <activity
             android:name=".Sala_2"
-            android:label="@string/title_activity_sala_2" >
+            android:label="Sala numer 2" >
         </activity>
         <activity
             android:name=".Sala_3"
-            android:label="@string/title_activity_sala_3" >
+            android:label="Sala numer 3" >
         </activity>
         <activity
             android:name=".Sala_4"
-            android:label="@string/title_activity_sala_4" >
+            android:label="Sala numer 4" >
         </activity>
         <activity
             android:name=".Sala_5"
-            android:label="@string/title_activity_sala_5" >
+            android:label="Sala numer 5" >
         </activity>
         <activity
             android:name=".Lista"
-            android:label="@string/title_activity_lista" >
+            android:label="" >
         </activity>
         <activity
             android:name=".Zamowienie"
-            android:label="@string/title_activity_zamowienie" >
+            android:label="Dodawanie zamówienia" >
         </activity>
         <activity
             android:name=".Dodawanie"
-            android:label="@string/title_activity_dodawanie" >
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".Gotowka1"
+            android:label="Zapłata gotówką" >
+        </activity>
+        <activity
+            android:name=".Faktura"
+            android:label="@string/title_activity_faktura" >
+        </activity>
+        <activity
+            android:name=".Rezerwacja"
+            android:label="Rezerwacja stolika" >
+        </activity>
+        <activity
+            android:name=".Kuchnia"
+            android:label="@string/title_activity_kuchnia" >
+        </activity>
+        <activity
+            android:name=".Karta_dodawanie"
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".Lista_dodawanie"
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".Pprodukty_kategoria"
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".Magzyn"
+            android:label="Magazyn" >
+        </activity>
+        <activity
+            android:name=".Koszt_potrawy"
+            android:label="Koszt potrawy" >
+        </activity>
+        <activity
+            android:name=".Wykonane_potrawy"
+            android:label="Wykonane potrawy" >
+        </activity>
+        <activity
+            android:name=".Lista_zakupow"
+            android:label="Lista zakupów" >
+        </activity>
+        <activity
+            android:name=".Przychod"
+            android:label="Dochody restauracji" >
+        </activity>
+        <activity
+            android:name=".Nowe_konto"
+            android:label="Tworzenie nowego konta" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Sala sprzedaży" >
+        </activity>
+        <activity
+            android:name=".Glowne_menu"
+            android:label="Główne menu" >
+        </activity>
+        <activity
+            android:name=".Dane_do_faktury"
+            android:label="Dane do faktury" >
+        </activity>
+        <activity
+            android:name=".Ustawienia"
+            android:label="@string/title_activity_ustawienia" >
         </activity>
     </application>
 

@@ -10,21 +10,23 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class customAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] pi;
-    private final String[] pi2;
-    private final String[] pi3;
-    private final String[] pi4;
+    private final String[] zm;
+    private final String[] zm1;
+    private final String[] zm2;
+    private final String[] zm3;
     public customAdapter(Activity context,
-                         String[] zm,String[] zm1, String[] zm2,String[] zm3) {
-        super(context, R.layout.custom_row, zm);
+                         String[] zma,String[] zma1, String[] zma2,String[] zma3) {
+        super(context, R.layout.custom_row, zma);
         this.context = context;
-        this.pi = zm;
-        this.pi2 = zm1;
-        this.pi3 = zm2;
-        this.pi4 = zm3;
+        this.zm = zma;
+        this.zm1 = zma1;
+        this.zm2 = zma2;
+        this.zm3 = zma3;
     }
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
@@ -35,15 +37,15 @@ public class customAdapter extends ArrayAdapter<String> {
         TextView txtTitle2 = (TextView) rowView.findViewById(R.id.customText2);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.customImage);
 
-        txtTitle.setText(pi[position]);
-        txtTitle1.setText(pi2[position]);
-        txtTitle2.setText(pi3[position]);
-        String zdjencie = (pi4[position]);
+        txtTitle.setText(zm[position]);
+        txtTitle1.setText(zm1[position]);
+        txtTitle2.setText(zm2[position]);
+        String zdjencie = (zm3[position]);
 
         //dodawanie obrazu jesli go nie ma
-           Bitmap bmImg = BitmapFactory.decodeFile(zdjencie);
-            imageView.setImageBitmap(bmImg);
-          if(bmImg==null&pi[position]!=null)
+        Bitmap bmImg = BitmapFactory.decodeFile(zdjencie);
+        imageView.setImageBitmap(bmImg);
+        if(bmImg==null&zm[position]!=null)
         {
             imageView.setImageDrawable(imageView.getResources().getDrawable(R.drawable.brak));
 

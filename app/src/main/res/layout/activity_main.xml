@@ -2,112 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    tools:context=".MainActivity"
     android:background="@drawable/images1">
 
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="109dp"
-        android:minWidth="330dp"
-        android:minHeight="530dp"
-        android:weightSum="1"
-        android:layout_marginStart="109dp"
-        android:id="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/linearLayout3">
-
-        <TextView
-            android:layout_width="353dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Nazwa:"
-            android:id="@+id/textView"
-            android:layout_weight="0.20"
-            android:layout_marginTop="60dp"
-            android:minHeight="40dp" />
-
-        <ListView
-            android:layout_width="364dp"
-            android:layout_height="440dp"
-            android:id="@+id/listView"
-            android:layout_marginTop="5dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Suma:"
-            android:id="@+id/textView2"
-            android:layout_marginTop="5dp"
-            android:layout_weight="0.17"
-            android:minHeight="50dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="1">
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:id="@+id/button1"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="75dp"
-            android:layout_weight="0.15"
-            android:background="@drawable/dodaj" />
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:id="@+id/button2"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/plus" />
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:id="@+id/button3"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/usun" />
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:id="@+id/button4"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/minus" />
-
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:id="@+id/button5"
-            android:background="@drawable/zapis" />
-    </LinearLayout>
-
     <FrameLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="570dp"
+        android:layout_height="530dp"
         android:minHeight="550dp"
         android:minWidth="600dp"
         android:measureWithLargestChild="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/linearLayout"
-        android:layout_toEndOf="@+id/linearLayout"
         android:id="@+id/linearLayout3"
         android:weightSum="1"
-        android:layout_marginTop="80dp">
+        android:layout_below="@+id/linearLayout5"
+        android:layout_toRightOf="@+id/linearLayout2"
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_marginTop="20dp">
 
         <Button
             android:layout_width="122dp"
@@ -133,7 +44,7 @@
             android:id="@+id/button20"
             android:layout_gravity="right|top"
             android:layout_marginTop="50dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/sal" />
 
         <Button
@@ -141,7 +52,7 @@
             android:layout_height="101dp"
             android:id="@+id/button21"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/wina" />
 
@@ -151,7 +62,7 @@
             android:id="@+id/button22"
             android:layout_gravity="center"
             android:layout_marginRight="70dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/piwo" />
 
         <Button
@@ -159,8 +70,8 @@
             android:layout_height="101dp"
             android:id="@+id/button23"
             android:layout_gravity="right|center_vertical"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/dodatki" />
 
         <Button
@@ -169,7 +80,7 @@
             android:id="@+id/button24"
             android:layout_gravity="left|bottom"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/gazowane" />
 
         <Button
@@ -178,7 +89,7 @@
             android:id="@+id/button25"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginRight="70dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/zimne" />
 
         <Button
@@ -186,8 +97,8 @@
             android:layout_height="101dp"
             android:id="@+id/button26"
             android:layout_gravity="right|bottom"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/soki" />
 
         <Button
@@ -195,7 +106,7 @@
             android:layout_height="101dp"
             android:id="@+id/button27"
             android:layout_gravity="center_horizontal|top"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="65dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/ryba" />
 
@@ -204,8 +115,8 @@
             android:layout_height="101dp"
             android:id="@+id/button28"
             android:layout_gravity="center"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/desery" />
 
         <Button
@@ -213,8 +124,8 @@
             android:layout_height="101dp"
             android:id="@+id/button29"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginLeft="75dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/kawa" />
 
         <Button
@@ -241,7 +152,7 @@
             android:id="@+id/button32"
             android:layout_gravity="right|center_vertical"
             android:layout_marginBottom="50dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/suszi" />
 
         <Button
@@ -249,76 +160,64 @@
             android:layout_height="101dp"
             android:id="@+id/button33"
             android:layout_gravity="center"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="65dp"
             android:layout_marginBottom="50dp"
             android:background="@drawable/zupy" />
 
     </FrameLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_toRightOf="@+id/linearLayout"
-        android:layout_toEndOf="@+id/linearLayout"
-        android:id="@+id/linearLayout6">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listView2" />
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/linearLayout5"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout5">
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
         <Button
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:id="@+id/button11"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/exit" />
+            android:layout_marginRight="25dp"
+            android:background="@drawable/powrot" />
 
         <Button
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:id="@+id/button12"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/przerwa" />
 
         <Button
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:id="@+id/button13"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/napiwek" />
 
         <Button
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:id="@+id/button14"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/rabat" />
 
         <Button
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:id="@+id/button15"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/anulacja" />
 
         <Button
             android:layout_width="90dp"
             android:layout_height="80dp"
             android:id="@+id/button16"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/odswierz" />
 
         <Button
@@ -326,51 +225,207 @@
             android:layout_height="80dp"
             android:id="@+id/Button17"
             android:background="@drawable/kasa" />
+
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="80dp"
+            android:id="@+id/button36"
+            android:background="@drawable/gotowka"
+            android:layout_marginLeft="25dp" />
+
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="80dp"
+            android:id="@+id/button37"
+            android:background="@drawable/faktura"
+            android:layout_marginLeft="25dp" />
+
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="80dp"
+            android:id="@+id/button42"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/rezerwacja" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="360dp"
+        android:layout_height="500dp"
+        android:minWidth="330dp"
+        android:minHeight="530dp"
+        android:weightSum="1"
+        android:id="@+id/linearLayout"
+        android:layout_alignBottom="@+id/linearLayout3"
+        android:layout_toRightOf="@+id/linearLayout4"
+        android:layout_toEndOf="@+id/linearLayout4">
+
+        <TextView
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nazwa:"
+            android:id="@+id/textView"
+            android:minHeight="40dp"
+            android:layout_above="@+id/lista"
+            android:layout_alignRight="@+id/linearLayout5"
+            android:layout_alignEnd="@+id/linearLayout5"
+            android:layout_marginRight="330dp"
+            android:layout_marginLeft="10dp" />
+
+        <ListView
+            android:layout_width="336dp"
+            android:layout_height="380dp"
+            android:id="@+id/lista"
+            android:layout_alignTop="@+id/linearLayout"
+            android:layout_toLeftOf="@+id/linearLayout4"
+            android:layout_toStartOf="@+id/linearLayout4"
+            android:layout_weight="0.55"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/Suma"
+            android:id="@+id/textView2"
+            android:layout_weight="0.17"
+            android:minHeight="50dp"
+            android:layout_alignBottom="@+id/linearLayout6"
+            android:layout_alignLeft="@+id/lista"
+            android:layout_alignStart="@+id/lista"
+            android:layout_alignRight="@+id/lista"
+            android:layout_alignEnd="@+id/lista" />
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
+        android:id="@+id/linearLayout2"
+        android:weightSum="1"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_toRightOf="@+id/linearLayout"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:layout_marginTop="-33dp">
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/button2"
+            android:background="@drawable/plus"
+            android:layout_marginTop="150dp" />
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/button3"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/usun"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/button4"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/minus"
+            android:layout_marginTop="0dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="80dp"
+        android:layout_height="500dp"
         android:id="@+id/linearLayout4"
-        android:layout_alignTop="@+id/linearLayout2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:weightSum="1"
+        android:layout_alignTop="@+id/linearLayout3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="377dp"
+            android:id="@+id/lista2"
+            android:layout_alignBottom="@+id/linearLayout6"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="38dp"
+            android:layout_marginTop="70dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="80dp"
+        android:layout_height="500dp"
+        android:layout_toRightOf="@+id/linearLayout3"
+        android:layout_toEndOf="@+id/linearLayout3"
+        android:layout_alignBottom="@+id/linearLayout2"
+        android:layout_marginBottom="-60dp"
+        android:id="@+id/linearLayout6">
 
         <Button
             android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:id="@+id/button6"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="75dp"
-            android:background="@drawable/sala1" />
+            android:background="@drawable/sala1"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/button7"
+            android:layout_toStartOf="@+id/button7"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp" />
 
         <Button
             android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:id="@+id/button7"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/sala2" />
+            android:background="@drawable/sala2"
+            android:layout_alignTop="@+id/button6"
+            android:layout_toLeftOf="@+id/button9"
+            android:layout_toStartOf="@+id/button9"
+            android:layout_marginRight="38dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginBottom="20dp" />
 
         <Button
             android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:id="@+id/button9"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/sala3" />
+            android:background="@drawable/sala3"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_alignTop="@+id/button7"
+            android:layout_toLeftOf="@+id/button8"
+            android:layout_toStartOf="@+id/button8"
+            android:layout_marginBottom="20dp" />
 
         <Button
             android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:id="@+id/button8"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/sala4" />
+            android:background="@drawable/sala4"
+            android:layout_alignTop="@+id/button9"
+            android:layout_toLeftOf="@+id/button10"
+            android:layout_toStartOf="@+id/button10"
+            android:layout_marginRight="45dp"
+            android:layout_marginEnd="45dp"
+            android:layout_marginBottom="20dp" />
 
         <Button
             android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:id="@+id/button10"
-            android:background="@drawable/sala5" />
+            android:background="@drawable/sala5"
+            android:layout_alignTop="@+id/button8"
+            android:layout_alignRight="@+id/linearLayout6"
+            android:layout_alignEnd="@+id/linearLayout6"
+            android:layout_marginRight="79dp"
+            android:layout_marginEnd="79dp" />
     </LinearLayout>
 
 </RelativeLayout>

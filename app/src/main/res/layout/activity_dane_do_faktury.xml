@@ -1,0 +1,268 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:noHistory="true"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.example.michal.siema.Dodawanie"
+    android:background="@drawable/images1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dane firmy / osoby"
+        android:id="@+id/textView132"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="220dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ulica / osiedle"
+        android:id="@+id/textView134"
+        android:layout_below="@+id/textView132"
+        android:layout_alignLeft="@+id/textView132"
+        android:layout_alignStart="@+id/textView132"
+        android:layout_marginTop="44dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Numer domu"
+        android:id="@+id/textView135"
+        android:layout_below="@+id/textView134"
+        android:layout_alignLeft="@+id/textView134"
+        android:layout_alignStart="@+id/textView134"
+        android:layout_marginTop="38dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Miejscowosc"
+        android:id="@+id/textView136"
+        android:layout_below="@+id/textView135"
+        android:layout_alignLeft="@+id/textView135"
+        android:layout_alignStart="@+id/textView135"
+        android:layout_marginTop="49dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Kod pocztowy"
+        android:id="@+id/textView137"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/textView136"
+        android:layout_alignLeft="@+id/textView136"
+        android:layout_alignStart="@+id/textView136"
+        android:textSize="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText28"
+        android:layout_above="@+id/textView134"
+        android:layout_toRightOf="@+id/textView132"
+        android:layout_toEndOf="@+id/textView132"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="158dp"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText29"
+        android:layout_above="@+id/textView134"
+        android:layout_toRightOf="@+id/editText28"
+        android:layout_toEndOf="@+id/editText28"
+        android:layout_marginLeft="140dp"
+        android:layout_marginStart="163dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText30"
+        android:layout_above="@+id/textView135"
+        android:layout_alignLeft="@+id/editText28"
+        android:layout_alignStart="@+id/editText28"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText31"
+        android:layout_above="@+id/textView135"
+        android:layout_alignLeft="@+id/editText29"
+        android:layout_alignStart="@+id/editText29" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText32"
+        android:layout_above="@+id/textView136"
+        android:layout_alignLeft="@+id/editText30"
+        android:layout_alignStart="@+id/editText30"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText33"
+        android:layout_alignTop="@+id/editText32"
+        android:layout_alignLeft="@+id/editText31"
+        android:layout_alignStart="@+id/editText31" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText34"
+        android:layout_above="@+id/textView137"
+        android:layout_alignLeft="@+id/editText32"
+        android:layout_alignStart="@+id/editText32"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText35"
+        android:layout_above="@+id/textView137"
+        android:layout_alignLeft="@+id/editText33"
+        android:layout_alignStart="@+id/editText33" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText36"
+        android:layout_alignBottom="@+id/textView137"
+        android:layout_alignLeft="@+id/editText34"
+        android:layout_alignStart="@+id/editText34"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText37"
+        android:layout_alignTop="@+id/editText36"
+        android:layout_alignLeft="@+id/editText35"
+        android:layout_alignStart="@+id/editText35" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dane Firmy"
+        android:id="@+id/textView138"
+        android:textSize="25dp"
+        android:layout_below="@+id/textView140"
+        android:layout_alignLeft="@+id/textView140"
+        android:layout_alignStart="@+id/textView140"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dane Klienta"
+        android:id="@+id/textView139"
+        android:layout_alignTop="@+id/textView138"
+        android:layout_alignLeft="@+id/editText29"
+        android:layout_alignStart="@+id/editText29"
+        android:textSize="25dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/button79"
+        android:layout_below="@+id/editText36"
+        android:layout_toRightOf="@+id/textView132"
+        android:layout_toEndOf="@+id/textView132"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/usun1" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/button80"
+        android:background="@drawable/plus2"
+        android:layout_alignTop="@+id/button79"
+        android:layout_toRightOf="@+id/editText36"
+        android:layout_toEndOf="@+id/editText36"
+        android:layout_marginLeft="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dane do faktury"
+        android:id="@+id/textView140"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="30dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/spinner8"
+        android:layout_above="@+id/editText28"
+        android:layout_alignLeft="@+id/editText28"
+        android:layout_alignStart="@+id/editText28"
+        android:layout_alignRight="@+id/editText28"
+        android:layout_alignEnd="@+id/editText28"
+        android:layout_marginBottom="20dp"
+        android:visibility="visible" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/spinner9"
+        android:layout_alignTop="@+id/spinner8"
+        android:layout_toRightOf="@+id/button80"
+        android:layout_alignRight="@+id/editText29"
+        android:layout_alignEnd="@+id/editText29" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Edycja danych"
+        android:id="@+id/textView141"
+        android:layout_alignTop="@+id/spinner8"
+        android:layout_alignLeft="@+id/textView132"
+        android:layout_alignStart="@+id/textView132"
+        android:textSize="25dp" />
+
+</RelativeLayout>

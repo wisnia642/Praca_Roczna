@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/images1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView33"
+        android:textSize="30dp"
+        android:textIsSelectable="false"
+        android:layout_marginTop="47dp"
+        android:text="Rozlicznie faktury"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/button60"
+        android:background="@drawable/plus2"
+        android:layout_below="@+id/textView144"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_marginTop="71dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/button61"
+        android:background="@drawable/usun1"
+        android:layout_marginRight="93dp"
+        android:layout_marginEnd="93dp"
+        android:layout_alignTop="@+id/button60"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/imageView4"
+        android:background="@drawable/faktura"
+        android:layout_alignTop="@+id/textView142"
+        android:layout_alignRight="@+id/button61"
+        android:layout_alignEnd="@+id/button61" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner2"
+        android:layout_alignBottom="@+id/imageView4"
+        android:layout_alignLeft="@+id/spinner11"
+        android:layout_alignStart="@+id/spinner11"
+        android:layout_marginBottom="-40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/textView45"
+        android:layout_alignTop="@+id/button60"
+        android:layout_alignLeft="@+id/spinner2"
+        android:layout_alignStart="@+id/spinner2" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner10"
+        android:layout_below="@+id/textView33"
+        android:layout_alignLeft="@+id/textView33"
+        android:layout_alignStart="@+id/textView33"
+        android:layout_marginTop="66dp" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner11"
+        android:layout_below="@+id/spinner10"
+        android:layout_alignLeft="@+id/spinner10"
+        android:layout_alignStart="@+id/spinner10"
+        android:layout_marginTop="62dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Zamówienie"
+        android:id="@+id/textView142"
+        android:layout_above="@+id/spinner11"
+        android:layout_toLeftOf="@+id/spinner10"
+        android:layout_toStartOf="@+id/spinner10"
+        android:layout_marginRight="141dp"
+        android:layout_marginEnd="141dp"
+        android:textSize="25dp"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dane Klienta"
+        android:id="@+id/textView143"
+        android:layout_alignBottom="@+id/spinner11"
+        android:layout_alignLeft="@+id/textView142"
+        android:layout_alignStart="@+id/textView142"
+        android:textSize="25dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dane firmy"
+        android:id="@+id/textView144"
+        android:layout_alignBottom="@+id/spinner2"
+        android:layout_alignLeft="@+id/textView143"
+        android:layout_alignStart="@+id/textView143"
+        android:layout_marginBottom="20dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Należność"
+        android:id="@+id/textView145"
+        android:textSize="25dp"
+        android:layout_alignBottom="@+id/textView45"
+        android:layout_alignLeft="@+id/textView144"
+        android:layout_alignStart="@+id/textView144"
+        android:layout_marginBottom="0dp" />
+
+</RelativeLayout>

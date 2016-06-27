@@ -13,5 +13,33 @@
     <string name="title_activity_zamowienie">Zamowienie</string>
     <string name="title_activity_dodawanie">Dodawanie</string>
     <string name="title_activity_usuwanie">Usuwanie</string>
+    <string name="title_activity_custom_adapter1">customAdapter1</string>
+    <string name="kwota_do_zaplaty">Large Text</string>
+    <string name="kwota_otrzymana">Kwota otrzymana</string>
+    <string name="title_activity_gotowka1">Gotowka1</string>
+    <string name="title_activity_faktura">Faktura</string>
+    <string name="title_activity_rezerwacja">Rezerwacja</string>
+    <string name="Suma">Suma:</string>
+    <string name="usun">New Button</string>
+    <string name="anuluj">New Button</string>
+    <string name="select">select</string>
+    <string name="prompt_text">prompt_text</string>
+    <string name="title_activity_kuchnia">Kuchnia</string>
+    <string name="title_activity_karta_dodawanie">Karta_dodawanie</string>
+    <string name="title_activity_lista_dodawanie">Lista_dodawanie</string>
+    <string name="title_activity_pprodukty_kategoria">Pprodukty_kategoria</string>
+    <string name="title_activity_glowne_menu">Glowne_menu</string>
+    <string name="title_activity_magzyn">Magzyn</string>
+    <string name="title_activity_koszt_potrawy">Koszt_potrawy</string>
+    <string name="title_activity_wykonane_potrawy">Wykonane_potrawy</string>
+    <string name="title_activity_lista_zakupow">Lista_zakupow</string>
+    <string name="title_activity_przychod">Przychod</string>
+    <string name="title_activity_logowanie">Logowanie</string>
+    <string name="title_activity_nowe_konto">Nowe_konto</string>
+    <string name="title_activity_glown_menu">Glown_menu</string>
+    <string name="title_activity_glowne_men">Glowne_men</string>
+    <string name="title_activity_gmenu">GMenu</string>
+    <string name="title_activity_dane_do_faktury">Dane_do_faktury</string>
+    <string name="title_activity_ustawienia">Ustawienia</string>
 
 </resources>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/images1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView33"
+            android:textSize="30dp"
+            android:textIsSelectable="false"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Rozlicznie rachunku gotówką" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:id="@+id/button60"
+            android:background="@drawable/plus2"
+            android:layout_marginRight="53dp"
+            android:layout_marginEnd="53dp"
+            android:layout_below="@+id/textView38"
+            android:layout_toLeftOf="@+id/button61"
+            android:layout_toStartOf="@+id/button61" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:id="@+id/button61"
+            android:background="@drawable/usun1"
+            android:layout_marginRight="84dp"
+            android:layout_marginEnd="84dp"
+            android:layout_alignTop="@+id/button60"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Kwota do zapłaty "
+            android:id="@+id/textView34"
+            android:layout_marginRight="114dp"
+            android:layout_marginEnd="114dp"
+            android:textSize="25dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/textView33"
+            android:layout_toStartOf="@+id/textView33" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/kwota_otrzymana"
+            android:id="@+id/textView35"
+            android:textSize="25dp"
+            android:layout_below="@+id/spinner3"
+            android:layout_alignLeft="@+id/textView39"
+            android:layout_alignStart="@+id/textView39"
+            android:layout_marginTop="51dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Reszta"
+            android:id="@+id/textView37"
+            android:layout_marginTop="77dp"
+            android:textSize="25dp"
+            android:layout_below="@+id/textView34"
+            android:layout_alignLeft="@+id/textView34"
+            android:layout_alignStart="@+id/textView34" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView36"
+            android:layout_alignTop="@+id/textView34"
+            android:textSize="25dp"
+            android:layout_alignLeft="@+id/editText6"
+            android:layout_alignStart="@+id/editText6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView38"
+            android:textSize="25dp"
+            android:layout_alignTop="@+id/textView37"
+            android:layout_alignLeft="@+id/editText6"
+            android:layout_alignStart="@+id/editText6"
+            android:text="0" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/editText6"
+            android:layout_alignTop="@+id/textView35"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Klient / Stolik"
+            android:id="@+id/textView39"
+            android:layout_marginTop="88dp"
+            android:layout_below="@+id/textView33"
+            android:layout_alignLeft="@+id/textView34"
+            android:layout_alignStart="@+id/textView34"
+            android:textSize="25dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner3"
+        android:spinnerMode="dropdown"
+        android:layout_alignTop="@+id/textView39"
+        android:layout_alignLeft="@+id/editText6"
+        android:layout_alignStart="@+id/editText6"
+        android:layout_alignRight="@+id/textView33"
+        android:layout_alignEnd="@+id/textView33" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/imageView4"
+        android:layout_above="@+id/textView37"
+        android:layout_alignLeft="@+id/button60"
+        android:layout_alignStart="@+id/button60"
+        android:background="@drawable/gotowka" />
+
+</RelativeLayout>

@@ -1,0 +1,238 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.example.michal.siema.Pprodukty_kategoria"
+    android:background="@drawable/images1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView77"
+        android:textSize="30dp"
+        android:text="LISTA ZAKUPÓW"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Produkty"
+        android:id="@+id/textView78"
+        android:layout_marginTop="51dp"
+        android:layout_below="@+id/textView77"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Kategoria"
+        android:id="@+id/textView79"
+        android:layout_marginLeft="44dp"
+        android:layout_above="@+id/editText11"
+        android:layout_toRightOf="@+id/editText11"
+        android:layout_toEndOf="@+id/editText11"
+        android:layout_marginStart="44dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ilość"
+        android:id="@+id/textView80"
+        android:layout_marginLeft="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_alignTop="@+id/textView79"
+        android:layout_toRightOf="@+id/editText12"
+        android:layout_toEndOf="@+id/editText12" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Stan Krytyczny"
+        android:id="@+id/textView81"
+        android:layout_alignTop="@+id/textView101"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ilość dettal."
+        android:id="@+id/textView86"
+        android:layout_alignTop="@+id/textView101"
+        android:layout_alignRight="@+id/textView100"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Przynależność"
+        android:id="@+id/textView100"
+        android:visibility="visible"
+        android:layout_above="@+id/editText11"
+        android:layout_toRightOf="@+id/editText13"
+        android:layout_toEndOf="@+id/editText13"
+        android:layout_marginLeft="69dp"
+        android:layout_marginStart="69dp" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText11"
+        android:layout_below="@+id/textView78"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        android:textSize="22dp" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText12"
+        android:layout_alignBottom="@+id/editText11"
+        android:layout_alignLeft="@+id/textView79"
+        android:layout_alignStart="@+id/textView79"
+        android:textSize="22dp"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText13"
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/editText17"
+        android:layout_toRightOf="@+id/textView77"
+        android:layout_toEndOf="@+id/textView77" />
+
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner5"
+        android:layout_alignBottom="@+id/editText13"
+        android:layout_alignLeft="@+id/textView100"
+        android:layout_alignStart="@+id/textView100" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText16"
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/editText12"
+        android:layout_toLeftOf="@+id/textView77"
+        android:layout_toStartOf="@+id/textView77" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:id="@+id/listView4"
+        android:layout_below="@+id/button52"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="44dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="POPRAW"
+        android:id="@+id/button52"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/editText16"
+        android:layout_toLeftOf="@+id/editText17"
+        android:layout_toStartOf="@+id/editText17" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cena    "
+        android:id="@+id/textView101"
+        android:layout_above="@+id/editText11"
+        android:layout_alignRight="@+id/editText13"
+        android:layout_alignEnd="@+id/editText13" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText17"
+        android:textSize="22dp"
+        android:layout_alignTop="@+id/editText16"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="USUN"
+        android:id="@+id/button51"
+        android:layout_alignTop="@+id/button53"
+        android:layout_toLeftOf="@+id/editText13"
+        android:layout_toStartOf="@+id/editText13"
+        android:layout_marginRight="-7dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Wyślij EMAIL"
+        android:id="@+id/button53"
+        android:layout_above="@+id/listView4"
+        android:layout_toLeftOf="@+id/spinner5"
+        android:layout_toStartOf="@+id/spinner5" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="CANCEL"
+        android:id="@+id/button54"
+        android:layout_above="@+id/listView4"
+        android:layout_toRightOf="@+id/textView79"
+        android:layout_toEndOf="@+id/textView79" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Dodaj"
+        android:id="@+id/button68"
+        android:layout_above="@+id/listView4"
+        android:layout_toRightOf="@+id/textView78"
+        android:layout_toEndOf="@+id/textView78" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Wyślij SMS"
+        android:id="@+id/button69"
+        android:layout_marginLeft="71dp"
+        android:layout_marginStart="71dp"
+        android:layout_alignTop="@+id/button53"
+        android:layout_toRightOf="@+id/button53"
+        android:layout_toEndOf="@+id/button53" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner7"
+        android:layout_above="@+id/button52"
+        android:layout_alignLeft="@+id/editText12"
+        android:layout_alignStart="@+id/editText12"
+        android:layout_toLeftOf="@+id/textView80"
+        android:layout_toStartOf="@+id/textView80" />
+
+</RelativeLayout>
