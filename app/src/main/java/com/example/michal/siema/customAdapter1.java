@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -24,6 +25,7 @@ public class customAdapter1 extends ArrayAdapter<String> {
     private final String[] Stan;
     private final int poz;
 
+
     public customAdapter1(Activity context,
                          String[] zm,String[] zm1, String[] zm2,int zm3,String[] zm4) {
         super(context, R.layout.custom_row1, zm);
@@ -34,6 +36,9 @@ public class customAdapter1 extends ArrayAdapter<String> {
         this.poz = zm3;
         this.Stan = zm4;
     }
+
+
+
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
         View rowView1=inflater.inflate(R.layout.custom_row1, null,true);
@@ -42,9 +47,10 @@ public class customAdapter1 extends ArrayAdapter<String> {
         TextView txtTitle1 = (TextView) rowView1.findViewById(R.id.Text2);
         ImageView imageView = (ImageView) rowView1.findViewById(R.id.Image);
 
-            txtTitle.setText(Danie[position]);
+            txtTitle.setText(Danie[position]); //Danie zmiana
             txtTitle1.setText(Ilosc[position]);
             String zdjencie = (Zdjecie[position]);
+
 
         if(Stan[position]!="null")
         {
@@ -60,9 +66,6 @@ public class customAdapter1 extends ArrayAdapter<String> {
         }
         return rowView1;
 
-
     }
-
-
 
 }

@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -62,6 +64,7 @@ public class MainActivity extends ActionBarActivity {
     String zm=null;
     Double zm1;
     Double zm2;
+    Double zm3;
     int Numer,Numer1,wartosc;
     int x,w,c,a,q,z,p;
     FileOutputStream fos;
@@ -70,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
     String s,m,k,W,login,haslo;
     String hash1,textboks;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.0.88:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -136,6 +139,7 @@ public class MainActivity extends ActionBarActivity {
         try {
             connection = DriverManager.getConnection(url,user,pass);
         } catch (SQLException e) {
+            showToast("brak polaczenia z internetem");
             return;
         }
 
@@ -153,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 if(wartosc==3)
                 {
-                    sampleDB.execSQL("UPDATE Zamowienie SET Suma=('"+zm2+"') WHERE Klient=('"+klient[w]+"')" );
+                    sampleDB.execSQL("UPDATE Zamowienie SET Suma=('"+zm3+"') WHERE Klient=('"+klient[w]+"')" );
                 }
                 sampleDB.close();
 
@@ -172,7 +176,7 @@ public class MainActivity extends ActionBarActivity {
             try {
                 st.executeUpdate(sql);
             } catch (SQLException e1) {
-                // e1.printStackTrace();
+                 e1.printStackTrace();
             }}
         }
 
@@ -218,16 +222,16 @@ public class MainActivity extends ActionBarActivity {
 
             Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE", null);
 
-           while (c.moveToNext()) {
-               zm = String.valueOf(c.getString(1));
-               if(zm!=null){
-                   Klient[x] = String.valueOf(c.getString(0));
-                   Danie[x] = String.valueOf(c.getString(1));
-                   Ilosc[x] = String.valueOf(c.getString(2));
-                   Zdjecie[x] = String.valueOf(c.getString(5));
-                   Suma[x] = Double.valueOf(c.getDouble(6));
-                   Stan[x] = String.valueOf(c.getString(9));
-                x++;}
+            while (c.moveToNext()) {
+                zm = String.valueOf(c.getString(1));
+                if(zm!=null){
+                    Klient[x] = String.valueOf(c.getString(0));
+                    Danie[x] = String.valueOf(c.getString(1));
+                    Ilosc[x] = String.valueOf(c.getString(2));
+                    Zdjecie[x] = String.valueOf(c.getString(5));
+                    Suma[x] = Double.valueOf(c.getDouble(6));
+                    Stan[x] = String.valueOf(c.getString(9));
+                    x++;}
             }
             sampleDB.close();
         } catch (Exception a) {
@@ -324,15 +328,14 @@ public class MainActivity extends ActionBarActivity {
                 } catch (SQLException e1) {
                 }
                 try{
-                    PreparedStatement stmt = connection.prepareStatement(sql);
-                    rs = stmt.executeQuery();
-
                     while (rs.next())
                     {
                         Klient[x] = rs.getString("Klient");
                         Danie[x] = rs.getString("Danie");
                         Ilosc[x] = rs.getString("Ilosc");
                         Suma[x] = rs.getDouble("Suma");
+                        Stan[x] = rs.getString("Stan");
+                      //  showToast(Stan[x]);
                         File image = new File("/mnt/sdcard/"+Klient[x]+".jpg");
                         Zdjecie[x] = "/mnt/sdcard/"+Klient[x]+".jpg";
                         try {
@@ -370,7 +373,8 @@ public class MainActivity extends ActionBarActivity {
                 if(connection!=null)
                     connection.close();
             }catch(SQLException se){
-                showToast("brak polaczenia z internetem");}
+               // showToast("brak polaczenia z internetem");
+               showToast(""+se);}
 
         }
     }
@@ -521,13 +525,13 @@ public class MainActivity extends ActionBarActivity {
                 }
                 sampleDB.close();
             } catch (Exception e) {
-                //showToast(""+e);
+                showToast(""+e);
             }
             i++;
         }
     }
 
-    //wczytywanie danych z tablicy do bazy danych
+    //wczytywanie danych z tablicy do bazy danych dodawanie
     public void wczytywanie2() {
         p=0;
         connect();
@@ -712,15 +716,14 @@ public class MainActivity extends ActionBarActivity {
         W = applesData.getString("wszystko");
 
         readsqlLigt1();
-        if(login==null)
-        {
+        if(login==null) {
             wczytywanie1();
         }
 
         //odczyt z bazy danych i z pliku
-            readsqlLight();
+         readsqlLight();
         if(Klient[0]==null){
-                wczytywanie();
+            wczytywanie();
             }
 
         try{zdjecie1();}catch (Exception e){}
@@ -813,49 +816,54 @@ public class MainActivity extends ActionBarActivity {
         rabat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View popUpView = getLayoutInflater().inflate(R.layout.popup, null);
-                // inflating popup layout
-                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                //Creation of popup
-                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
-                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                if(ilosc[Numer1]!=null) {
+                    View popUpView = getLayoutInflater().inflate(R.layout.popup, null);
+                    // inflating popup layout
+                    mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                    //Creation of popup
+                    mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                    mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-                final TextView textV = (TextView) popUpView.findViewById(R.id.textView33);
-                textV.setText("Rabat w %");
+                    final TextView textV = (TextView) popUpView.findViewById(R.id.textView33);
+                    textV.setText("Rabat w %");
 
-                Button btnOk = (Button) popUpView.findViewById(R.id.button60);
-                final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
+                    Button btnOk = (Button) popUpView.findViewById(R.id.button60);
+                    final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
 
-                btnOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            double zm3 = Double.parseDouble(editT.getText().toString());
-                            zm2 = zm1 - ((zm1 * zm3) / 100);
-                            zm2 *= 100; // zaokraglanie
-                            zm2 = Double.valueOf(Math.round(zm2));
-                            zm2 /= 100;
-                            Txt1.setText("Suma + rabat: " + String.valueOf(zm2));
+                    btnOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
                             try {
-                                wartosc = 3;
-                                funkcjonalnosci();
-                            }catch (Exception w){}
-                        } catch (Exception e) {
+                                double zm4 = Double.parseDouble(editT.getText().toString());
+                                zm1 = suma[Numer1];
+                                zm2 = zm1 - ((zm1 * zm4) / 100);
+                                zm2 *= 100; // zaokraglanie
+                                zm3 = Double.valueOf(Math.round(zm2));
+                                zm3 /= 100;
+                                Txt1.setText("Suma + rabat: " + String.valueOf(zm3));
+                                try {
+                                    wartosc = 3;
+                                    funkcjonalnosci();
+                                } catch (Exception w) {
+                                }
+                            } catch (Exception e) {
+                            }
+                            mpopup.dismiss();
                         }
-                        mpopup.dismiss();
-                    }
-                });
+                    });
 
-                Button btnCancel = (Button) popUpView.findViewById(R.id.button61);
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mpopup.dismiss();
-                    }
-                });
+                    Button btnCancel = (Button) popUpView.findViewById(R.id.button61);
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mpopup.dismiss();
+                        }
+                    });
 
 
-
+                }
+                else
+                { showToast("Wybierz rachunek do udzielenia rabatu");}
             }
         });
 
@@ -872,9 +880,13 @@ public class MainActivity extends ActionBarActivity {
         anulacja.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ilosc[Numer1]!=null) {
                 anulacja_sqlLight_SQL();
                 finish();
-                startActivity(getIntent());
+                startActivity(getIntent());}
+                else{
+                    showToast("Wybierz rachunek do anulowania");
+                }
             }
 
 
@@ -931,7 +943,6 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    if(Stan[Numer1]!=null) {
                         if (ilosc[Numer1] != null & !ilosc[Numer1].equals("0")) {
                             z = Integer.parseInt(ilosc[Numer1]);
                             z++;
@@ -949,6 +960,7 @@ public class MainActivity extends ActionBarActivity {
                                 }
                                 i++;
                             }
+                          //  showToast("Danie zostało wykonane");
                             wartosc = 1;
                             funkcjonalnosci();
                             finish();
@@ -956,7 +968,6 @@ public class MainActivity extends ActionBarActivity {
                         } else {
                             showToast("wybierz danie do zwiększenia ilości");
                         }
-                    }else {showToast("Danie zostało wykonane");}
                 }catch (Exception e){}
             }
         });
@@ -965,7 +976,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    if(Stan[Numer1]!=null) {
+
                     if(ilosc[Numer1]!=null & !ilosc[Numer1].equals("0")) {
                         z = Integer.parseInt(ilosc[Numer1]);
                         z--;
@@ -982,6 +993,7 @@ public class MainActivity extends ActionBarActivity {
                             }
                             i++;
                         }
+                       // showToast("Danie zostało wykonane");
                         wartosc = 1;
                         funkcjonalnosci();
                         finish();
@@ -990,7 +1002,7 @@ public class MainActivity extends ActionBarActivity {
                     else {
                         showToast("wybierz danie do zmniejszenia ilości");
                     }
-                    }else {showToast("Danie zostało wykonane");}
+
                 }catch (Exception e) {}
             }
         });
@@ -1017,6 +1029,7 @@ public class MainActivity extends ActionBarActivity {
                 try {
                     Numer = position;
                     SqlLight();
+
                 } catch (Exception e) {
                 }
 
@@ -1029,6 +1042,7 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                    Numer1=position;
+              //  showToast(stan1[position]);
                 Txt1.setText("Suma: " + String.valueOf(suma[Numer1]));
               //  if(wartosc==1||wartosc==2) {
                 //    funkcjonalnosci();
@@ -1040,46 +1054,47 @@ public class MainActivity extends ActionBarActivity {
         napiwek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View popUpView = getLayoutInflater().inflate(R.layout.popup, null);
-                // inflating popup layout
-                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                //Creation of popup
-                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
-                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                if(ilosc[Numer1]!=null) {
+                    View popUpView = getLayoutInflater().inflate(R.layout.popup, null);
+                    // inflating popup layout
+                    mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                    //Creation of popup
+                    mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                    mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-                final TextView textV = (TextView) popUpView.findViewById(R.id.textView33);
-                textV.setText("Napiwek w zł");
+                    final TextView textV = (TextView) popUpView.findViewById(R.id.textView33);
+                    textV.setText("Napiwek w zł");
 
-                Button btnOk = (Button)popUpView.findViewById(R.id.button60);
-                final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
-                btnOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            zm2 = Double.valueOf(editT.getText().toString());
-                            zm2 = zm1 + zm2;
-                            Txt1.setText("Suma "+zm1+"  + napiwek" + String.valueOf(zm2));
+                    Button btnOk = (Button) popUpView.findViewById(R.id.button60);
+                    final EditText editT = (EditText) popUpView.findViewById(R.id.editText5);
+                    btnOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                try {
+                                    zm2 = Double.valueOf(editT.getText().toString());
+                                    zm1 = suma[Numer1];
+                                    zm3 = zm1 + zm2;
+                                    Txt1.setText("Suma + napiwek " + String.valueOf(zm3));
+                                    wartosc = 3;
+                                    funkcjonalnosci();
 
-                        }catch (Exception e){}
-                        try {
-                            wartosc = 3;
-                            funkcjonalnosci();
-                        }catch (Exception e){}
+                                    //odowołanie alerta
+                                    mpopup.dismiss();
+                                }catch (Exception r){showToast(""+r);}
+                        }
+                    });
 
-                        //odowołanie alerta
-                        mpopup.dismiss();
-                    }
-                });
+                    Button btnCancel = (Button) popUpView.findViewById(R.id.button61);
 
-                Button btnCancel = (Button)popUpView.findViewById(R.id.button61);
-
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mpopup.dismiss();
-                    }
-                });
-
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mpopup.dismiss();
+                        }
+                    });
+                }
+                else
+                {showToast("Wybierz rachunek do przyznania rabatu");}
             }
         });
 

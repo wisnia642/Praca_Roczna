@@ -142,11 +142,11 @@ public class Karta extends ActionBarActivity {
         }
     }
     private void zdjecie6() {
-            if(zdjecie[5].equals("brak")){
-                buton6.setBackgroundResource(R.drawable.brak);
-            } else{
-                thumbnail = (BitmapFactory.decodeFile(zdjecie[5]));
-                buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
+        if(zdjecie[5].equals("brak")){
+            buton6.setBackgroundResource(R.drawable.brak);
+        } else{
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[5]));
+            buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
 
     }
     private  void zdjecie7()
@@ -184,7 +184,7 @@ public class Karta extends ActionBarActivity {
     private  void zdjecie11(){
         if(zdjecie[10].equals("brak")) {buton11.setBackgroundResource(R.drawable.brak);}
         else {
-        thumbnail = (BitmapFactory.decodeFile(zdjecie[10]));
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[10]));
             buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
     }
     private  void zdjecie12() {
@@ -222,7 +222,7 @@ public class Karta extends ActionBarActivity {
     private  void zdjecie16(){
         if(zdjecie[15].equals("brak")) {buton16.setBackgroundResource(R.drawable.brak);}
         else {
-        thumbnail = (BitmapFactory.decodeFile(zdjecie[15]));
+            thumbnail = (BitmapFactory.decodeFile(zdjecie[15]));
             buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));}
 
     }
@@ -279,279 +279,279 @@ public class Karta extends ActionBarActivity {
 
 
 
-            buton1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Makarony";
-                    stan = 0;
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    startActivity(i);
-                }
-            });
-            buton2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Przystawki";
-                    stan = 1;
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    startActivity(i);
-                }
-            });
-            buton3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Ryba";
-                    stan=2;
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    startActivity(i);
-                }
-            });
-            buton4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Salatki";
-                    stan=3;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton5.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Fast_Food";
-                    stan=4;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton6.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Pizza";
-                    stan=5;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton7.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Zupy";
-                    stan=6;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton8.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Suszi";
-                    stan=7;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton9.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Wina";
-                    stan=8;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton10.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Piwo";
-                    stan=9;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton11.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Desery";
-                    stan=10;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton12.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Dodatki";
-                    stan=11;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton13.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Napoje_Gazowane";
-                    stan=12;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton14.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Napoje_Zimne";
-                    stan=13;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton15.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Napoje_Gorace";
-                    stan=14;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
-            buton16.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Karta.this, Lista.class);
-                    userMassage = "Soki";
-                    stan = 15;
-                    i.putExtra("sala_sprzedazy", s);
-                    i.putExtra("wszystko", W);
-                    i.putExtra("magazyn", m);
-                    i.putExtra("kuchnia", k);
-                    i.putExtra("applesMessage", userMassage);
-                    i.putExtra("Sala", posilek);
-                    startActivity(i);
-                }
-            });
+        buton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Makarony";
+                stan = 0;
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                startActivity(i);
+            }
+        });
+        buton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Przystawki";
+                stan = 1;
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                startActivity(i);
+            }
+        });
+        buton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Ryba";
+                stan=2;
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                startActivity(i);
+            }
+        });
+        buton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Salatki";
+                stan=3;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Fast_Food";
+                stan=4;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Pizza";
+                stan=5;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Zupy";
+                stan=6;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Suszi";
+                stan=7;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Wina";
+                stan=8;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Piwo";
+                stan=9;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Desery";
+                stan=10;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Dodatki";
+                stan=11;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Napoje_Gazowane";
+                stan=12;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Napoje_Zimne";
+                stan=13;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Napoje_Gorace";
+                stan=14;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
+        buton16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Karta.this, Lista.class);
+                userMassage = "Soki";
+                stan = 15;
+                i.putExtra("sala_sprzedazy", s);
+                i.putExtra("wszystko", W);
+                i.putExtra("magazyn", m);
+                i.putExtra("kuchnia", k);
+                i.putExtra("applesMessage", userMassage);
+                i.putExtra("Sala", posilek);
+                startActivity(i);
+            }
+        });
 
-            buton1.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    userMassage = "Makarony";
-                    stan = 0;
-                    switch (wiadomosc){
-                        case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
+        buton1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                userMassage = "Makarony";
+                stan = 0;
+                switch (wiadomosc){
+                    case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
 
-                        case 2:
-                            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(intent, 2);break;
+                    case 2:
+                        intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 2);break;
 
-                        case 3:
-                            buton1.setBackgroundResource(R.drawable.brak);
-                            zdjecie[stan]= "brak";
-                            savesqlLight(); break;
+                    case 3:
+                        buton1.setBackgroundResource(R.drawable.brak);
+                        zdjecie[stan]= "brak";
+                        savesqlLight(); break;
 
-                        case 4:
-                            buton1.setBackgroundResource(R.drawable.makarony);
-                            zdjecie[stan]="";
-                            savesqlLight(); break;
-                        default:
-                    }
-                    return true;
+                    case 4:
+                        buton1.setBackgroundResource(R.drawable.makarony);
+                        zdjecie[stan]="";
+                        savesqlLight(); break;
+                    default:
                 }
-            });
+                return true;
+            }
+        });
         buton2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                    userMassage = "Przystawki";
-                    stan = 1;
+                userMassage = "Przystawki";
+                stan = 1;
                 switch (wiadomosc){
                     case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
@@ -578,8 +578,8 @@ public class Karta extends ActionBarActivity {
         buton3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                    userMassage = "Ryba";
-                    stan = 2;
+                userMassage = "Ryba";
+                stan = 2;
                 switch (wiadomosc){
                     case 1: Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, CAMERA_PIC_REQUEST);break;
@@ -965,193 +965,192 @@ public class Karta extends ActionBarActivity {
             }
         });
 
-        }
+    }
 
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == CAMERA_PIC_REQUEST) {
-                //2
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                switch (stan) {
-                    case 0:
-                        buton1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 1:
-                        buton2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 2:
-                        buton3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 3:
-                        buton4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 4:
-                        buton5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 5:
-                        buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 6:
-                        buton7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 7:
-                        buton8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 8:
-                        buton9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 9:
-                        buton10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 10:
-                        buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 11:
-                        buton12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 12:
-                        buton13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 13:
-                        buton14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 14:
-                        buton15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 16:
-                        buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    default:
-                        break;
-                }
-                //3
-                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                //4
-                File file = new File(Environment.getExternalStorageDirectory() + File.separator + userMassage+".jpg");
-                try {
-                    zdjecie[stan] = String.valueOf(file);
-                    savesqlLight();
-                    file.createNewFile();
-                    FileOutputStream fo = new FileOutputStream(file);
-                    //5
-                    fo.write(bytes.toByteArray());
-                    fo.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-
-            if (requestCode == 2) {
-
-                Uri selectedImage = data.getData();
-                String[] filePath = {MediaStore.Images.Media.DATA};
-                Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
-                c.moveToFirst();
-                int columnIndex = c.getColumnIndex(filePath[0]);
-                String picturePath = c.getString(columnIndex);
-                c.close();
-                zdjecie[stan] = picturePath;
-                savesqlLight();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(zdjecie[stan]));
-                // Log.w("path of image from gallery......******************.........", picturePath+"");
-                switch (stan) {
-                    case 0:
-                        buton1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 1:
-                        buton2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 2:
-                        buton3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 3:
-                        buton4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 4:
-                        buton5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 5:
-                        buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 6:
-                        buton7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 7:
-                        buton8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 8:
-                        buton9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 9:
-                        buton10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 10:
-                        buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 11:
-                        buton12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 12:
-                        buton13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 13:
-                        buton14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 14:
-                        buton15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
-                        break;
-                    case 16:
+    @Override
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_PIC_REQUEST) {
+            //2
+            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            switch (stan) {
+                case 0:
+                    buton1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 1:
+                    buton2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 2:
+                    buton3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 3:
+                    buton4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 4:
+                    buton5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 5:
+                    buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 6:
+                    buton7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 7:
+                    buton8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 8:
+                    buton9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 9:
+                    buton10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 10:
+                    buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 11:
+                    buton12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 12:
+                    buton13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 13:
+                    buton14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 14:
+                    buton15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 16:
                     buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
                     break;
-                    default:
-                        break;
-                }
-
-            }}
-
-            @Override
-            public boolean onCreateOptionsMenu (Menu menu){
-                if(W.equals("1")) {
-                    menu.add(0, PIERWSZY_ELEMENT, 0, "Zrob Zdjecie");
-                    menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjecie");
-                    menu.add(2, TRZECI_ELEMENT, 0, "Brak Zdjecia");
-                    menu.add(3, CZWARTY_ELEMENT, 0, "Reset Zdjecia");
-                }
-                    return true;
-
+                default:
+                    break;
             }
-
-            @Override
-            public boolean onOptionsItemSelected (MenuItem item){
-
-                switch (item.getItemId()) {
-
-                    case PIERWSZY_ELEMENT:
-                           wiadomosc=1;
-                            showToast("aby dodac zdjecie przytrzymaj dana kategorie");
-                        break;
-                    case DRUGI_ELEMENT:
-                        wiadomosc=2;
-                        showToast("aby dodac zdjecie przytrzymaj dana kategorie");
-                        break;
-                    case TRZECI_ELEMENT:
-                        wiadomosc=3;
-                        showToast("aby dodac zdjecie przytrzymaj dana kategorie");
-                        break;
-                    case CZWARTY_ELEMENT:
-                        wiadomosc=4;
-                        showToast("aby dodac zdjecie przytrzymaj dana kategorie");
-                        break;
-                    default:
-
-
-                }
-                return true;
+            //3
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            //4
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + userMassage+".jpg");
+            try {
+                zdjecie[stan] = String.valueOf(file);
+                savesqlLight();
+                file.createNewFile();
+                FileOutputStream fo = new FileOutputStream(file);
+                //5
+                fo.write(bytes.toByteArray());
+                fo.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-
         }
 
+
+        if (requestCode == 2) {
+
+            Uri selectedImage = data.getData();
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            zdjecie[stan] = picturePath;
+            savesqlLight();
+            Bitmap thumbnail = (BitmapFactory.decodeFile(zdjecie[stan]));
+            // Log.w("path of image from gallery......******************.........", picturePath+"");
+            switch (stan) {
+                case 0:
+                    buton1.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 1:
+                    buton2.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 2:
+                    buton3.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 3:
+                    buton4.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 4:
+                    buton5.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 5:
+                    buton6.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 6:
+                    buton7.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 7:
+                    buton8.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 8:
+                    buton9.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 9:
+                    buton10.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 10:
+                    buton11.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 11:
+                    buton12.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 12:
+                    buton13.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 13:
+                    buton14.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 14:
+                    buton15.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                case 16:
+                    buton16.setBackground(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(thumbnail, 95, 28, true)));
+                    break;
+                default:
+                    break;
+            }
+
+        }}
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu){
+        if(W.equals("1")) {
+            menu.add(0, PIERWSZY_ELEMENT, 0, "Zrob Zdjecie");
+            menu.add(1, DRUGI_ELEMENT, 0, "Dodaj zdjecie");
+            menu.add(2, TRZECI_ELEMENT, 0, "Brak Zdjecia");
+            menu.add(3, CZWARTY_ELEMENT, 0, "Reset Zdjecia");
+        }
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+
+        switch (item.getItemId()) {
+
+            case PIERWSZY_ELEMENT:
+                wiadomosc=1;
+                showToast("aby dodac zdjecie przytrzymaj dana kategorie");
+                break;
+            case DRUGI_ELEMENT:
+                wiadomosc=2;
+                showToast("aby dodac zdjecie przytrzymaj dana kategorie");
+                break;
+            case TRZECI_ELEMENT:
+                wiadomosc=3;
+                showToast("aby dodac zdjecie przytrzymaj dana kategorie");
+                break;
+            case CZWARTY_ELEMENT:
+                wiadomosc=4;
+                showToast("aby dodac zdjecie przytrzymaj dana kategorie");
+                break;
+            default:
+
+
+        }
+        return true;
+    }
+
+}

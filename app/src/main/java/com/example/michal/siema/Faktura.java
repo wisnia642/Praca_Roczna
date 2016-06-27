@@ -82,7 +82,7 @@ public class Faktura extends ActionBarActivity {
     List<String> listaStringow2 = new ArrayList<String>();
 
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -738,7 +738,7 @@ public class Faktura extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                     try {
-                        if(Kwota.getText().toString()!=null) {
+                        if(!listaStringow.isEmpty()) {
                             //pobieranie daty do faktury
                             ZapisMySql();
                             ZapisSqlLight();
@@ -749,6 +749,7 @@ public class Faktura extends ActionBarActivity {
                             createPDF();
                             open();
                         }
+                   else{showToast("Brak klientów do wystawienia faktury");}
                     }catch (Exception e){}
                 }
         });
@@ -873,7 +874,6 @@ public class Faktura extends ActionBarActivity {
 
         public View getCustomView(int position, View convertView, ViewGroup parent)
         {
-
             c=position;
             LayoutInflater inflater = getLayoutInflater();
             View mySpinner = inflater.inflate(custom_spiner1, parent, false);

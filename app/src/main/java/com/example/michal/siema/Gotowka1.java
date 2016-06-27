@@ -40,7 +40,7 @@ public class Gotowka1 extends ActionBarActivity {
     static ResultSet rs;
     static Statement st;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -136,65 +136,72 @@ public class Gotowka1 extends ActionBarActivity {
                 }
             }
             if (wartosc == 2) {
-            String sql1 = "INSERT INTO Historia (Data,Czas,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+login+"')";
-            try {
-                st.executeUpdate(sql1);
+                String sql1 = "INSERT INTO Historia (Data,Czas,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + Klient[w] + "','" + Suma[w] + "','"+login+"')";
+                try {
+                    st.executeUpdate(sql1);
 
-            } catch (SQLException e) {
+                } catch (SQLException e) {
 
-            }
-                String sql = "DELETE FROM Zamowienie WHERE Klient=('" + klient[w] + "')";
+                }
+                String sql = "DELETE FROM Zamowienie WHERE Klient=('" + Klient[w] + "')";
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e1) {
 
                 }
-        }
-        try {
-            if (connection != null)
-                connection.close();
-        } catch (SQLException se) {
-            showToast("brak polaczenia z internetem");
-        }
+            }
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak polaczenia z internetem");
+            }
 
-    }}
+        }}
 
     private void readsqlLight() {
 
-            SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
+        SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
-            if(wartosc==1){
-                try {
-            Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
+        if(wartosc==1){
+            try {
+                Cursor c  = sampleDB.rawQuery("SELECT * FROM ZAMOWIENIE",null);
 
-            while (c.moveToNext()) {
-                zm = String.valueOf(c.getString(1));
-                if(zm!=null){
-                    Klient[x] = String.valueOf(c.getString(0));
-                    Suma[x] = Double.valueOf(c.getDouble(6));
-                    x++;}
-            }
-            sampleDB.close();
-        } catch (Exception e){
-            }
-            }
+                while (c.moveToNext()) {
+                    zm = String.valueOf(c.getString(0));
+                    if(zm!=null){
+                        Klient[x] = String.valueOf(c.getString(0));
+                        Suma[x] = Double.valueOf(c.getDouble(6));
+                        x++;}
+                }
+                sampleDB.close();
 
-            if(wartosc==2)
-            {
-                ToDataBase();
-                try {
+                for (int i = 0; i < x; i = i + 0) {
+
+                    listaStringow.add(Klient[i]);
+                    i++;
+                }
+
+            } catch (Exception e){
+            }
+        }
+
+        if(wartosc==2)
+        {
+            ToDataBase();
+            try {
                 SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-                 sampleDB1.execSQL("INSERT INTO historia (Data,Casz,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + klient[w] + "','" + Suma[w] + "','"+login+"')");
+                sampleDB1.execSQL("INSERT INTO historia (Data,Casz,Klient,Suma,Kto_wykonal) VALUES ('" + data + "','" + data1 + "','" + Klient[w] + "','" + Suma[w] + "','"+login+"')");
                 sampleDB1.close();
             } catch (Exception e){
-        }
-                try {
+            }
+            try {
                 SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-                sampleDB1.execSQL("DELETE FROM Zamowienie WHERE Klient=('" + klient[w] + "')");
-                    sampleDB1.close();
-                } catch (Exception e){
-                }
-             }
+                sampleDB1.execSQL("DELETE FROM Zamowienie WHERE Klient=('" + Klient[w] + "')");
+                sampleDB1.close();
+            } catch (Exception e){
+            }
+        }
     }
 
     public void spinner()
@@ -296,27 +303,6 @@ public class Gotowka1 extends ActionBarActivity {
         SimpleDateFormat sdf1 = new SimpleDateFormat("kk:mm:ss");
         data1 = sdf1.format(new Date());
 
-        for (int i = 0; i < x; i = i + 0) {
-            for (int j = 0; j < x; j = j + 0) {
-                if (j == 0) {
-                    j = j + i;
-                }
-
-                if (Klient[j].equals(Klient[i])) {
-                    w = w + 1;
-                }
-                j = j + 1;
-            }
-            if (w == 1) {
-                klient[c] = Klient[i];
-                listaStringow.add(klient[c]);
-                c = c + 1;
-
-            }
-            w = 0;
-            i = i + 1;
-        }
-        c = 0;
 
         Stolik = (Spinner) findViewById(R.id.spinner3);
         Stolik.setAdapter(new Gotowka1.MyAdapter(this, R.layout.custom_spiner1, listaStringow));
@@ -357,9 +343,11 @@ public class Gotowka1 extends ActionBarActivity {
                         wartosc = 2;
                         wczytywanie();
                         readsqlLight();
+                        wartosc=1;
+                        readsqlLight();
                         spinner();
                     }else{
-                        showToast("Wpisana kwota jest za mała");
+                        showToast("Wybierz Klient / Stolik");
                     }
                 } catch (Exception e) {
                 }
@@ -404,7 +392,7 @@ public class Gotowka1 extends ActionBarActivity {
             LayoutInflater inflater = getLayoutInflater();
             View mySpinner = inflater.inflate(R.layout.custom_spiner1, parent, false);
             TextView main_text = (TextView) mySpinner .findViewById(R.id.text2);
-            main_text.setText(klient[position]);
+            main_text.setText(Klient[position]);
             return mySpinner;
         }}
 }

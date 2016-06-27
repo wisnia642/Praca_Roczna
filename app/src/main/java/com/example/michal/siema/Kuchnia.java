@@ -94,7 +94,7 @@ public class Kuchnia extends ActionBarActivity {
     Boolean stan5=false;
     Boolean stan6=false;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -221,7 +221,7 @@ public class Kuchnia extends ActionBarActivity {
     }
 
     private void readsqlLight() {
-            ToDataBase();
+        ToDataBase();
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
@@ -254,7 +254,7 @@ public class Kuchnia extends ActionBarActivity {
                     A++;}
             }
 
-             C=0;
+            C=0;
             Cursor b  = sampleDB.rawQuery("SELECT * FROM Magazyn",null);
 
             while (b.moveToNext()) {
@@ -266,7 +266,7 @@ public class Kuchnia extends ActionBarActivity {
                     C++;}
             }
 
-              B=0;
+            B=0;
             Cursor d  = sampleDB.rawQuery("SELECT * FROM Mroznia",null);
 
             while (d.moveToNext()) {
@@ -426,7 +426,7 @@ public class Kuchnia extends ActionBarActivity {
     {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-                sampleDB.execSQL("UPDATE " + gdzie_idzie + " SET Ilosc=('" + zm + "'),Przynaleznosc=('" + gdzie_idzie + "')  WHERE Nazwa=('" + Skladniki_produkty[p] + "') ");
+            sampleDB.execSQL("UPDATE " + gdzie_idzie + " SET Ilosc=('" + zm + "'),Przynaleznosc=('" + gdzie_idzie + "')  WHERE Nazwa=('" + Skladniki_produkty[p] + "') ");
             sampleDB.close();
         } catch (Exception e) {
             showToast("Blad w magazyn");
@@ -459,7 +459,7 @@ public class Kuchnia extends ActionBarActivity {
     {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-                sampleDB.execSQL("INSERT INTO Brak_kategori (Nazwa,Przynaleznosc) VALUES ('" + Skladniki_produkty[p] + "','Brak kategori') ");
+            sampleDB.execSQL("INSERT INTO Brak_kategori (Nazwa,Przynaleznosc) VALUES ('" + Skladniki_produkty[p] + "','Brak kategori') ");
             sampleDB.close();
         } catch (Exception e) {
             showToast("Blad w brak kategori");
@@ -472,20 +472,20 @@ public class Kuchnia extends ActionBarActivity {
             } catch (SQLException e1) {
                 //e1.printStackTrace();
             }
-        String sql1 = "INSERT INTO Brak_kategori (Nazwa,Przynaleznosc)  VALUES ('" + Skladniki_produkty[p] + "','Brak kategori') ";
+            String sql1 = "INSERT INTO Brak_kategori (Nazwa,Przynaleznosc)  VALUES ('" + Skladniki_produkty[p] + "','Brak kategori') ";
 
             try {
                 st.executeUpdate(sql1);
             } catch (SQLException e1) {
                 // e1.printStackTrace();
             }
-        try {
-            if (connection != null)
-                connection.close();
-        } catch (SQLException se) {
-            showToast("brak połączenia z internetem");
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException se) {
+                showToast("brak połączenia z internetem");
+            }
         }
-    }
     }
 
     private void Hash()
@@ -648,9 +648,9 @@ public class Kuchnia extends ActionBarActivity {
 
                             textboks = editT.getText().toString();
                             Hash();
-                                if (hash1.equals(haslo)) {
-                                    mpopup.dismiss();
-                                } else { showToast("błędne hasło");}
+                            if (hash1.equals(haslo)) {
+                                mpopup.dismiss();
+                            } else { showToast("błędne hasło");}
                         } catch (Exception e) {
                         }
 
@@ -708,7 +708,7 @@ public class Kuchnia extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent w = new Intent(Kuchnia.this, Dodawanie.class);
-               w.putExtra("sala_sprzedazy", s);
+                w.putExtra("sala_sprzedazy", s);
                 w.putExtra("wszystko", W);
                 w.putExtra("magazyn", m);
                 w.putExtra("kuchnia", k);
@@ -852,7 +852,7 @@ public class Kuchnia extends ActionBarActivity {
                                     gdzie_idzie = "Lodowka";
                                     stan1 = true;
                                     zm1 = Double.valueOf(Lodówka_stan_krytyczny[j]);
-                                    if (zm1 < zm) {
+                                    if (zm1 > zm) {
                                         showToast("Stan krytyczny " + Skladniki_produkty[p]);
                                     }
                                     UpdateSql();
@@ -867,7 +867,7 @@ public class Kuchnia extends ActionBarActivity {
                                     gdzie_idzie = "Magazyn";
                                     stan2 = true;
                                     zm1 = Double.valueOf(Magazyn_stan_krytyczny[j]);
-                                    if (zm1 < zm) {
+                                    if (zm1 > zm) {
                                         showToast("Stan krytyczny " + Skladniki_produkty[p]);
                                     }
                                     UpdateSql();
@@ -883,7 +883,7 @@ public class Kuchnia extends ActionBarActivity {
                                     stan3 = true;
                                     gdzie_idzie = "Mroznia";
                                     zm1 = Double.valueOf(Mroznia_stan_krytyczny[j]);
-                                    if (zm1 < zm) {
+                                    if (zm1 > zm) {
                                         showToast("Stan krytyczny " + Skladniki_produkty[p]);
                                     }
                                     UpdateSql();

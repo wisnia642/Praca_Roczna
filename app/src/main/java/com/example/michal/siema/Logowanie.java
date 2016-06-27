@@ -33,7 +33,7 @@ public class Logowanie extends ActionBarActivity {
     Button ok,anuluj;
 
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.0.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 

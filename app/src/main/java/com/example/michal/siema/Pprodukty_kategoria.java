@@ -35,7 +35,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
 
     CustomAdapter6 adapter1;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -71,7 +71,7 @@ public class Pprodukty_kategoria extends ActionBarActivity {
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
     int A,B,C,D,p,o;
-    boolean klikniecie=false,klikniecie1=false;
+    boolean klikniecie=false;
     String Nazwa_dania;
 
     private void showToast(String message) {
@@ -415,19 +415,13 @@ public class Pprodukty_kategoria extends ActionBarActivity {
                 klikniecie = false;
             }
         });
-        danie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                klikniecie1=true;
-            }
-        });
 
         utworz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 naz =danie.getText().toString();
                 ilo =ilosc.getText().toString();
-                if(klikniecie1==true & naz!=null & ilo!=null) {
+                if(!naz.equals("") & !ilo.equals("")) {
                     saveSqlLight();
                     finish();
                     startActivity(getIntent());

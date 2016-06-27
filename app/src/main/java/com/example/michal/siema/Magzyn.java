@@ -48,7 +48,7 @@ public class Magzyn extends ActionBarActivity {
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 

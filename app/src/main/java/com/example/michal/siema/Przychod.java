@@ -44,7 +44,7 @@ public class Przychod extends ActionBarActivity {
     String[] Ilosc = new String[40];
     String[] Nazwa1 = new String[40];
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -251,11 +251,12 @@ z=0;
                     if (zm != null) {
                         Nazwa[z] = String.valueOf(c.getString(0));
                         Cena[z] = String.valueOf(c.getString(5));
+                       // showToast(String.valueOf(Cena[z]));
                         z++;
                     }
                 }
                 sampleDB.close();
-            } catch (Exception e) {
+            } catch (Exception e) { showToast(""+e);
 
             }
             i++;
@@ -347,19 +348,21 @@ z=0;
                     for (int i = 0; i < x; i = i + 0) {
                         Ilosc2 = Ilosc1 + Integer.parseInt(Ilosc[i]);
                         Ilosc1 = Ilosc2;
-
-                        for (int j = 0; j < x; j = j + 0) {
-                            if (Nazwa1[i].equals(Nazwa[j])) {
-                                cena3 = Double.parseDouble(Cena[j]) * Integer.parseInt(Ilosc[i]);
-                                cena1 = cena2 + cena3;
-                                cena2 = cena1;
-                            }
-                            j++;
-                        }
                         i++;
                     }
-
-                    przychody.setText(String.valueOf(cena2));
+                    int i=0;
+                    for (int j = 0; j < z; j = j + 0) {
+                        if (Nazwa[j].equals(Nazwa1[i])) {
+                           // showToast(Cena[j]+"  "+Cena[i]);
+                            cena3 = Double.parseDouble(Cena[j]) * Integer.parseInt(Ilosc[i]);
+                            // showToast(Cena[j]+"  "+Ilosc[i]);
+                            cena1 = cena2 + cena3;
+                            cena2 = cena1;
+                            i++;
+                        }
+                        j++;
+                    }
+                    przychody.setText(String.valueOf(cena1=10.));
                     wykonywane.setText(String.valueOf(Ilosc2));
 
                 }catch (Exception e ){}
@@ -382,7 +385,7 @@ z=0;
                     }else{
                         koszty2 = koszty.getText().toString();
                         procenty2 = narzut.getText().toString();
-                        cena4= Double.valueOf(cena1);
+                        cena4= Double.valueOf(cena2);
                         wynik =  cena4 - Double.parseDouble(koszty2) ;
                         koszty1= wynik*Double.parseDouble(procenty2);
                         procenty1= koszty1/ 100;

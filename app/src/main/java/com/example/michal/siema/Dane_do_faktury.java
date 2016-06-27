@@ -62,7 +62,7 @@ public class Dane_do_faktury extends ActionBarActivity {
     List<String> listaStringow1 = new ArrayList<String>();
 
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.0.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -529,22 +529,22 @@ public class Dane_do_faktury extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                    if (faktura.equals("false")) {
-                        Intent i = new Intent(Dane_do_faktury.this, Ustawienia.class);
-                        i.putExtra("sala_sprzedazy", s);
-                        i.putExtra("wszystko", W);
-                        i.putExtra("magazyn", m);
-                        i.putExtra("kuchnia", k);
-                        startActivity(i);
-                    }
-                    if (faktura.equals("true")) {
-                        Intent w = new Intent(Dane_do_faktury.this, Faktura.class);
-                        w.putExtra("sala_sprzedazy", s);
-                        w.putExtra("wszystko", W);
-                        w.putExtra("magazyn", m);
-                        w.putExtra("kuchnia", k);
-                        startActivity(w);
-                    }
+                if (faktura.equals("false")) {
+                    Intent i = new Intent(Dane_do_faktury.this, Ustawienia.class);
+                    i.putExtra("sala_sprzedazy", s);
+                    i.putExtra("wszystko", W);
+                    i.putExtra("magazyn", m);
+                    i.putExtra("kuchnia", k);
+                    startActivity(i);
+                }
+                if (faktura.equals("true")) {
+                    Intent w = new Intent(Dane_do_faktury.this, Faktura.class);
+                    w.putExtra("sala_sprzedazy", s);
+                    w.putExtra("wszystko", W);
+                    w.putExtra("magazyn", m);
+                    w.putExtra("kuchnia", k);
+                    startActivity(w);
+                }
 
             }
         });
@@ -563,26 +563,22 @@ public class Dane_do_faktury extends ActionBarActivity {
                 wartosc[8] = miejscowosc1.getText().toString();
                 wartosc[4] = kod_pocztowy.getText().toString();
                 wartosc[9] = kod_pocztowy1.getText().toString();
+                if (!wartosc[0].equals("") || !wartosc[5].equals("")) {
 
-                if (stan == true) {
-                    connectToDataBase1();
+                       // connectToDataBase1();
+                        //connectToDataBase();
+                        UpdateSql();
+                        UpdateSql1();
+
+                    showToast("Dane zostały dodane");
+                    finish();
+                    startActivity(getIntent());
+
                 }
                 else
                 {
-                    UpdateSql();
+                    showToast("Uzupełnij wszystkie pola");
                 }
-
-                if(stan1 == true)
-                {
-                    connectToDataBase();
-                }
-                else
-                {
-                    UpdateSql1();
-                }
-                showToast("Dane zostały dodane");
-                finish();
-                startActivity(getIntent());
             }
 
         });

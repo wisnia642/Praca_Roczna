@@ -37,7 +37,7 @@ public class Lista_dodawanie extends ActionBarActivity {
     public static final int CZWARTY_ELEMENT = 4;
     public static final int PIATY_ELEMENT = 5;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.0.100:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 

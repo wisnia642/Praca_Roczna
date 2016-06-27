@@ -296,7 +296,6 @@
             android:layout_alignBottom="@+id/linearLayout6"
             android:layout_alignLeft="@+id/lista"
             android:layout_alignStart="@+id/lista"
-            android:layout_toStartOf="@+id/linearLayout3"
             android:layout_alignRight="@+id/lista"
             android:layout_alignEnd="@+id/lista" />
 

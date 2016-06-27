@@ -37,7 +37,7 @@ public class Koszt_potrawy extends ActionBarActivity {
     private static final String SAMPLE_DB_NAME = "Restalracja";
     private static final String SAMPLE_TABLE_NAME = "Karta";
 
-    private static final String url = "jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url = "jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user = "michal";
     private static final String pass = "kaseta12";
 
@@ -65,7 +65,7 @@ public class Koszt_potrawy extends ActionBarActivity {
     private static  String[] Nazwa_produktu = new String[30];
     private static  String[] kategoria = new String[30];
     private static  String[] cena_detaliczna = new String[30];
-    private static   String[] ilosc_detaliczna = new String[30];
+    private static  String[] ilosc_detaliczna = new String[30];
     private static  String[] wyswietlanie = new String[30];
     private static  String[] zm = new String[20];
     private static  String[] zm1 = new String[20];
@@ -106,8 +106,8 @@ public class Koszt_potrawy extends ActionBarActivity {
                 i++;
             }
             sampleDB.close();
-        } catch (Exception e) {
-            showToast(""+e);
+        } catch (Exception e) { showToast(""+e);
+
         }
 
 
@@ -129,9 +129,9 @@ public class Koszt_potrawy extends ActionBarActivity {
                 }
                 i++;
             }
-            sampleDB.close();
+
             sampleDB1.close();
-        } catch (Exception e) {showToast("Błąd1");}
+        } catch (Exception e) {showToast(""+e);}
 
     }
 
@@ -280,15 +280,13 @@ public class Koszt_potrawy extends ActionBarActivity {
         W = applesData.getString("wszystko");
 
         readsqlLigtData();
-        if(Nazwa[0]==null)
-       try{
-         wczytywanie();
-       }
-        catch(Exception e){}
 
-
+       // showToast(Nazwa[0]);
         adapter1=new customAdapter1(this, Nazwa,ilosc,Zdjęcie,q,stan1);
         dania.setAdapter(adapter1);
+
+        //showToast(Nazwa[0]+Nazwa_produktu[0]);
+
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,6 +342,8 @@ public class Koszt_potrawy extends ActionBarActivity {
                         wyswietlanie[b] = "";
                         b++;
                     }
+                    adapter2 = new CustomAdapter5(Koszt_potrawy.this, wyswietlanie);
+                    skladniki.setAdapter(adapter2);
                   //  wyswietlanie[0]="Nazwa produktu/Ilość/Kategoria/Cena";
                     c = 0;
                     wynik1 = 0.0;
@@ -383,7 +383,7 @@ public class Koszt_potrawy extends ActionBarActivity {
                                  cena1 = Double.valueOf(cena_detaliczna[w]);
                                  cena3 = Double.valueOf(miarka[a]);
                                  wynik1 = cena1 * cena3;
-                                 wyswietlanie[c] = zm[a] + ", " + miarka[a] + ", " + kat + ", " + cena_d;
+                                 wyswietlanie[c] = zm[a] + ",   " + miarka[a] + ",   " + kat + ",   " + cena_d;
                                  c++;
                                  wynik2 = wynik1 + wynik2;
                                  adapter2 = new CustomAdapter5(Koszt_potrawy.this, wyswietlanie);

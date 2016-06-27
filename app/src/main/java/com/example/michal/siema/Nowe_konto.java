@@ -44,7 +44,7 @@ public class Nowe_konto extends ActionBarActivity {
     String s,m,k,w;
     List<String> listaStringow = new ArrayList<String>();
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -65,9 +65,6 @@ public class Nowe_konto extends ActionBarActivity {
     int x,z,q,i,p;
     boolean stan=false;
     boolean stan1 =false;
-    boolean stan2 =false;
-    boolean stan3 =false;
-    boolean stan4 =false;
     String hash1,login1,haslo1,powtorz_haslo1;
 
 
@@ -371,25 +368,6 @@ public class Nowe_konto extends ActionBarActivity {
                 startActivity(c);
             }
         });
-        Login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stan2=true;
-            }
-        });
-
-        Haslo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stan3=true;
-            }
-        });
-        Powtorz_haslo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stan4=true;
-            }
-        });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,7 +376,7 @@ public class Nowe_konto extends ActionBarActivity {
                 haslo1 = Haslo.getText().toString();
                 powtorz_haslo1 = Powtorz_haslo.getText().toString();
                 try {
-                    if (stan2==true&stan3==true&stan4==true) {
+                    if (!login1.equals("") & !haslo1.equals("") & !powtorz_haslo1.equals("")) {
                         if (haslo1.equals(powtorz_haslo1)) {
                             if (stan1 == true) {
                                 if (haslo[q].equals(hash1)) {

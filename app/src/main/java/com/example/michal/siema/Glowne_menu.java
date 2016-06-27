@@ -27,7 +27,7 @@ public class Glowne_menu extends ActionBarActivity {
     Bundle applesData;
     String Magazyn,Kuchnia,Sala_sprzedazy,Wszystko,login;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 

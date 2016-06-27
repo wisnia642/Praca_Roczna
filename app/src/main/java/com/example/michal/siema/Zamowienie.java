@@ -50,7 +50,7 @@ public class Zamowienie extends ActionBarActivity  {
 
     String s,m,k,W;
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
@@ -353,10 +353,7 @@ public class Zamowienie extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         ilosc = Ilosc.getText().toString();
-                        if(ilosc!=null){
-                            showToast("UZUPELNIJ ILOSC");
-                        }
-                        else {
+                        if (!ilosc.equals("")) {
                             dodatki = Dodatki.getText().toString();
                             dodatkowe_zyczenia = Dodatkowe_Zyczenia.getText().toString();
                             try {
@@ -389,7 +386,11 @@ public class Zamowienie extends ActionBarActivity  {
                             i.putExtra("kuchnia", k);
                             startActivity(i);
 
-                    }}
+
+                        } else {
+                            showToast("Uzupełnij ilość");
+                        }
+                    }
                 });
 
         anulacja.setOnClickListener(new View.OnClickListener() {

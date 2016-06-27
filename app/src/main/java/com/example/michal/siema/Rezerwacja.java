@@ -44,7 +44,7 @@ public class Rezerwacja extends ActionBarActivity {
     String[] Stolik = {"Stolik_1","Stolik_2","Stolik_3","Stolik_4","Stolik_5","Stolik_6","Stolik_7","Stolik_8","Stolik_9",
             "Stolik_10","Stolik_11","Stolik_12","Stolik_13","Stolik_14","Stolik_15"};
 
-    private static final String url="jdbc:mysql://192.168.1.100:3306/restalracja1234";
+    private static final String url="jdbc:mysql://192.168.1.101:3306/restalracja1234";
     private static final String user="michal";
     private static final String pass="kaseta12";
 
